@@ -2,6 +2,7 @@ package engine.enemy.aliens;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 import fronted.imaging.Image;
 import fronted.imaging.ImageLoader;
@@ -14,26 +15,22 @@ public class Alien {
     int x ;
     int y ;
     boolean alive = true ;
-    Image[] image = new Image[2] ;
+    ArrayList<Image> image = new ArrayList<Image>() ;
     AlienName name ;
 
     public int j=0 ;
 
 
 
-    public void setImages(String add1 , String add2) {
-        image[0]= new Image(add1);
-        image[0].setImage(ImageLoader.Load(image[0].getAddress()));
 
-        image[1]= new Image(add2);
-        image[1].setImage(ImageLoader.Load(image[1].getAddress()));
+    public void setImages(String... address) {
+        for(int i=0 ; i<address.length ; i++) {
+            image.add(new Image(address[i]));
+            image.get(i).setImage(ImageLoader.Load(image.get(i).getAddress()));
+        }
 
     }
 
-    public BufferedImage[] getImages() {
-        BufferedImage[] img = {image[0].getImage(),image[1].getImage()} ;
-        return img ;
-    }
 
     public int getX() {
         return x;
@@ -99,9 +96,16 @@ public class Alien {
     }
 
 
-    public void draw(Graphics g) {
-        g.drawImage(image[j].getImage(), x, y, width, height, null);
-    }
 
+    int i=0 ;
+
+    public void draw(Graphics g) {
+        g.drawImage(image.get(j).getImage(), x, y, width, height, null);
+        if(i%25<12)
+            j = 0 ;
+        else
+            j = 1 ;
+        i++ ;
+    }
 
 }

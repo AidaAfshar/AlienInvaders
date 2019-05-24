@@ -24,17 +24,6 @@ public class Hester extends Alien {
         setWidth(80);
     }
 
-    int i=0 ;
-
-    @Override
-    public void draw(Graphics g) {
-        super.draw(g);
-        if(i%25<12)
-            j = 0 ;
-        else
-            j = 1 ;
-        i++ ;
-    }
 
 
 

@@ -95,7 +95,12 @@ public class Administrator {
     }
 
     private void prepareAliens() {
-        rect = new RectangularGroup(AlienName.HESTER) ;
+
+//        rect = new RectangularGroup(AlienName.HESTER) ;
+          rect = new RectangularGroup(AlienName.AUGUSTUS) ;
+//        rect = new RectangularGroup(AlienName.OPHELIA) ;
+//        rect = new RectangularGroup(AlienName.BLOODREX) ;
+
     }
 
     public void detectCollisions() {

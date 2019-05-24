@@ -10,9 +10,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import javax.swing.Timer;
 
 import engine.enemy.alienAttack.Spike;
-import engine.enemy.aliens.Alien;
-import engine.enemy.aliens.AlienName;
-import engine.enemy.aliens.Hester;
+import engine.enemy.aliens.*;
 import fronted.utilities.Dim;
 
 public class RectangularGroup implements Group{
@@ -48,13 +46,13 @@ public class RectangularGroup implements Group{
 
     @Override
     public void placeAliens() {
-        if(alien.getName().equals(AlienName.HESTER)) {
             for(int i=0 ; i<count ; i++) {
                 int p = i%10 ;
                 int q = i/10 ;
-                aliens.add(new Hester(-1700+p*(Xblank+alien.getHeight()) , -480+q*(Yblank+alien.getWidth()))) ;
+                //TODO
+                aliens.add(new Augustus(-1700+p*(Xblank+alien.getHeight()) , -480+q*(Yblank+alien.getWidth()))) ;
             }
-        }
+
     }
 
     @Override
@@ -96,6 +94,7 @@ public class RectangularGroup implements Group{
     public void produceSpike(){
         for(Alien alien : aliens){
             if(alien.isAlive()) {
+                //TODO
                 if (random.nextInt(15000) % 1000 == 0) {
                     releaseSpike(alien.getX(), alien.getY());
                 }
