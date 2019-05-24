@@ -8,6 +8,7 @@ import javax.swing.Timer;
 import engine.attackTools.Bomb;
 import engine.attackTools.FlameBall;
 import engine.enemy.alienAttack.Spike;
+import engine.enemy.alienGroups.Group;
 import engine.enemy.alienGroups.RectangularGroup;
 import engine.enemy.aliens.Alien;
 import engine.enemy.aliens.AlienName;
@@ -21,11 +22,10 @@ public class Administrator {
     public GamePanel gamePanel ;
 
     public SpaceShip ship ;
-    public RectangularGroup rect ;
+    public Group group ;
 
     static Timer timer ;
     public Player player ;
-
 
 
     public Administrator(GamePanel gamePanel,SpaceShip spaceShip,Player player) {
@@ -56,7 +56,7 @@ public class Administrator {
                 ship.tempController.controlTemp(gamePanel);
                 detectCollisions();
                 bombExplosion();
-                rect.produceSpike();
+                group.produceSpike();
                 updateValues();
 
             }
@@ -68,7 +68,7 @@ public class Administrator {
     protected void bombExplosion() {
         for(Bomb bomb : ship.shipAttack.getBombs()) {
             if(bomb.timeToKill)
-                rect.killTheGroup();
+                group.killTheGroup();
         }
     }
 
@@ -85,23 +85,13 @@ public class Administrator {
     }
 
     private void prepareEnemy() {
-
-        prepareAliens();
-        prepareSpikes();
+//        group = new RectangularGroup(AlienName.HESTER) ;
+          group = new RectangularGroup(AlienName.AUGUSTUS) ;
+//        group = new RectangularGroup(AlienName.OPHELIA) ;
+//        group = new RectangularGroup(AlienName.BLOODREX) ;
     }
 
-    private void prepareSpikes() {
 
-    }
-
-    private void prepareAliens() {
-
-//        rect = new RectangularGroup(AlienName.HESTER) ;
-          rect = new RectangularGroup(AlienName.AUGUSTUS) ;
-//        rect = new RectangularGroup(AlienName.OPHELIA) ;
-//        rect = new RectangularGroup(AlienName.BLOODREX) ;
-
-    }
 
     public void detectCollisions() {
         beamAlienCollision();
@@ -110,8 +100,8 @@ public class Administrator {
     }
 
     private void spaceShipSpikeCollision() {
-        for (int j = 0; j < rect.getSpikes().size(); j++) {
-            Spike spike = rect.getSpikes().get(j);
+        for (int j = 0; j < group.getSpikes().size(); j++) {
+            Spike spike = group.getSpikes().get(j);
             if (!spike.isCollided()) {
                 if(spike.getX()>ship.getX() && spike.getX()<ship.getX()+ship.getWidth()) {
                     if(spike.getY()>ship.getY() && spike.getY()<ship.getY()+ship.getHeight()) {
@@ -125,9 +115,9 @@ public class Administrator {
         }
     }
     private void beamAlienCollision(){
-        for(int i=0 ; i<rect.getAliens().size() ; i++) {
+        for(int i=0 ; i<group.getAliens().size() ; i++) {
             for(int j=0 ; j<ship.shipAttack.getFlameBalls().size() ; j++) {
-                Alien alien = rect.getAliens().get(i);
+                Alien alien = group.getAliens().get(i);
                 FlameBall flameBall = ship.shipAttack.getFlameBalls().get(j);
                 if(flameBall.getThrowPermission()==true) {
                     double d = Math.sqrt(Math.pow(alien.getX()-flameBall.getX(),2)+Math.pow(alien.getY()-flameBall.getY(),2)) ;

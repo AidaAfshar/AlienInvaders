@@ -1,8 +1,8 @@
 package engine.enemy.aliens;
 
 import java.awt.Graphics;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Random;
 
 import fronted.imaging.Image;
 import fronted.imaging.ImageLoader;
@@ -10,18 +10,19 @@ import fronted.imaging.ImageLoader;
 
 public class Alien {
 
+    //attributes:
+
+    AlienName name ;
     int width ;
     int height ;
     int x ;
     int y ;
     boolean alive = true ;
-    ArrayList<Image> image = new ArrayList<Image>() ;
-    AlienName name ;
-
-    public int j=0 ;
+    ArrayList<Image> image = new ArrayList<>() ;
+    int j=0 ;
 
 
-
+    //methods:
 
     public void setImages(String... address) {
         for(int i=0 ; i<address.length ; i++) {
@@ -30,7 +31,6 @@ public class Alien {
         }
 
     }
-
 
     public int getX() {
         return x;
@@ -95,8 +95,6 @@ public class Alien {
 
     }
 
-
-
     int i=0 ;
 
     public void draw(Graphics g) {
@@ -107,5 +105,6 @@ public class Alien {
             j = 1 ;
         i++ ;
     }
+
 
 }

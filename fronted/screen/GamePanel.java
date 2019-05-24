@@ -165,7 +165,7 @@ public class GamePanel extends JPanel {
         background1.draw(g);
         admin.ship.draw(g);
         admin.ship.shipAttack.renderAttack(g);
-        admin.rect.renderGroup(g);
+        admin.group.renderGroup(g);
     }
 
 
