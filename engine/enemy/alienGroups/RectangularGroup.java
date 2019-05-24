@@ -23,6 +23,7 @@ public class RectangularGroup implements Group{
 
     Random random = new Random();
 
+    Timer entranceTimer ;
 
 
     int count =30 ;
@@ -41,6 +42,8 @@ public class RectangularGroup implements Group{
 
     public void initialize() {
         placeAliens();
+        prepareEntrance();
+        entranceTimer.start();
     }
 
     @Override
@@ -49,7 +52,7 @@ public class RectangularGroup implements Group{
             for(int i=0 ; i<count ; i++) {
                 int p = i%10 ;
                 int q = i/10 ;
-                aliens.add(new Hester(100+p*(Xblank+80) , 120+q*(Yblank+100))) ;
+                aliens.add(new Hester(-1700+p*(Xblank+alien.getHeight()) , -480+q*(Yblank+alien.getWidth()))) ;
             }
         }
     }
@@ -65,6 +68,26 @@ public class RectangularGroup implements Group{
         }
     }
 
+    public void prepareEntrance(){
+        entranceTimer = new Timer(30, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                if (aliens.get(0).getX() < 100 || aliens.get(0).getY() < 120)
+                    for (int i = 0; i < count; i++) {
+                        Alien alien = aliens.get(i);
+                        int p = i % 10;
+                        int q = i / 10;
+                        if (alien.getX() < 100 + p * (Xblank + alien.getWidth())) alien.setX(alien.getX() + 6);
+                        if (alien.getY() < 120 + q * (Yblank + alien.getHeight())) alien.setY(alien.getY() + 5);
+                    }
+                else
+                    entranceTimer.stop();
+
+            }
+
+        });
+    }
 
     public void releaseSpike(int x , int y){
         spikes.add(new Spike(x,y));
