@@ -23,9 +23,9 @@ public class Administrator {
 
     public SpaceShip ship ;
     public Group group ;
+    public Player player ;
 
     static Timer timer ;
-    public Player player ;
 
 
     public Administrator(GamePanel gamePanel,SpaceShip spaceShip,Player player) {
@@ -86,9 +86,9 @@ public class Administrator {
 
     private void prepareEnemy() {
 //        group = new RectangularGroup(AlienName.HESTER) ;
-          group = new RectangularGroup(AlienName.AUGUSTUS) ;
+//        group = new RectangularGroup(AlienName.AUGUSTUS) ;
 //        group = new RectangularGroup(AlienName.OPHELIA) ;
-//        group = new RectangularGroup(AlienName.BLOODREX) ;
+          group = new RectangularGroup(AlienName.BLOODREX) ;
     }
 
 

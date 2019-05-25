@@ -2,7 +2,6 @@ package engine.enemy.aliens;
 
 import java.awt.Graphics;
 import java.util.ArrayList;
-import java.util.Random;
 
 import fronted.imaging.Image;
 import fronted.imaging.ImageLoader;
@@ -15,8 +14,8 @@ public class Alien {
     AlienName name ;
     int width ;
     int height ;
-    int x ;
-    int y ;
+    int x , y ;
+    int vx , vy ;
     boolean alive = true ;
     ArrayList<Image> image = new ArrayList<>() ;
     int j=0 ;
@@ -62,6 +61,22 @@ public class Alien {
 
     public void setWidth(int width) {
         this.width = width;
+    }
+
+    public int getVx() {
+        return vx;
+    }
+
+    public void setVx(int vx) {
+        this.vx = vx;
+    }
+
+    public int getVy() {
+        return vy;
+    }
+
+    public void setVy(int vy) {
+        this.vy = vy;
     }
 
     public void setName(AlienName name) {

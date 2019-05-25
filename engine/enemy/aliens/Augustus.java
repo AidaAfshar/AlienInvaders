@@ -1,6 +1,5 @@
 package engine.enemy.aliens;
 
-import java.awt.*;
 
 public class Augustus extends Alien{
 
