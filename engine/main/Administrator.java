@@ -10,6 +10,7 @@ import engine.attackTools.FlameBall;
 import engine.enemy.alienAttack.Spike;
 import engine.enemy.alienGroups.Group;
 import engine.enemy.alienGroups.RectangularGroup;
+import engine.enemy.alienGroups.circularGroup.Circle;
 import engine.enemy.aliens.Alien;
 import engine.enemy.aliens.AlienName;
 import engine.player.Player;
@@ -88,7 +89,10 @@ public class Administrator {
 //        group = new RectangularGroup(AlienName.HESTER) ;
 //        group = new RectangularGroup(AlienName.AUGUSTUS) ;
 //        group = new RectangularGroup(AlienName.OPHELIA) ;
-          group = new RectangularGroup(AlienName.BLOODREX) ;
+//        group = new RectangularGroup(AlienName.BLOODREX) ;
+          group = new Circle(200 ,500,500 , AlienName.BLOODREX) ;
+
+
     }
 
 

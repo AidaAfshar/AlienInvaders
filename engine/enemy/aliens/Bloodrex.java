@@ -13,6 +13,13 @@ public class Bloodrex extends Alien{
         initialize();
     }
 
+
+    public Bloodrex(int r, double teta){
+        this.r = r ;
+        this.teta = teta ;
+        initialize();
+    }
+
     public void initialize(){
         setName(AlienName.BLOODREX) ;
         setImages("pictures/aliens/bloodrex/1.png" ,"pictures/aliens/bloodrex/2.png" );

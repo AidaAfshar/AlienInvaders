@@ -14,22 +14,42 @@ public class Alien {
     AlienName name ;
     int width ;
     int height ;
-    int x , y ;
+    int x ; int y ;
+    int r ; double teta ;
     int vx , vy ;
     boolean alive = true ;
-    ArrayList<Image> image = new ArrayList<>() ;
+    ArrayList<Image> image ;
     int j=0 ;
 
-
     //methods:
+
+    public Alien(){
+        image = new ArrayList<>() ;
+    }
 
     public void setImages(String... address) {
         for(int i=0 ; i<address.length ; i++) {
             image.add(new Image(address[i]));
             image.get(i).setImage(ImageLoader.Load(image.get(i).getAddress()));
         }
-
     }
+
+    public void setV(int xc , int yc){
+        if(this.getX()>xc && this.getY()<yc){
+            this.setVx(-1);
+            this.setVy(-1);
+        }else if(this.getX()<xc && this.getY()<yc){
+            this.setVx(-1);
+            this.setVy(+1);
+        }else if(this.getX()<xc && this.getY()>yc){
+            this.setVx(+1);
+            this.setVy(+1);
+        }else if(this.getX()>xc && this.getY()>yc){
+            this.setVx(+1);
+            this.setVy(-1);
+        }
+    }
+
 
     public int getX() {
         return x;
@@ -113,12 +133,13 @@ public class Alien {
     int i=0 ;
 
     public void draw(Graphics g) {
-        g.drawImage(image.get(j).getImage(), x, y, width, height, null);
-        if(i%25<12)
-            j = 0 ;
-        else
-            j = 1 ;
-        i++ ;
+            g.drawImage(image.get(j).getImage(), x, y, width, height, null);
+
+             if (i % 25 < 12)
+                j = 0;
+            else
+                j = 1;
+            i++;
     }
 
 
