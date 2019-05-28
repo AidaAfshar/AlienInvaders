@@ -8,8 +8,13 @@ public class Ophelia extends Alien{
 
 
     public Ophelia(int x, int y) {
-        this.x = x ;
-        this.y = y ;
+        super(x,y) ;
+        initialize();
+    }
+
+
+    public Ophelia(int xc , int yc , int r, double teta){
+        super(xc , yc , r , teta) ;
         initialize();
     }
 

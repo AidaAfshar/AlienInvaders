@@ -92,7 +92,6 @@ public class Administrator {
 //        group = new RectangularGroup(AlienName.BLOODREX) ;
           group = new Circle(250 ,650,300 , AlienName.BLOODREX) ;
 
-
     }
 
 

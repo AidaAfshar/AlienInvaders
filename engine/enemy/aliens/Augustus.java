@@ -9,8 +9,13 @@ public class Augustus extends Alien{
 
 
     public Augustus(int x, int y) {
-        this.x = x ;
-        this.y = y ;
+        super(x,y) ;
+        initialize();
+    }
+
+
+    public Augustus(int xc , int yc , int r, double teta){
+        super(xc , yc , r , teta) ;
         initialize();
     }
 

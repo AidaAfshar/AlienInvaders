@@ -18,14 +18,29 @@ public class Alien {
     int r ; double teta ;
     int vx , vy ;
     boolean alive = true ;
-    ArrayList<Image> image ;
+    ArrayList<Image> image = new ArrayList<>() ;
     int j=0 ;
 
     //methods:
 
     public Alien(){
-        image = new ArrayList<>() ;
+
     }
+
+    public Alien(int x, int y) {
+        this.x = x ;
+        this.y = y ;
+
+    }
+
+
+    public Alien(int xc , int yc , int r, double teta){
+        this.r = r ;
+        this.teta = teta ;
+        setPolarCoordinates(xc ,yc ,r ,teta);
+
+    }
+
 
     public void setImages(String... address) {
         for(int i=0 ; i<address.length ; i++) {

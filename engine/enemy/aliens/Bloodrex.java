@@ -8,16 +8,13 @@ public class Bloodrex extends Alien{
 
 
     public Bloodrex(int x, int y) {
-        this.x = x ;
-        this.y = y ;
+        super(x,y) ;
         initialize();
     }
 
 
     public Bloodrex(int xc , int yc , int r, double teta){
-        this.r = r ;
-        this.teta = teta ;
-        setPolarCoordinates(xc ,yc ,r ,teta);
+        super(xc , yc , r , teta) ;
         initialize();
     }
 

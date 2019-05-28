@@ -27,22 +27,6 @@ public class Circle extends Group {
         initialize();
     }
 
-//    public void setV(Alien alien){
-//        if(alien.getX()>xc && alien.getY()<yc){
-//            alien.setVx(-1);
-//            alien.setVy(-1);
-//        }else if(alien.getX()<xc && alien.getY()<yc){
-//            alien.setVx(-1);
-//            alien.setVy(+1);
-//        }else if(alien.getX()<xc && alien.getY()>yc){
-//            alien.setVx(+1);
-//            alien.setVy(+1);
-//        }else if(alien.getX()>xc && alien.getY()>yc){
-//            alien.setVx(+1);
-//            alien.setVy(-1);
-//        }
-//    }
-
 
     @Override
     public void prepareEntrance() {
@@ -54,8 +38,6 @@ public class Circle extends Group {
     public void placeAliens(){
         for(int i=0 ; i<count ; i++){
             Alien alien  = new Bloodrex(xc,yc,r,teta);
-//          alien.setX((int)(xc + r*Math.cos(teta)));
-//          alien.setY((int)(yc + r*Math.sin(teta)));
             alien.setV(this.xc , this.yc);
             aliens.add(alien);
             teta += 2*Math.PI/count;

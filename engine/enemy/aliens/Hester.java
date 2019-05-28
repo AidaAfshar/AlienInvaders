@@ -12,8 +12,13 @@ public class Hester extends Alien {
     }
 
     public Hester(int x, int y) {
-        this.x = x ;
-        this.y = y ;
+        super(x,y) ;
+        initialize();
+    }
+
+
+    public Hester(int xc , int yc , int r, double teta){
+        super(xc , yc , r , teta) ;
         initialize();
     }
 
