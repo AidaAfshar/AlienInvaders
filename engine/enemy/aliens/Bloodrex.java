@@ -14,11 +14,13 @@ public class Bloodrex extends Alien{
     }
 
 
-    public Bloodrex(int r, double teta){
+    public Bloodrex(int xc , int yc , int r, double teta){
         this.r = r ;
         this.teta = teta ;
+        setPolarCoordinates(xc ,yc ,r ,teta);
         initialize();
     }
+
 
     public void initialize(){
         setName(AlienName.BLOODREX) ;

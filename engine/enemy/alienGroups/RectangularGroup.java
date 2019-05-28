@@ -1,5 +1,6 @@
 package engine.enemy.alienGroups;
 
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.Timer;
@@ -68,7 +69,11 @@ public class RectangularGroup extends Group {
     }
 
 
-
+    @Override
+    public void renderAliens(Graphics g) {
+        m = 10 ;
+        super.renderAliens(g);
+    }
 
 }
 

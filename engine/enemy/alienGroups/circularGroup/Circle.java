@@ -21,7 +21,7 @@ public class Circle extends Group {
         this.r = r ;
         this.xc = xc ;
         this.yc = yc ;
-        count = (int) (2*Math.PI*r)/(alien.getWidth()+50) ;
+        count = (int) (2*Math.PI*r)/(alien.getWidth()+30) ;
         aliens = new ArrayList<>();
 
         initialize();
@@ -53,7 +53,7 @@ public class Circle extends Group {
 
     public void placeAliens(){
         for(int i=0 ; i<count ; i++){
-            Alien alien  = new Bloodrex((int)(xc + ((double)r)*Math.cos(teta)),(int)(yc + ((double)r)*Math.sin(teta)));
+            Alien alien  = new Bloodrex(xc,yc,r,teta);
 //          alien.setX((int)(xc + r*Math.cos(teta)));
 //          alien.setY((int)(yc + r*Math.sin(teta)));
             alien.setV(this.xc , this.yc);
@@ -68,8 +68,8 @@ public class Circle extends Group {
     @Override
     public void moveGroup() {
         for(Alien alien : aliens){
-            alien.setX((int)(xc + ((double)r)*Math.cos(teta+=dteta)));
-            alien.setY((int)(yc + ((double)r)*Math.sin(teta+=dteta)));
+            alien.setTeta(alien.getTeta()+dteta);
+            alien.setPolarCoordinates(xc , yc , alien.getR(), alien.getTeta());
             alien.setV(this.xc , this.yc);
         }
     }
@@ -77,7 +77,7 @@ public class Circle extends Group {
 
     @Override
     public void renderAliens(Graphics g) {
-        m = 20 ;
+        m = 16 ;
         super.renderAliens(g);
     }
 }

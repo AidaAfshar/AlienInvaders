@@ -90,7 +90,7 @@ public class Administrator {
 //        group = new RectangularGroup(AlienName.AUGUSTUS) ;
 //        group = new RectangularGroup(AlienName.OPHELIA) ;
 //        group = new RectangularGroup(AlienName.BLOODREX) ;
-          group = new Circle(200 ,500,500 , AlienName.BLOODREX) ;
+          group = new Circle(250 ,650,300 , AlienName.BLOODREX) ;
 
 
     }

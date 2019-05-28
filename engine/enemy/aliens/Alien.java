@@ -34,6 +34,14 @@ public class Alien {
         }
     }
 
+    public void setPolarCoordinates(int xc , int yc , int r , double teta){
+        this.r = r ;
+        this.teta = teta ;
+        this.x = (int)(xc + ((double)r)*Math.cos(teta)) ;
+        this.y = (int)(yc + ((double)r)*Math.sin(teta)) ;
+    }
+
+
     public void setV(int xc , int yc){
         if(this.getX()>xc && this.getY()<yc){
             this.setVx(-1);
@@ -65,6 +73,22 @@ public class Alien {
 
     public void setY(int y) {
         this.y = y;
+    }
+
+    public int getR() {
+        return r;
+    }
+
+    public void setR(int r) {
+        this.r = r;
+    }
+
+    public double getTeta() {
+        return teta;
+    }
+
+    public void setTeta(double teta) {
+        this.teta = teta;
     }
 
     public void setHeight(int height) {
