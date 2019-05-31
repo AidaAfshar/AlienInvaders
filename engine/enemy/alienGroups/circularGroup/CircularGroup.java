@@ -23,9 +23,9 @@ public class CircularGroup extends Group {
     }
 
     private void prepareCircles() {
-        circles.add(new Circle(100, 700, 250, Alien.alien[r.nextInt(4)]));
-        circles.add(new Circle(200, 700, 250, Alien.alien[r.nextInt(4)]));
-        circles.add(new Circle(300, 700, 250, Alien.alien[r.nextInt(4)]));
+        circles.add(new Circle(100, 730, 300, Alien.alien[r.nextInt(4)]));
+        circles.add(new Circle(200, 730, 300, Alien.alien[r.nextInt(4)]));
+        circles.add(new Circle(300, 730, 300, Alien.alien[r.nextInt(4)]));
 
         for(Circle circle : circles){
             aliens.addAll(circle.aliens);
@@ -41,6 +41,10 @@ public class CircularGroup extends Group {
 
 
     public void prepareEntrance() {
+
+        for (Circle circle : circles)
+            circle.enter();
+
         entranceTimer = new Timer(30, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -51,17 +55,12 @@ public class CircularGroup extends Group {
                     else i++;
                 }
 
-                if (i < 3)
-                    for (Circle circle : circles)
-                        if (!circle.reachedDestination)
-                            circle.enter();
-
-                else {
+                if (i == 3) {
                     groupReachedDestination = true;
                     entranceTimer.stop();
                 }
-            }
 
+            }
         });
 
     }

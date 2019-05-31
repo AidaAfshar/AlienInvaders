@@ -4,6 +4,9 @@ import engine.enemy.aliens.Alien;
 import engine.enemy.aliens.AlienName;
 import engine.enemy.aliens.Bloodrex;
 
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class Circle {
@@ -17,6 +20,8 @@ public class Circle {
     int count ;
 
     boolean reachedDestination = false ;
+
+    Timer entranceTimer ;
 
     public Circle(int r , int finalXC , int finalYC , AlienName name ){
         this.alien = Alien.diagnoseType(name) ;
@@ -48,17 +53,32 @@ public class Circle {
 
 
     public void enter() {
-        if (xc < finalXC || yc < finalYC) {
-            if (xc < finalXC) xc += 8;
-            if (yc < finalYC) yc += 6;
-            for (int i = 0; i < count; i++) {
-                Alien alien = aliens.get(i);
-                alien.setPolarCoordinates(xc, yc, r, alien.getTeta());
-            }
-        }else {
-            reachedDestination = true;
-        }
+        prepareEntrance();
+        entranceTimer.start();
     }
+
+    public void prepareEntrance() {
+        entranceTimer = new Timer(20, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                if (xc < finalXC || yc < finalYC) {
+                    if (xc < finalXC) xc += 10;
+                    if (yc < finalYC) yc += 6;
+                    for (int i = 0; i < count; i++) {
+                        Alien alien = aliens.get(i);
+                        alien.setPolarCoordinates(xc, yc, r, alien.getTeta());
+                    }
+                }else {
+                    reachedDestination = true;
+                }
+            }
+
+        });
+
+    }
+
+
 
 
     double dteta = Math.toRadians(1) ;
