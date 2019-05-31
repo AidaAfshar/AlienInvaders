@@ -1,12 +1,44 @@
 package engine.enemy.alienGroups.circularGroup;
 
 import engine.enemy.alienGroups.Group;
-import engine.enemy.aliens.AlienName;
+import engine.enemy.aliens.Alien;
 
-public class CircularGroup extends Circle{
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.Random;
 
 
-    public CircularGroup(int r, int xc, int yc, AlienName name) {
-        super(r, xc, yc, name);
+public class CircularGroup extends Group {
+
+    ArrayList<Circle> circles ;
+    Random r = new Random();
+
+    public CircularGroup() {
+        super();
+        initialize();
     }
+
+    public void initialize(){
+        circles = new ArrayList<>() ;
+        circles.add(new Circle(200 , 650 , 500 , Alien.alien[r.nextInt(4)])) ;
+        circles.add(new Circle(300 , 650 , 500 , Alien.alien[r.nextInt(4)])) ;
+        circles.add(new Circle(400 , 650 , 500 , Alien.alien[r.nextInt(4)])) ;
+    }
+
+    @Override
+    public void prepareEntrance() {
+
+    }
+
+    @Override
+    public void placeAliens() {
+
+    }
+
+    @Override
+    public void moveGroup() {
+
+    }
+
+
 }

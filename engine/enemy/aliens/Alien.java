@@ -11,6 +11,8 @@ public class Alien {
 
     //attributes:
 
+    public static AlienName[] alien = {AlienName.HESTER , AlienName.OPHELIA, AlienName.AUGUSTUS ,AlienName.BLOODREX };
+
     AlienName name ;
     int width ;
     int height ;

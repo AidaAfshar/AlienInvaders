@@ -11,6 +11,7 @@ import engine.enemy.alienAttack.Spike;
 import engine.enemy.alienGroups.Group;
 import engine.enemy.alienGroups.RectangularGroup;
 import engine.enemy.alienGroups.circularGroup.Circle;
+import engine.enemy.alienGroups.circularGroup.CircularGroup;
 import engine.enemy.aliens.Alien;
 import engine.enemy.aliens.AlienName;
 import engine.player.Player;
@@ -53,6 +54,7 @@ public class Administrator {
 
             @Override
             public void actionPerformed(ActionEvent e) {
+                group.moveGroup();
                 ship.shipAttack.attack();
                 ship.tempController.controlTemp(gamePanel);
                 detectCollisions();
@@ -90,7 +92,9 @@ public class Administrator {
 //        group = new RectangularGroup(AlienName.AUGUSTUS) ;
 //        group = new RectangularGroup(AlienName.OPHELIA) ;
 //        group = new RectangularGroup(AlienName.BLOODREX) ;
-          group = new Circle(250 ,650,300 , AlienName.BLOODREX) ;
+        group = new Circle(150 ,700,300 , AlienName.BLOODREX) ;
+//          group = new CircularGroup() ;
+
 
     }
 

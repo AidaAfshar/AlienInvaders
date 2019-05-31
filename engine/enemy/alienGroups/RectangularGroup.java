@@ -71,7 +71,7 @@ public class RectangularGroup extends Group {
 
     @Override
     public void renderAliens(Graphics g) {
-        m = 10 ;
+//        m = 10 ;
         super.renderAliens(g);
     }
 
