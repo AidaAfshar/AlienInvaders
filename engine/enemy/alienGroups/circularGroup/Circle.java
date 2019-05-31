@@ -1,37 +1,39 @@
 package engine.enemy.alienGroups.circularGroup;
 
-import engine.enemy.alienGroups.Group;
 import engine.enemy.aliens.Alien;
 import engine.enemy.aliens.AlienName;
 import engine.enemy.aliens.Bloodrex;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class Circle extends Group {
+public class Circle {
+
+    Alien alien ;
+    ArrayList<Alien> aliens;
 
     int r ;
     final int finalXC, finalYC;
     int xc , yc ;
-    int count  ;
+    int count ;
 
+    boolean reachedDestination = false ;
 
-
-    public Circle(int r , int xc , int yc , AlienName name ){
-        super(name);
+    public Circle(int r , int finalXC , int finalYC , AlienName name ){
+        this.alien = Alien.diagnoseType(name) ;
         this.r = r ;
-        this.finalXC = xc ;
-        this.finalYC = yc ;
+        this.finalXC = finalXC ;
+        this.finalYC = finalYC ;
         this.xc = -(200+2*r) ;
         this.yc = -(200+2*r) ;
-        count = (int) (2*Math.PI*r)/(alien.getWidth()+30) ;
-        aliens = new ArrayList<>();
-
+        this.count = (int) (2*Math.PI*r)/(alien.getWidth()+30) ;
         initialize();
     }
+
+    public void initialize() {
+        aliens = new ArrayList<>();
+        placeAliens();
+    }
+
 
     double teta = 0 ;
 
@@ -45,37 +47,24 @@ public class Circle extends Group {
     }
 
 
-    @Override
-    public void prepareEntrance() {
-        entranceTimer = new Timer(30, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-
-                if (xc < finalXC || yc < finalYC) {
-                    if (xc < finalXC) xc += 8;
-                    if (yc < finalYC) yc += 6;
-                    for (int i = 0; i < count; i++) {
-                        Alien alien = aliens.get(i);
-                        alien.setPolarCoordinates(xc, yc, r, alien.getTeta());
-                    }
-                }else {
-                    entranceTimer.stop();
-                    groupReachedDestination = true;
-                }
+    public void enter() {
+        if (xc < finalXC || yc < finalYC) {
+            if (xc < finalXC) xc += 8;
+            if (yc < finalYC) yc += 6;
+            for (int i = 0; i < count; i++) {
+                Alien alien = aliens.get(i);
+                alien.setPolarCoordinates(xc, yc, r, alien.getTeta());
             }
-
-        });
-
+        }else {
+            reachedDestination = true;
+        }
     }
-
 
 
     double dteta = Math.toRadians(1) ;
 
-    @Override
-    public void moveGroup() {
-        if(groupReachedDestination)
+    public void move() {
+        if(reachedDestination)
         for(Alien alien : aliens){
             alien.setTeta(alien.getTeta()+dteta);
             alien.setPolarCoordinates(finalXC, finalYC, alien.getR(), alien.getTeta());
@@ -84,8 +73,4 @@ public class Circle extends Group {
     }
 
 
-    @Override
-    public void renderAliens(Graphics g) {
-        super.renderAliens(g);
-    }
 }

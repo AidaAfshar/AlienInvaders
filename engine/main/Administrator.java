@@ -92,8 +92,8 @@ public class Administrator {
 //        group = new RectangularGroup(AlienName.AUGUSTUS) ;
 //        group = new RectangularGroup(AlienName.OPHELIA) ;
 //        group = new RectangularGroup(AlienName.BLOODREX) ;
-        group = new Circle(150 ,700,300 , AlienName.BLOODREX) ;
-//          group = new CircularGroup() ;
+//        group = new Circle(150 ,700,300 , AlienName.BLOODREX) ;
+          group = new CircularGroup() ;
 
 
     }

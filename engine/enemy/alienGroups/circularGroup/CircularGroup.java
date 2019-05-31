@@ -3,41 +3,75 @@ package engine.enemy.alienGroups.circularGroup;
 import engine.enemy.alienGroups.Group;
 import engine.enemy.aliens.Alien;
 
-import java.awt.*;
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Random;
 
 
 public class CircularGroup extends Group {
 
-    ArrayList<Circle> circles ;
+    ArrayList<Circle> circles = new ArrayList<>();
     Random r = new Random();
+
 
     public CircularGroup() {
         super();
+        prepareCircles();
         initialize();
     }
 
-    public void initialize(){
-        circles = new ArrayList<>() ;
-        circles.add(new Circle(200 , 650 , 500 , Alien.alien[r.nextInt(4)])) ;
-        circles.add(new Circle(300 , 650 , 500 , Alien.alien[r.nextInt(4)])) ;
-        circles.add(new Circle(400 , 650 , 500 , Alien.alien[r.nextInt(4)])) ;
+    private void prepareCircles() {
+        circles.add(new Circle(100, 700, 250, Alien.alien[r.nextInt(4)]));
+        circles.add(new Circle(200, 700, 250, Alien.alien[r.nextInt(4)]));
+        circles.add(new Circle(300, 700, 250, Alien.alien[r.nextInt(4)]));
+
+        for(Circle circle : circles){
+            aliens.addAll(circle.aliens);
+        }
     }
 
-    @Override
-    public void prepareEntrance() {
 
-    }
-
-    @Override
     public void placeAliens() {
+        for (Circle circle : circles) {
+            circle.placeAliens();
+        }
+    }
+
+
+    public void prepareEntrance() {
+        entranceTimer = new Timer(30, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                int i = 0;
+                for (Circle circle : circles) {
+                    if (!circle.reachedDestination) break;
+                    else i++;
+                }
+
+                if (i < 3)
+                    for (Circle circle : circles)
+                        if (!circle.reachedDestination)
+                            circle.enter();
+
+                else {
+                    groupReachedDestination = true;
+                    entranceTimer.stop();
+                }
+            }
+
+        });
 
     }
+
 
     @Override
     public void moveGroup() {
-
+        for (Circle circle : circles) {
+            circle.move();
+        }
     }
 
 
