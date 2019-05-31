@@ -34,16 +34,6 @@ public class RectangularGroup extends Group {
 
     }
 
-    @Override
-    public void moveGroup() {
-        for(Alien alien : aliens) {
-
-            if( alien.getX()<100 ) v=1 ;
-            else if (alien.getX()>Dim.MAX_X-alien.getWidth()-100) v=-1 ;
-
-            alien.setX( alien.getX() + v ) ;
-        }
-    }
 
     @Override
     public void prepareEntrance(){
@@ -57,12 +47,13 @@ public class RectangularGroup extends Group {
                         Alien alien = aliens.get(i);
                         int p = i % 10;
                         int q = i / 10;
-                        if (alien.getX() < 100 + p * (Xblank + alien.getWidth())) alien.setX(alien.getX() + 6);
-                        if (alien.getY() < 120 + q * (Yblank + alien.getHeight())) alien.setY(alien.getY() + 5);
+                        if (alien.getX() < 100 + p * (Xblank + alien.getWidth())) alien.setX(alien.getX() + 10);
+                        if (alien.getY() < 120 + q * (Yblank + alien.getHeight())) alien.setY(alien.getY() + 8);
                     }
-                else
+                else {
+                    groupReachedDestination = true ;
                     entranceTimer.stop();
-
+                }
             }
 
         });
@@ -70,8 +61,19 @@ public class RectangularGroup extends Group {
 
 
     @Override
+    public void moveGroup() {
+
+        for(Alien alien : aliens) {
+
+            if( alien.getX()<100 ) v=5 ;
+            else if (alien.getX()>Dim.MAX_X-alien.getWidth()-100) v=-5 ;
+
+            alien.setX( alien.getX() + v ) ;
+        }
+    }
+
+    @Override
     public void renderAliens(Graphics g) {
-//        m = 10 ;
         super.renderAliens(g);
     }
 
