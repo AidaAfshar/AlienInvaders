@@ -69,6 +69,7 @@ public class Circle {
         entranceTimer.start();
     }
 
+
     public void prepareEntrance() {
         entranceTimer = new Timer(20, new ActionListener() {
             @Override
