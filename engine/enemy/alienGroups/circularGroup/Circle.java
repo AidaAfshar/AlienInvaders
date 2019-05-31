@@ -18,6 +18,7 @@ public class Circle {
     final int finalXC, finalYC;
     int xc , yc ;
     int count ;
+    int vx ,vy ;
 
     boolean reachedDestination = false ;
 
@@ -28,15 +29,19 @@ public class Circle {
         this.r = r ;
         this.finalXC = finalXC ;
         this.finalYC = finalYC ;
-        this.xc = -(200+2*r) ;
+        this.xc = finalXC ;
         this.yc = -(200+2*r) ;
+        this.vx = 0 ;
+        this.vy = setV() ;
         this.count = (int) (2*Math.PI*r)/(alien.getWidth()+30) ;
+
         initialize();
     }
 
     public void initialize() {
         aliens = new ArrayList<>();
         placeAliens();
+        setV();
     }
 
 
@@ -51,6 +56,13 @@ public class Circle {
         }
     }
 
+    public int setV(){
+        if(r<=100) return 10 ;
+        if(r<=200) return 12 ;
+        if(r<=300) return 15 ;
+
+        return 20 ;
+    }
 
     public void enter() {
         prepareEntrance();
@@ -62,9 +74,9 @@ public class Circle {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                if (xc < finalXC || yc < finalYC) {
-                    if (xc < finalXC) xc += 10;
-                    if (yc < finalYC) yc += 6;
+                if (xc<finalXC || yc < finalYC) {
+                    xc += vx ;
+                    yc += vy ;
                     for (int i = 0; i < count; i++) {
                         Alien alien = aliens.get(i);
                         alien.setPolarCoordinates(xc, yc, r, alien.getTeta());
