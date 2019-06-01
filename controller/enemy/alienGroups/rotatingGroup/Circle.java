@@ -1,6 +1,9 @@
-package controller.enemy.alienGroups.circularGroup;
+package controller.enemy.alienGroups.rotatingGroup;
 
-import controller.enemy.aliens.*;
+import controller.enemy.aliens.Alien;
+import controller.enemy.aliens.AlienName;
+import controller.enemy.aliens.Bloodrex;
+import view.utilities.Dim;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -13,25 +16,24 @@ public class Circle {
     ArrayList<Alien> aliens;
 
     int r ;
-    final int finalXC, finalYC;
-    int xc , yc ;
+    final int initialR , finalR ;
+    final int xc , yc ;
     int count ;
-    int vx ,vy ;
+    int vr ;
 
     boolean reachedDestination = false ;
 
     Timer entranceTimer ;
 
-    public Circle(int r , int finalXC , int finalYC , AlienName name){
+
+    public Circle(int initialR ,int finalR , AlienName name){
         this.alien = Alien.diagnoseType(name) ;
-        this.r = r ;
-        this.finalXC = finalXC ;
-        this.finalYC = finalYC ;
-        this.xc = finalXC ;
-        this.yc = -(200+2*r) ;
-        this.vx = 0 ;
-        this.vy = setV() ;
-        this.count = (int) (2*Math.PI*r)/(alien.getWidth()+30) ;
+        this.initialR = initialR ;
+        this.finalR = finalR ;
+        this.r = initialR ;
+        this.xc = Dim.CENTER_X -80;
+        this.yc = Dim.CENTER_Y -80;
+        this.count = (int) (2*Math.PI*finalR)/(alien.getWidth()+80) ;
 
         initialize();
     }
@@ -39,7 +41,6 @@ public class Circle {
     public void initialize() {
         aliens = new ArrayList<>();
         placeAliens();
-        setV();
     }
 
 
@@ -47,19 +48,11 @@ public class Circle {
 
     public void placeAliens(){
         for(int i=0 ; i<count ; i++){
-            Alien alien  = new Ophelia(xc, yc,r,teta);
+            Alien alien  = new Bloodrex(xc, yc,initialR,teta);
             alien.setV(xc,yc);
             aliens.add(alien);
             teta += 2*Math.PI/count;
         }
-    }
-
-    public int setV(){
-        if(r<=100) return 10 ;
-        if(r<=200) return 12 ;
-        if(r<=300) return 15 ;
-
-        return 20 ;
     }
 
     public void enter() {
@@ -73,9 +66,8 @@ public class Circle {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                if (xc<finalXC || yc < finalYC) {
-                    xc += vx ;
-                    yc += vy ;
+                if (r > finalR) {
+                    r -= 15 ;
                     for (int i = 0; i < count; i++) {
                         Alien alien = aliens.get(i);
                         alien.setPolarCoordinates(xc, yc, r, alien.getTeta());
@@ -92,15 +84,15 @@ public class Circle {
 
 
 
-    double dteta = Math.toRadians(1.5) ;
+    double dteta = Math.toRadians(2) ;
 
     public void move() {
         if(reachedDestination)
-        for(Alien alien : aliens){
-            alien.setTeta(alien.getTeta()+dteta);
-            alien.setPolarCoordinates(finalXC, finalYC, alien.getR(), alien.getTeta());
-            alien.setV(this.finalXC, this.finalYC);
-        }
+            for(Alien alien : aliens){
+                alien.setTeta(alien.getTeta()+dteta);
+                alien.setPolarCoordinates(xc,yc, alien.getR(), alien.getTeta());
+                alien.setV(xc,yc);
+            }
     }
 
 

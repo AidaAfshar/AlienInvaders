@@ -29,7 +29,7 @@ public class RectangularGroup extends Group {
         for(int i=0 ; i<count ; i++) {
                 int p = i%10 ;
                 int q = i/10 ;
-                aliens.add(new Bloodrex(-1700 + p * (Xblank + alien.getWidth()), -480 + q * (Yblank + alien.getHeight())));
+                aliens.add(new Augustus(-1700 + p * (Xblank + alien.getWidth()), -480 + q * (Yblank + alien.getHeight())));
             }
 
     }
@@ -47,8 +47,8 @@ public class RectangularGroup extends Group {
                         Alien alien = aliens.get(i);
                         int p = i % 10;
                         int q = i / 10;
-                        if (alien.getX() < 100 + p * (Xblank + alien.getWidth())) alien.setX(alien.getX() + 10);
-                        if (alien.getY() < 120 + q * (Yblank + alien.getHeight())) alien.setY(alien.getY() + 8);
+                        if (alien.getX() < 100 + p * (Xblank + alien.getWidth())) alien.setX(alien.getX() + 4);
+                        if (alien.getY() < 120 + q * (Yblank + alien.getHeight())) alien.setY(alien.getY() + 4);
                     }
                 else {
                     groupReachedDestination = true ;
@@ -65,8 +65,8 @@ public class RectangularGroup extends Group {
 
         for(Alien alien : aliens) {
 
-            if( alien.getX()<100 ) v=5 ;
-            else if (alien.getX()>Dim.MAX_X-alien.getWidth()-100) v=-5 ;
+            if( alien.getX()<100 ) v=7 ;
+            else if (alien.getX()>Dim.MAX_X-alien.getWidth()-100) v=-7 ;
 
             alien.setX( alien.getX() + v ) ;
         }

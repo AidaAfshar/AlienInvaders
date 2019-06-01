@@ -9,8 +9,11 @@ import controller.attackTools.Bomb;
 import controller.attackTools.FlameBall;
 import controller.enemy.alienAttack.Spike;
 import controller.enemy.alienGroups.Group;
+import controller.enemy.alienGroups.RectangularGroup;
 import controller.enemy.alienGroups.circularGroup.CircularGroup;
+import controller.enemy.alienGroups.rotatingGroup.RotatingGroup;
 import controller.enemy.aliens.Alien;
+import controller.enemy.aliens.AlienName;
 import controller.player.Player;
 import controller.ship.SpaceShip;
 import view.imaging.ImageLoader;
@@ -85,8 +88,10 @@ public class Administrator {
     }
 
     private void prepareEnemy() {
-//        group = new RectangularGroup(AlienName.BLOODREX) ;
-        group = new CircularGroup() ;
+//        group = new RectangularGroup(AlienName.AUGUSTUS) ;
+//       group = new CircularGroup() ;
+//        group = new RotatingGroup() ;
+
 
     }
 
