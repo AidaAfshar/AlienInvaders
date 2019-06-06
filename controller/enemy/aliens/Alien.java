@@ -96,6 +96,14 @@ public class Alien {
         return nextY;
     }
 
+    public void setNextX(int nextX) {
+        this.nextX = nextX;
+    }
+
+    public void setNextY(int nextY) {
+        this.nextY = nextY;
+    }
+
     public boolean reachedNextX(){
         if(x<nextX+20 && x>nextX-20)
             return true ;

@@ -90,7 +90,7 @@ public class Administrator {
 //       group = new RectangularGroup(AlienName.AUGUSTUS) ;
 //       group = new CircularGroup() ;
 //       group = new RotatingGroup() ;
-         group = new RandomGroup() ;
+         group = new RandomGroup(ship) ;
 
     }
 

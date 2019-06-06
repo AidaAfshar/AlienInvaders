@@ -2,6 +2,7 @@ package controller.enemy.alienGroups;
 
 import controller.enemy.aliens.Alien;
 import controller.enemy.aliens.Augustus;
+import controller.ship.SpaceShip;
 import view.utilities.Dim;
 
 import javax.swing.*;
@@ -11,11 +12,14 @@ import java.awt.event.ActionListener;
 
 public class RandomGroup extends Group{
 
+    SpaceShip ship ;
+
     Timer moveTimer ;
     Timer chooserTimer ;
 
 
-    public RandomGroup(){
+    public RandomGroup(SpaceShip ship){
+        this.ship = ship ;
         this.count = 10 ;
         initialize();
     }
@@ -31,6 +35,7 @@ public class RandomGroup extends Group{
     public void placeAliens() {
         for(int i=0 ; i<count ;i++){
             aliens.add(new Augustus(random.nextInt((int)Dim.MAX_X-100),random.nextInt((int)Dim.MAX_Y-100)));
+            aliens.get(i).produceCoordinate();
         }
     }
 
@@ -41,19 +46,32 @@ public class RandomGroup extends Group{
 
     @Override
     public void moveGroup() {
+        for(Alien alien : aliens) {
+            if (alien.isInside()) {
+                int dx = (alien.getNextX() - alien.getX()) / 300;
+                int dy = (alien.getNextY() - alien.getY()) / 300;
+                if (!alien.reachedNextDestination()) {
+                    if (!alien.reachedNextX()) alien.setX(alien.getX() + dx);
+                    if (!alien.reachedNextY()) alien.setY(alien.getY() + dy);
+                } else {
+                    alien.produceCoordinate();
+                }
+            }
 
+        }
     }
 
 
     public void prepareChooserTimer(){
-        chooserTimer = new Timer(2000, new ActionListener() {
+        chooserTimer = new Timer(3000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(groupIsDead()) chooserTimer.stop();
                 Alien randomAlien = getRandomAlien();
-                randomAlien.produceCoordinate();
-                int dx = (randomAlien.getNextX() - randomAlien.getX())/300;
-                int dy = (randomAlien.getNextY() - randomAlien.getY())/300;
+                randomAlien.setNextX(ship.getX());
+                randomAlien.setNextY(ship.getY());
+                int dx = ship.getX() - randomAlien.getX() /300;
+                int dy = ship.getY() - randomAlien.getY() /300;
                 moveRandomAlien(randomAlien,dx,dy);
             }
         });
@@ -67,20 +85,18 @@ public class RandomGroup extends Group{
         else return getRandomAlien() ;
     }
 
-    public void moveRandomAlien(Alien randomAlien , int dx , int dy) {
-        moveTimer = new Timer(10, new ActionListener() {
+    public void moveRandomAlien(Alien randomAlien ,int dx , int dy) {
+        moveTimer = new Timer(50, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(randomAlien.isInside()) {
+                if (randomAlien.isInside()) {
                     if (!randomAlien.reachedNextDestination()) {
                         if (!randomAlien.reachedNextX()) randomAlien.setX(randomAlien.getX() + dx);
                         if (!randomAlien.reachedNextY()) randomAlien.setY(randomAlien.getY() + dy);
-                    } else {
-                        moveTimer.stop();
-                    }
-                }else
-                 moveTimer.stop();
 
+                    }else
+                        moveTimer.stop();
+                }
             }
 
         });
