@@ -238,5 +238,12 @@ public class Alien {
         alive = false ;
     }
 
+    public boolean isInside(){
+        if(x<0 || x> Dim.MAX_X) return false ;
+        if(y<0 || y> Dim.MAX_Y) return false ;
+
+        return true ;
+    }
+
 
 }
