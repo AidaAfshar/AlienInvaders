@@ -2,28 +2,27 @@ package controller.enemy.aliens;
 
 import java.awt.Graphics;
 import java.util.ArrayList;
+import java.util.Random;
 
 import view.imaging.Image;
 import view.imaging.ImageLoader;
+import view.utilities.Dim;
 
 
 public class Alien {
 
-    //attributes:
 
     public static AlienName[] alien = {AlienName.HESTER , AlienName.OPHELIA, AlienName.AUGUSTUS ,AlienName.BLOODREX };
 
     AlienName name ;
+    ArrayList<Image> image = new ArrayList<>() ;
     int width ;
     int height ;
-    int x ; int y ;
-    int r ; double teta ;
+    int x , y ;
     int vx , vy ;
     boolean alive = true ;
-    ArrayList<Image> image = new ArrayList<>() ;
-    int j=0 ;
 
-    //methods:
+
 
     public Alien(){
 
@@ -32,9 +31,15 @@ public class Alien {
     public Alien(int x, int y) {
         this.x = x ;
         this.y = y ;
-
     }
 
+    // POLAR COORDINATES :
+
+    //attributes:
+
+    int r ; double teta ;
+
+    //methods:
 
     public Alien(int xc , int yc , int r, double teta){
         this.r = r ;
@@ -43,13 +48,6 @@ public class Alien {
 
     }
 
-
-    public void setImages(String... address) {
-        for(int i=0 ; i<address.length ; i++) {
-            image.add(new Image(address[i]));
-            image.get(i).setImage(ImageLoader.Load(image.get(i).getAddress()));
-        }
-    }
 
     public void setPolarCoordinates(int xc , int yc , int r , double teta){
         this.r = r ;
@@ -75,6 +73,90 @@ public class Alien {
         }
     }
 
+    //RANDOM COORDINATES:
+
+    //attributes:
+
+    Random random = new Random();
+    int nextX ,nextY;
+
+    //methods:
+
+
+    public void produceCoordinate(){
+        nextX = random.nextInt(Dim.MAX_X);
+        nextY = random.nextInt(Dim.MAX_Y);
+    }
+
+    public int getNextX() {
+        return nextX;
+    }
+
+    public int getNextY() {
+        return nextY;
+    }
+
+    public boolean reachedNextX(){
+        if(x<nextX+20 && x>nextX-20)
+            return true ;
+
+        return false ;
+    }
+
+    public boolean reachedNextY(){
+        if(y<nextY+20 && y>nextY-20)
+            return true ;
+
+        return false ;
+    }
+
+    public boolean reachedNextDestination(){
+        if(this.reachedNextX() && this.reachedNextY())
+            return true ;
+        else
+            return false ;
+    }
+
+
+    //----
+
+
+    public void setImages(String... address) {
+        for(int i=0 ; i<address.length ; i++) {
+            image.add(new Image(address[i]));
+            image.get(i).setImage(ImageLoader.Load(image.get(i).getAddress()));
+        }
+    }
+
+
+    int i=0 ;
+    int j=0 ;
+
+    public void draw(Graphics g) {
+            g.drawImage(image.get(j).getImage(), x, y, width, height, null);
+
+             if (i % 25 < 12)
+                j = 0;
+            else
+                j = 1;
+            i++;
+    }
+
+    public static  Alien diagnoseType(AlienName alienName) {
+        if(alienName.equals(AlienName.HESTER))
+            return new Hester();
+        else if(alienName.equals(AlienName.OPHELIA))
+            return new Ophelia();
+        else if(alienName.equals(AlienName.AUGUSTUS))
+            return new Augustus();
+        else if(alienName.equals(AlienName.BLOODREX))
+            return new Bloodrex();
+
+        return null ;
+
+    }
+
+    //getters & setters :
 
     public int getX() {
         return x;
@@ -152,35 +234,8 @@ public class Alien {
         return alive;
     }
 
-
     public void gotHit() {
         alive = false ;
-    }
-
-    public static  Alien diagnoseType(AlienName alienName) {
-        if(alienName.equals(AlienName.HESTER))
-            return new Hester();
-        else if(alienName.equals(AlienName.OPHELIA))
-            return new Ophelia();
-        else if(alienName.equals(AlienName.AUGUSTUS))
-            return new Augustus();
-        else if(alienName.equals(AlienName.BLOODREX))
-            return new Bloodrex();
-
-        return null ;
-
-    }
-
-    int i=0 ;
-
-    public void draw(Graphics g) {
-            g.drawImage(image.get(j).getImage(), x, y, width, height, null);
-
-             if (i % 25 < 12)
-                j = 0;
-            else
-                j = 1;
-            i++;
     }
 
 

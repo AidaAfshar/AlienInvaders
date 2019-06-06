@@ -9,6 +9,7 @@ import controller.attackTools.Bomb;
 import controller.attackTools.FlameBall;
 import controller.enemy.alienAttack.Spike;
 import controller.enemy.alienGroups.Group;
+import controller.enemy.alienGroups.RandomGroup;
 import controller.enemy.alienGroups.RectangularGroup;
 import controller.enemy.alienGroups.circularGroup.CircularGroup;
 import controller.enemy.alienGroups.rotatingGroup.RotatingGroup;
@@ -44,8 +45,6 @@ public class Administrator {
         prepareEnemy();
         prepareTimer();
         timer.start();
-
-
     }
 
 
@@ -88,10 +87,10 @@ public class Administrator {
     }
 
     private void prepareEnemy() {
-//        group = new RectangularGroup(AlienName.AUGUSTUS) ;
+//       group = new RectangularGroup(AlienName.AUGUSTUS) ;
 //       group = new CircularGroup() ;
-//        group = new RotatingGroup() ;
-
+//       group = new RotatingGroup() ;
+         group = new RandomGroup() ;
 
     }
 

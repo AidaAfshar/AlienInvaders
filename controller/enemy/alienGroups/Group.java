@@ -36,7 +36,6 @@ public abstract class Group {
         placeAliens();
         prepareEntrance();
         entranceTimer.start() ;
-
     }
 
     public abstract void placeAliens() ;
