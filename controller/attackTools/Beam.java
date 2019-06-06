@@ -6,15 +6,17 @@ import view.imaging.Image;
 import view.screen.GamePanel;
 
 
-public class Beam extends Image{
+public abstract class Beam extends Image{
 
-    int x ;
-    int y ;
-    int height ;
-    int width ;
-    int halfHeight ;
-    int halfWidth ;
-    public boolean throwPermission = false ;
+    int power ;
+    int tempUp ;
+    int v ;
+    int x0 , y0;
+    int x , y ;
+    int width ,height ;
+    int halfWidth ,halfHeight ;
+    boolean throwPermission = false ;
+
 
     public Beam(String address) {
         super(address);
@@ -27,8 +29,15 @@ public class Beam extends Image{
     }
 
     public void initialize() {
+
     }
 
+
+    public void moveBeam(){
+        y-= v ;
+        if(y<-20)
+            setThrowPermission(false);
+    }
 
     public void setDimensions(int width ,int height) {
         this.width = width ;
@@ -43,9 +52,6 @@ public class Beam extends Image{
         this.halfWidth = (int) width/2 ;
         this.halfHeight = (int) height/2 ;
 
-//		this.x = GamePanel.ml.x - this.halfWidth ;
-//		this.y = GamePanel.ml.y - this.halfHeight ;
-
         this.x = GamePanel.ml.x - this.halfWidth ;
         this.y = GamePanel.ml.y - this.halfHeight-40 ;
 
@@ -55,6 +61,8 @@ public class Beam extends Image{
     public void draw(Graphics g) {
         g.drawImage(this.getImage(),this.x,this.y,this.width,this.height, null);
     }
+
+    //getters & setters :
 
     public int getX() {
         return x;
@@ -72,4 +80,51 @@ public class Beam extends Image{
         this.y = y;
     }
 
+    public int getWidth() {
+        return width;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    public boolean getThrowPermission(){
+        return throwPermission ;
+    }
+
+    public void setThrowPermission(boolean b){
+        throwPermission = b ;
+    }
+
+    public int getPower() {
+        return power;
+    }
+
+    public void setPower(int power) {
+        this.power = power;
+    }
+
+    public int getTempUp() {
+        return tempUp;
+    }
+
+    public void setTempUp(int tempUp) {
+        this.tempUp = tempUp;
+    }
+
+    public int getV() {
+        return v;
+    }
+
+    public void setV(int v) {
+        this.v = v;
+    }
 }

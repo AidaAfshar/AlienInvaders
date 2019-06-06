@@ -8,8 +8,7 @@ import java.util.TimerTask;
 
 import javax.swing.Timer;
 
-import controller.attackTools.Bomb;
-import controller.attackTools.FlameBall;
+import controller.attackTools.*;
 import view.imaging.Image;
 import view.screen.BeamMouseListener;
 import view.screen.GamePanel;
@@ -140,8 +139,21 @@ public class SpaceShip extends Image{
         this.height = height;
     }
 
+    public int getX() {
+        return x;
+    }
 
+    public void setX(int x) {
+        this.x = x;
+    }
 
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
 
 //	public void save(PrintStream p) {
 //		Gson gson = new Gson();
@@ -157,13 +169,12 @@ public class SpaceShip extends Image{
 
     public class SpaceShipAttack{
 
-        ArrayList<FlameBall> flameBalls = new ArrayList<FlameBall>();
-        ArrayList<Bomb> bombs = new ArrayList<Bomb>();
+        ArrayList<Bomb> bombs = new ArrayList<>(3);
+        ArrayList<Beam> beams = new ArrayList<>();
+//        ArrayList<FireGlobe> fireGlobe = new ArrayList<>();
+//        ArrayList<NitroGlobe> nitroGlobe = new ArrayList<>();
 
         Timer beamTimer ;
-        Timer explosionTimer ;
-
-
 
         public SpaceShipAttack() {
             initialize();
@@ -180,15 +191,15 @@ public class SpaceShip extends Image{
         }
 
         private void singleBeamAttack() {
-            if(bml.mousePressed_flameBall) {
-                produceFlameBall();
-                bml.mousePressed_flameBall = false ;
+            if(bml.mousePressed_beam) {
+                produceBeam();
+                bml.mousePressed_beam = false ;
             }
         }
 
-        public void produceFlameBall() {
-            flameBalls.add(new FlameBall(bml.x , bml.y));
-            SpaceShip.this.tempController.increaseTemprature(); ;
+        public void produceBeam() {
+            beams.add(new FireGlobe(bml.x , bml.y));
+            SpaceShip.this.tempController.increaseTemprature();
         }
 
         private void multiBeamsAttack() {
@@ -232,29 +243,25 @@ public class SpaceShip extends Image{
 
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    produceFlameBall();
+                    produceBeam();
                 }
 
             });
         }
 
 
-        public void updateFlameBallsList() {
-            //TODO
-        }
-
         public void renderAttack(Graphics g) {
-            renderFlameBallAttack(g);
+            renderBeamAttack(g);
             renderBombAttack(g);
         }
 
 
-        public void renderFlameBallAttack(Graphics g) {
-            if(this.flameBalls.size() != 0) {
-                for(FlameBall beam : this.flameBalls) {
+        public void renderBeamAttack(Graphics g) {
+            if(this.beams.size() != 0) {
+                for(Beam beam : this.beams) {
                     if(beam.getThrowPermission()) {
                         beam.draw(g);
-                        beam.moveFlameBall();
+                        beam.moveBeam();
                     }
 
                 }
@@ -264,7 +271,7 @@ public class SpaceShip extends Image{
         public void renderBombAttack(Graphics g) {
             if(this.bombs.size() != 0) {
                 for(Bomb bomb : this.bombs) {
-                    if(bomb.throwPermission) {
+                    if(bomb.getThrowPermission()) {
                         bomb.draw(g);
                         bomb.moveBomb();
                     }else if(bomb.explode) {
@@ -277,8 +284,8 @@ public class SpaceShip extends Image{
             }
         }
 
-        public ArrayList<FlameBall> getFlameBalls() {
-            return flameBalls;
+        public ArrayList<Beam> getBeams() {
+            return beams;
         }
 
         public ArrayList<Bomb> getBombs() {
@@ -307,7 +314,7 @@ public class SpaceShip extends Image{
                 if(this.temperature>=100) {
                     this.tempInSafeRange=false ;
                     this.temperature=0 ;
-                    bml.mousePressed_flameBall=false ;
+                    bml.mousePressed_beam =false ;
                     bml.pressDown = false ;
                     gamePanel.removeMouseListener(gamePanel.bml);
                     gamePanel.remove(gamePanel.tempBar);
@@ -341,7 +348,7 @@ public class SpaceShip extends Image{
                 @Override
                 public void run() {
 
-                    if(bml.mousePressed_flameBall==false && bml.pressDown ==false) {
+                    if(bml.mousePressed_beam ==false && bml.pressDown ==false) {
                         SpaceShipTempController.this.decreaseTemprature();
                         if(SpaceShipTempController.this.temperature < 0) {
                             SpaceShipTempController.this.temperature = 0 ;
@@ -363,30 +370,6 @@ public class SpaceShip extends Image{
 
     }// end of SpaceShipTempController sub class
 
-
-    public int getX() {
-        return x;
-    }
-
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
-    }
-
-    public SpaceShipTempController getTempController() {
-        return tempController;
-    }
-
-    public void setTempController(SpaceShipTempController tempController) {
-        this.tempController = tempController;
-    }
 
 
 }

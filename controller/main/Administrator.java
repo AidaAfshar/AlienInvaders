@@ -5,14 +5,12 @@ import java.awt.event.ActionListener;
 
 import javax.swing.Timer;
 
+import controller.attackTools.Beam;
 import controller.attackTools.Bomb;
 import controller.attackTools.FlameBall;
 import controller.enemy.alienAttack.Spike;
 import controller.enemy.alienGroups.Group;
-import controller.enemy.alienGroups.RandomGroup;
 import controller.enemy.alienGroups.RectangularGroup;
-import controller.enemy.alienGroups.circularGroup.CircularGroup;
-import controller.enemy.alienGroups.rotatingGroup.RotatingGroup;
 import controller.enemy.aliens.Alien;
 import controller.enemy.aliens.AlienName;
 import controller.player.Player;
@@ -87,11 +85,10 @@ public class Administrator {
     }
 
     private void prepareEnemy() {
-//       group = new RectangularGroup(AlienName.AUGUSTUS) ;
+       group = new RectangularGroup(AlienName.AUGUSTUS) ;
 //       group = new CircularGroup() ;
 //       group = new RotatingGroup() ;
-         group = new RandomGroup(ship) ;
-
+//       group = new RandomGroup(ship) ;
     }
 
 
@@ -119,14 +116,14 @@ public class Administrator {
     }
     private void beamAlienCollision(){
         for(int i=0 ; i<group.getAliens().size() ; i++) {
-            for(int j=0 ; j<ship.shipAttack.getFlameBalls().size() ; j++) {
+            for(int j = 0; j<ship.shipAttack.getBeams().size() ; j++) {
                 Alien alien = group.getAliens().get(i);
-                FlameBall flameBall = ship.shipAttack.getFlameBalls().get(j);
-                if(flameBall.getThrowPermission()==true) {
-                    double d = Math.sqrt(Math.pow(alien.getX()-flameBall.getX(),2)+Math.pow(alien.getY()-flameBall.getY(),2)) ;
+                Beam beam = ship.shipAttack.getBeams().get(j);
+                if(beam.getThrowPermission()==true) {
+                    double d = Math.sqrt(Math.pow(alien.getX()-beam.getX(),2)+Math.pow(alien.getY()-beam.getY(),2)) ;
                     if(alien.isAlive() && d<alien.getHeight()) {
                         alien.gotHit();
-                        flameBall.setThrowPermission(false);
+                        beam.setThrowPermission(false);
                     }
                 }
             }

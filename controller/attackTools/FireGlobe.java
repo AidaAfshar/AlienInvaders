@@ -2,13 +2,13 @@ package controller.attackTools;
 
 import view.imaging.ImageLoader;
 
-public class FlameBall extends Beam {
+public class FireGlobe extends Beam {
 
-    static String flameBallAddress = "pictures/beams/flameball.png" ;
+    static String fireGlobeAddress = "pictures/beams/fire.png" ;
 
 
-    public FlameBall(int x0, int y0) {
-        super(flameBallAddress);
+    public FireGlobe(int x0, int y0) {
+        super(fireGlobeAddress);
         this.x0 = x0 ;
         this.y0 = y0 ;
         initialize();
@@ -16,15 +16,14 @@ public class FlameBall extends Beam {
 
     public void initialize() {
         this.setImage(ImageLoader.Load(this.getAddress()));
-        setWidth(25) ;
-        setHeight(80) ;
+        setWidth(120) ;
+        setHeight(120) ;
         setV(7);
-        setPower(1);
-        setTempUp(5);
+        setPower(2);
+        setTempUp(10);
         setThrowPermission(true);
         this.setDimensions();
     }
-
 
 
 }

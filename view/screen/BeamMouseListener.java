@@ -8,11 +8,12 @@ public class BeamMouseListener implements MouseListener{
     public int x = 0 ;
     public int y = 0 ;
     public boolean pressDown = false ;
-    public boolean mousePressed_flameBall = false ;
+    public boolean mousePressed_beam = false ;
     public boolean mousePressed_bomb = false ;
 
     @Override
     public void mouseClicked(MouseEvent e) {
+
     }
 
     @Override
@@ -21,7 +22,7 @@ public class BeamMouseListener implements MouseListener{
         if(e.getButton() == MouseEvent.BUTTON1) {
             x = e.getX();
             y = e.getY();
-            mousePressed_flameBall = true ;
+            mousePressed_beam = true ;
         }
         if(e.getButton()== MouseEvent.BUTTON3) {
             x = e.getX();
