@@ -17,15 +17,12 @@ import view.utilities.Dim;
 public class EscapePanel extends JPanel {
 
     Background background1 = new Background("pictures/backgrounds/background1.png");
+    ContentPane contentPane ;
+
     JButton resumeButton;
     JButton exitButton;
 
-    ContentPane contentPane ;
-
-    boolean flag = false ;
-    boolean resumeGameSelected = false ;
-
-    MyKeyListener kl = new MyKeyListener();
+//    MyKeyListener kl ;
 
 
     public EscapePanel(ContentPane contentPane) {
@@ -38,7 +35,8 @@ public class EscapePanel extends JPanel {
     public void initialize() {
         this.setLayout(null);
         this.setBackground(Color.red);
-        this.addKeyListener(kl);
+//        kl = new MyKeyListener(contentPane);
+//        this.addKeyListener(kl);
         prepareBackground();
         prepareButtons() ;
     }
@@ -57,8 +55,7 @@ public class EscapePanel extends JPanel {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                //			flag = true ;
-                resumeGameSelected = true ;
+                contentPane.resumeGameFromEscapePanel();
             }
 
         });

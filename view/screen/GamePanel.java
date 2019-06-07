@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.TimerTask;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -24,13 +25,14 @@ public class GamePanel extends JPanel {
     //attributes:
 
     Administrator admin ;
+    ContentPane contentPane ;
 
     Background background1 = new Background("pictures/backgrounds/background1.png");
 
     public static MyMouseListener ml = new MyMouseListener();
-    public BeamMouseListener bml = new BeamMouseListener();
-    MyKeyListener kl = new MyKeyListener();
-    static Timer timer ;
+    public static BeamMouseListener bml = new BeamMouseListener();
+    MyKeyListener kl ;
+    Timer timer ;
 
 
     JLabel coinLabel ;
@@ -45,16 +47,10 @@ public class GamePanel extends JPanel {
     //methods:
 
 
-
-    public GamePanel() {
+    public GamePanel(ContentPane contentPane , Administrator admin) {
         super();
-        initialize();
-    }
-
-
-    public GamePanel(SpaceShip spaceShip,Player player) {
-        super();
-        admin = new Administrator(this);
+        this.contentPane = contentPane ;
+        this.admin = admin;
         initialize();
     }
 
@@ -65,6 +61,7 @@ public class GamePanel extends JPanel {
         this.addMouseMotionListener(ml);
         this.addMouseListener(ml);
         this.addMouseListener(bml);
+        kl = new MyKeyListener(contentPane);
         this.addKeyListener(kl);
         this.setFocusable(true);
         prepareBackground();
@@ -79,6 +76,8 @@ public class GamePanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 repaint();
+                controlTemp();
+                updateValues();
             }
 
         });
@@ -129,6 +128,43 @@ public class GamePanel extends JPanel {
         add(tempBar);
         add(tempLabel);
     }
+
+
+
+    public void controlTemp() {
+        if(admin.getShip().isTempInSafeRange()) {
+            if(admin.getShip().getTemperature()>=100) {
+                admin.getShip().setTempInSafeRange(false);
+                admin.getShip().setTemperature(0);
+                bml.mousePressed_beam =false ;
+                bml.pressDown = false ;
+                removeMouseListener(bml);
+                remove(getTempBar());
+                add(getRestLabel());
+                evokeRestTimer();
+            }
+        }
+
+    }
+
+    java.util.Timer restTimer ;
+
+
+    public void evokeRestTimer() {
+        restTimer = new java.util.Timer();
+        restTimer.schedule(new TimerTask() {
+
+            @Override
+            public void run() {
+                addMouseListener(bml);
+                remove(getRestLabel());
+                add(getTempBar());
+                admin.getShip().setTempInSafeRange(true);
+            }
+
+        },4000);
+    }
+
 
 
     public void prepareLabels() {
@@ -184,13 +220,21 @@ public class GamePanel extends JPanel {
         add(nameLabel);
     }
 
+    public void updateValues() {
+        getTempBar().setValue(admin.getShip().getTemperature());
+        getBombLabel().setText("         Bomb : " + admin.getPlayer().getBombCount());
+        getPowerLabel().setText("      Power : " + admin.getPlayer().getPower());
+        getCoinLabel().setText("   Coin : " + admin.getPlayer().getCoin());
+    }
+
+
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         background1.draw(g);
         admin.getShip().draw(g);
         admin.getShip().renderAttack(g);
-        admin.group.renderGroup(g);
+        admin.getGroup().renderGroup(g);
     }
 
 

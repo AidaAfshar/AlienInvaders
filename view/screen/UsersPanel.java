@@ -21,11 +21,11 @@ import view.utilities.Dim;
 public class UsersPanel extends JPanel {
 
     Background background3 = new Background("pictures/backgrounds/background3.png");
-    boolean flag = false ;
+    ContentPane contentPane ;
 
     ArrayList<UserLabel> playersLabel = new ArrayList<UserLabel>(5);
 
-    Player chosenPlayer ;
+    String playerName ;
 
     JButton deleteButton ;
     JButton addButton ;
@@ -33,8 +33,9 @@ public class UsersPanel extends JPanel {
     JOptionPane optionPane ;
     JLabel label ;
 
-    public UsersPanel() {
+    public UsersPanel(ContentPane contentPane){
         super();
+        this.contentPane = contentPane ;
         initialize();
     }
 
@@ -112,21 +113,22 @@ public class UsersPanel extends JPanel {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                prepareChosenPlayer() ;
-                flag = true ;
-
+                contentPane.setPlayer(getPlayersName());
+                contentPane.afterUsersPanel();
             }
 
         });
 
     }
 
-    public void prepareChosenPlayer() {
+    public String getPlayersName() {
         for(int i=0 ; i<playersLabel.size();i++) {
             if(playersLabel.get(i).chosen) {
-                chosenPlayer = new Player(playersLabel.get(i).name);
+                playerName = playersLabel.get(i).name ;
             }
         }
+
+        return playerName ;
     }
 
     public void removeUser(String showInputDialog) {

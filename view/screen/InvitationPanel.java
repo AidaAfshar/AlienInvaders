@@ -18,12 +18,14 @@ import view.utilities.Dim;
 public class InvitationPanel extends JPanel {
 
     Background background4 = new Background("pictures/backgrounds/background4.png");
+    ContentPane contentPane ;
+
     JLabel label ;
     JButton button ;
-    boolean flag = false ;
 
-    public InvitationPanel() {
+    public InvitationPanel(ContentPane contentPane) {
         super();
+        this.contentPane = contentPane ;
         initialize();
     }
 
@@ -57,7 +59,7 @@ public class InvitationPanel extends JPanel {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                flag = true ;
+                contentPane.afterInvitationPanel();
             }
 
         });

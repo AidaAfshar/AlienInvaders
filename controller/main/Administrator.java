@@ -20,7 +20,6 @@ import view.screen.GamePanel;
 
 public class Administrator {
 
-    GamePanel gamePanel ;
     SpaceShip ship ;
 
     Player player ;
@@ -29,14 +28,13 @@ public class Administrator {
     Timer timer ;
 
 
-    public Administrator(GamePanel gamePanel) {
-        this.gamePanel = gamePanel ;
+    public Administrator(Player player) {
+        this.player = player ;
         initialize();
     }
 
 
     private void initialize(){
-//        preparePlayer();
         prepareEnemy();
         prepareShip();
         prepareTimer();
@@ -44,9 +42,6 @@ public class Administrator {
     }
 
 
-    public void preparePlayer(String name){
-        player = new Player(name);
-    }
 
     private void prepareEnemy() {
         group = new RectangularGroup(AlienName.AUGUSTUS) ;
@@ -56,8 +51,7 @@ public class Administrator {
     }
 
     public void prepareShip() {
-        ship = new SpaceShip();
-        ship.bml = gamePanel.bml ;
+        ship = new SpaceShip(player);
         ship.setWidth(200);
         ship.setHeight(180) ;
         ship.setDimensions();
@@ -72,12 +66,9 @@ public class Administrator {
             public void actionPerformed(ActionEvent e) {
                 group.moveGroup();
                 ship.attack();
-                ship.controlTemp(gamePanel);
                 detectCollisions();
                 bombExplosion();
                 group.produceSpike();
-                updateValues();
-
             }
 
         });
@@ -109,7 +100,7 @@ public class Administrator {
                 if(spike.getX()>ship.getX() && spike.getX()<ship.getX()+ship.getWidth()) {
                     if(spike.getY()>ship.getY() && spike.getY()<ship.getY()+ship.getHeight()) {
                         spike.setCollided(true);
-                        ship.setPower(ship.getPower()-1);
+                        player.setPower(player.getPower()-1);
                     }
                 }
 
@@ -155,24 +146,11 @@ public class Administrator {
 
 
 
-    public void updateValues() {
-        gamePanel.tempBar.setValue(ship.getTemperature());
-        gamePanel.bombLabel.setText("         Bomb : " + ship.getBombCount());
-        gamePanel.powerLabel.setText("      Power : " + ship.getPower());
-        gamePanel.coinLabel.setText("   Coin : " + ship.getCoin());
-    }
 
 
     //getters & setters :
 
 
-    public GamePanel getGamePanel() {
-        return gamePanel;
-    }
-
-    public void setGamePanel(GamePanel gamePanel) {
-        this.gamePanel = gamePanel;
-    }
 
     public SpaceShip getShip() {
         return ship;
@@ -188,5 +166,9 @@ public class Administrator {
 
     public void setPlayer(Player player) {
         this.player = player;
+    }
+
+    public Group getGroup() {
+        return group;
     }
 }

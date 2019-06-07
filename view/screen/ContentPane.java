@@ -8,6 +8,8 @@ import java.awt.event.ActionListener;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+import controller.main.Administrator;
+import controller.player.Player;
 import model.fileManagement.FileManager;
 import controller.ship.SpaceShip;
 
@@ -22,9 +24,10 @@ public class ContentPane extends JPanel {
     GamePanel gamePanel ;
     EscapePanel escapePanel ;
 
-    FileManager fileManager ;
+    Player player ;
+    Administrator admin ;
 
-    Timer timer ;
+    FileManager fileManager ;
 
 
     public ContentPane() {
@@ -33,22 +36,17 @@ public class ContentPane extends JPanel {
     }
 
     public void initialize() {
-        this.setLayout(new BorderLayout());
-        this.setBackground(Color.blue);
-
         fileManager = new FileManager();
-
-        invitationPanel= new InvitationPanel();
-        this.add(invitationPanel);
-        usersPanel = new UsersPanel();
-        escapePanel = new EscapePanel(this);
-
-        prepareTimer();
-        timer.start();
-
-
+        setLayout(new BorderLayout());
+        setBackground(Color.blue);
+        preparePanels() ;
+        add(invitationPanel);
     }
 
+    public void preparePanels(){
+        invitationPanel= new InvitationPanel(this);
+        escapePanel = new EscapePanel(this);
+    }
 
     public void saveState() {
 //		fileManager.save(gamePanel.ship1);
@@ -58,71 +56,69 @@ public class ContentPane extends JPanel {
 //		FileManager.load();
 //	}
 
-    public void prepareTimer() {
-        timer = new Timer(500,new ActionListener() {
 
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                if(invitationPanel.flag) {
-                    ContentPane.this.invitationPanel.setVisible(false);
-                    ContentPane.this.add(usersPanel);
-                    invitationPanel.flag = false ;
-                }
-
-                if(usersPanel.flag) {
-                    menuPanel = new MenuPanel(usersPanel.chosenPlayer);
-                    ContentPane.this.usersPanel.setVisible(false);
-                    ContentPane.this.add(menuPanel);
-                    usersPanel.flag = false ;
-                }
-
-                if(menuPanel != null) {
-                    if(menuPanel.flag) {
-                        if(menuPanel.newGameSelected) {
-                            ContentPane.this.menuPanel.setVisible(false);
-                            ContentPane.this.add(escapePanel);
-                            ContentPane.this.add(gamePanel = new GamePanel(new SpaceShip(),menuPanel.player));
-                            gamePanel.requestFocus();
-                        }
-                        if(menuPanel.resumeGameSelected) {
-                            ContentPane.this.menuPanel.setVisible(false);
-                            ContentPane.this.add(escapePanel);
-//							ContentPane.this.add(gamePanel = new GamePanel(FileManager.load(),menuPanel.player));
-                            gamePanel.requestFocus();
-                        }
-
-                        menuPanel.flag = false ;
-
-                    }
-                }
-
-                if(gamePanel != null) {
-                    if(MyKeyListener.escPressed) {
-                        gamePanel.setVisible(false);
-                        ContentPane.this.add(escapePanel);
-                        escapePanel.setVisible(true);
-                        escapePanel.requestFocus();
-                        MyKeyListener.escPressed = false ;
-                    }
-                }
-
-
-                if(gamePanel != null) {
-                    if(escapePanel.resumeGameSelected) {
-                        ContentPane.this.remove(escapePanel);
-                        escapePanel.setVisible(false);
-                        gamePanel.setVisible(true);
-                        gamePanel.requestFocus();
-                        escapePanel.resumeGameSelected = false ;
-                    }
-                }
-
-            }
-
-        });
+    public void afterInvitationPanel(){
+        invitationPanel.setVisible(false);
+        usersPanel = new UsersPanel(this);
+        add(usersPanel);
     }
 
+    public void afterUsersPanel(){
+        usersPanel.setVisible(false);
+        menuPanel = new MenuPanel(this);
+        add(menuPanel);
+    }
+
+    public void afterMenuPanel(){
+        if(menuPanel.newGameSelected) {
+            menuPanel.setVisible(false);
+            add(escapePanel);
+            prepareGamePanel();
+            add(gamePanel);
+            gamePanel.requestFocus();
+        }
+        if(menuPanel.resumeGameSelected) {
+            menuPanel.setVisible(false);
+            add(escapePanel);
+//			ContentPane.this.add(gamePanel = new GamePanel(FileManager.load(),menuPanel.player));
+            gamePanel.requestFocus();
+        }
+    }
+
+
+    public void handleEscapePanel(){
+            gamePanel.setVisible(false);
+            add(escapePanel);
+            escapePanel.setVisible(true);
+            escapePanel.requestFocus();
+    }
+
+    public void resumeGameFromEscapePanel(){
+            ContentPane.this.remove(escapePanel);
+            escapePanel.setVisible(false);
+            gamePanel.setVisible(true);
+            gamePanel.requestFocus();
+    }
+
+    public void prepareGamePanel() {
+        gamePanel = new GamePanel(this ,admin);
+    }
+
+    public void prepareAdministrator(){
+        admin = new Administrator(player);
+    }
+
+    //getters & setters:
+
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(String playerName) {
+        player = new Player(playerName) ;
+        prepareAdministrator() ;
+    }
 
 
 }

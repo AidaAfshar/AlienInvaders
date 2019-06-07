@@ -20,13 +20,12 @@ import view.utilities.Dim;
 public class MenuPanel extends JPanel {
 
     Background background5 = new Background("pictures/backgrounds/background5.png");
-    Player player ;
 
-    boolean flag = false ;
+    ContentPane contentPane ;
+
     boolean newGameSelected = false ;
     boolean resumeGameSelected = false ;
 
-    ContentPane contentPane ;
 
     JLabel welcomeLabel ;
     JButton resumeButton ;
@@ -38,9 +37,9 @@ public class MenuPanel extends JPanel {
     Timer timer ;
     Skeleton skeleton = new Skeleton();
 
-    public MenuPanel(Player player) {
+    public MenuPanel(ContentPane contentPane) {
         super();
-        this.player = player ;
+        this.contentPane = contentPane ;
         initialize();
     }
 
@@ -67,7 +66,7 @@ public class MenuPanel extends JPanel {
     }
 
     public void prepareWelcomeLabel() {
-        welcomeLabel = new JLabel("Welcome  " + player.name + "  !");
+        welcomeLabel = new JLabel("Welcome  " + contentPane.getPlayer().getName() + "  !");
         welcomeLabel.setBounds(Dim.CENTER_X-250,Dim.CENTER_Y-100,700,200);
         welcomeLabel.setForeground(Color.red);
         welcomeLabel.setFont(new Font("Chiller", Font.BOLD , 80));
@@ -82,8 +81,8 @@ public class MenuPanel extends JPanel {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                flag = true ;
                 resumeGameSelected = true ;
+                contentPane.afterMenuPanel();
                 timer.stop();
             }
 
@@ -96,8 +95,8 @@ public class MenuPanel extends JPanel {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                flag = true ;
                 newGameSelected = true ;
+                contentPane.afterMenuPanel();
                 timer.stop();
             }
 

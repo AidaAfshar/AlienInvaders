@@ -30,12 +30,12 @@ public class SpaceShip extends Image{
 
     transient Timer shipTimer ;
 
-    public BeamMouseListener bml ;
+    public static BeamMouseListener bml = GamePanel.bml;
 
 
     public SpaceShip(Player player) {
         super(spaceShipAddress);
-        player = player ;
+        this.player = player ;
         initialize();
     }
 
@@ -186,40 +186,40 @@ public class SpaceShip extends Image{
         boolean tempInSafeRange = true ;
 
         java.util.Timer tempTimer ;
-        java.util.Timer restTimer ;
+//        java.util.Timer restTimer ;
 
 
 
-        public void controlTemp(GamePanel gamePanel) {
-            if(isTempInSafeRange()) {
-                if(getTemperature()>=100) {
-                    setTempInSafeRange(false);
-                    setTemperature(0);
-                    bml.mousePressed_beam =false ;
-                    bml.pressDown = false ;
-                    gamePanel.removeMouseListener(gamePanel.bml);
-                    gamePanel.remove(gamePanel.getTempBar());
-                    gamePanel.add(gamePanel.getRestLabel());
-                    evokeRestTimer(gamePanel);
-                }
-            }
+//        public void controlTemp(GamePanel gamePanel) {
+//            if(isTempInSafeRange()) {
+//                if(getTemperature()>=100) {
+//                    setTempInSafeRange(false);
+//                    setTemperature(0);
+//                    bml.mousePressed_beam =false ;
+//                    bml.pressDown = false ;
+//                    gamePanel.removeMouseListener(gamePanel.bml);
+//                    gamePanel.remove(gamePanel.getTempBar());
+//                    gamePanel.add(gamePanel.getRestLabel());
+//                    evokeRestTimer(gamePanel);
+//                }
+//            }
+//
+//        }
 
-        }
-
-        public void evokeRestTimer(GamePanel gamePanel) {
-            restTimer = new java.util.Timer();
-            restTimer.schedule(new TimerTask() {
-
-                @Override
-                public void run() {
-                    gamePanel.addMouseListener(gamePanel.bml);
-                    gamePanel.remove(gamePanel.getRestLabel());
-                    gamePanel.add(gamePanel.getTempBar());
-                    setTempInSafeRange(true);
-                }
-
-            },4000);
-        }
+//        public void evokeRestTimer(GamePanel gamePanel) {
+//            restTimer = new java.util.Timer();
+//            restTimer.schedule(new TimerTask() {
+//
+//                @Override
+//                public void run() {
+//                    gamePanel.addMouseListener(gamePanel.bml);
+//                    gamePanel.remove(gamePanel.getRestLabel());
+//                    gamePanel.add(gamePanel.getTempBar());
+//                    setTempInSafeRange(true);
+//                }
+//
+//            },4000);
+//        }
 
 
         public void prepareTempTimer() {
