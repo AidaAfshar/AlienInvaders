@@ -82,7 +82,7 @@ public class ContentPane extends JPanel {
                         if(menuPanel.newGameSelected) {
                             ContentPane.this.menuPanel.setVisible(false);
                             ContentPane.this.add(escapePanel);
-                            ContentPane.this.add(gamePanel = new GamePanel(new SpaceShip("pictures/spaceships/ship1.png"),menuPanel.player));
+                            ContentPane.this.add(gamePanel = new GamePanel(new SpaceShip(),menuPanel.player));
                             gamePanel.requestFocus();
                         }
                         if(menuPanel.resumeGameSelected) {

@@ -9,7 +9,9 @@ import java.util.TimerTask;
 import javax.swing.Timer;
 
 import controller.attackTools.*;
+import controller.player.Player;
 import view.imaging.Image;
+import view.imaging.ImageLoader;
 import view.screen.BeamMouseListener;
 import view.screen.GamePanel;
 import view.utilities.Dim;
@@ -17,30 +19,23 @@ import view.utilities.Dim;
 
 public class SpaceShip extends Image{
 
+    static String spaceShipAddress = "pictures/spaceships/ship1.png" ;
 
-    int x ;
+    int x ,y;
+    int width,height ;
+    int halfWidth , halfHeight ;
+    int centerX , centerY ;
 
-    int y ;
-    int width ;
-    int height ;
-    int halfWidth ;
-    int halfHeight ;
-    int centerX ;
-    int centerY ;
-    public int coin = 0 ;
-    public int power = 5 ;
-    public int bombCount = 3 ;
-
-    public transient SpaceShipTempController tempController ;
-    public transient SpaceShipAttack shipAttack ;
-
+    Player player ;
 
     transient Timer shipTimer ;
 
     public BeamMouseListener bml ;
 
 
-    public SpaceShip() {
+    public SpaceShip(Player player) {
+        super(spaceShipAddress);
+        player = player ;
         initialize();
     }
 
@@ -50,37 +45,10 @@ public class SpaceShip extends Image{
     }
 
     public void initialize() {
-        tempController = this.new SpaceShipTempController();
-        shipAttack = this.new SpaceShipAttack();
+        setImage(ImageLoader.Load(getAddress()));
         prepareShipTimer();
+        prepareBeamTimer();
         shipTimer.start();
-    }
-
-    public void setDimensions(int width ,int height) {
-        this.width = width ;
-        this.height = height ;
-
-        this.halfWidth = (int) width/2 ;
-        this.halfHeight = (int) height/2 ;
-
-        this.x = Dim.CENTER_X - halfWidth ;
-        this.y = Dim.MAX_Y - height;
-
-
-        this.centerX = getCenterX();
-        this.centerY = getCenterY();
-    }
-
-    public void setDimensions() {
-        this.halfWidth = (int) width/2 ;
-        this.halfHeight = (int) height/2 ;
-
-        this.x = Dim.CENTER_X - halfWidth;
-        this.y = Dim.MAX_Y - height ;
-
-
-        this.centerX = getCenterX();
-        this.centerY = getCenterY();
     }
 
 
@@ -102,22 +70,192 @@ public class SpaceShip extends Image{
     }
 
 
-    public void checkToBeInside() {
-        if(this.x < 0) this.x = 0 ;
-        if(this.y < 0) this.y = 0 ;
-        if(this.x + this.width > Dim.MAX_X) this.x = Dim.MAX_X - this.width ;
-        if(this.y + this.height > Dim.MAX_Y) this.y = Dim.MAX_Y - this.height ;
-    }
+    //SPACESHIP ATTACK :
 
-    public void draw(Graphics g) {
-        g.drawImage(this.getImage(), this.x , this.y, this.width, this.height, null);
+        ArrayList<Bomb> bombs = new ArrayList<>(3);
+        ArrayList<Beam> beams = new ArrayList<>();
 
-    }
+        Timer beamTimer ;
 
+
+
+        public void attack() {
+            singleBeamAttack();
+            multiBeamsAttack();
+            bombAttack();
+        }
+
+        private void singleBeamAttack() {
+            if(bml.mousePressed_beam) {
+                produceBeam();
+                bml.mousePressed_beam = false ;
+            }
+        }
+
+        public void produceBeam() {
+            beams.add(new NitroGlobe(bml.x , bml.y));
+            increaseTemprature();
+        }
+
+        private void multiBeamsAttack() {
+            if(bml.pressDown) {
+                if(! beamTimer.isRunning())
+                    beamTimer.start();
+            }else{
+                if(beamTimer.isRunning()) {
+                    beamTimer.stop();
+                }
+            }
+
+        }
+
+
+        public void bombAttack() {
+            if(bml.mousePressed_bomb) {
+                if(player.getBombCount()>0) {
+                    produceBomb();
+                    bml.mousePressed_bomb = false ;
+                }else {
+                    //TODO
+                }
+            }
+
+        }
+
+        public void produceBomb() {
+            if(bombs.size()<3) {
+                bombs.add(new Bomb(bml.x,bml.y));
+                Bomb.count++ ;
+                player.setBombCount(player.getBombCount()-1);
+            }
+        }
+
+
+
+        public void prepareBeamTimer() {
+
+            beamTimer = new Timer(200 , new ActionListener() {
+
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    produceBeam();
+                }
+
+            });
+        }
+
+
+        public void renderAttack(Graphics g) {
+            renderBeamAttack(g);
+            renderBombAttack(g);
+        }
+
+
+        public void renderBeamAttack(Graphics g) {
+            if(beams.size() != 0) {
+                for(Beam beam : beams) {
+                    if(beam.getThrowPermission()) {
+                        beam.draw(g);
+                        beam.moveBeam();
+                    }
+
+                }
+            }
+        }
+
+        public void renderBombAttack(Graphics g) {
+            if(bombs.size() != 0) {
+                for(Bomb bomb : bombs) {
+                    if(bomb.getThrowPermission()) {
+                        bomb.draw(g);
+                        bomb.moveBomb();
+                    }else if(bomb.explode) {
+                        bomb.renderExplosion(g);
+                        bomb.j++ ;
+                        if(bomb.j>13)
+                            bomb.explode = false ;
+                    }
+                }
+            }
+        }
+
+
+        //TEMPERATURE :
+
+        int temperature = 0;
+        boolean tempInSafeRange = true ;
+
+        java.util.Timer tempTimer ;
+        java.util.Timer restTimer ;
+
+
+
+        public void controlTemp(GamePanel gamePanel) {
+            if(isTempInSafeRange()) {
+                if(getTemperature()>=100) {
+                    setTempInSafeRange(false);
+                    setTemperature(0);
+                    bml.mousePressed_beam =false ;
+                    bml.pressDown = false ;
+                    gamePanel.removeMouseListener(gamePanel.bml);
+                    gamePanel.remove(gamePanel.getTempBar());
+                    gamePanel.add(gamePanel.getRestLabel());
+                    evokeRestTimer(gamePanel);
+                }
+            }
+
+        }
+
+        public void evokeRestTimer(GamePanel gamePanel) {
+            restTimer = new java.util.Timer();
+            restTimer.schedule(new TimerTask() {
+
+                @Override
+                public void run() {
+                    gamePanel.addMouseListener(gamePanel.bml);
+                    gamePanel.remove(gamePanel.getRestLabel());
+                    gamePanel.add(gamePanel.getTempBar());
+                    setTempInSafeRange(true);
+                }
+
+            },4000);
+        }
+
+
+        public void prepareTempTimer() {
+            tempTimer = new java.util.Timer();
+            tempTimer.scheduleAtFixedRate(new TimerTask() {
+
+                @Override
+                public void run() {
+
+                    if(bml.mousePressed_beam ==false && bml.pressDown ==false) {
+                        decreaseTemprature();
+                        if(temperature < 0) {
+                            temperature = 0 ;
+                        }
+                    }
+                }
+
+            },0,1000);
+        }
+
+
+        public void decreaseTemprature() {
+            this.temperature-=40 ;
+        }
+
+        public void increaseTemprature() {
+            this.temperature+=5 ;
+        }
+
+
+
+    //getters & setters :
 
     public int getCenterY() {
-        return this.x + this.halfWidth;
-    }
+            return this.x + this.halfWidth;
+        }
 
     public int getCenterX() {
         return this.y + this.halfHeight;
@@ -155,6 +293,82 @@ public class SpaceShip extends Image{
         this.y = y;
     }
 
+    public int getTemperature() {
+        return temperature;
+    }
+
+    public void setTemperature(int temperature) {
+        this.temperature = temperature;
+    }
+
+    public boolean isTempInSafeRange() {
+        return tempInSafeRange;
+    }
+
+    public void setTempInSafeRange(boolean tempInSafeRange) {
+        this.tempInSafeRange = tempInSafeRange;
+    }
+
+    public ArrayList<Beam> getBeams() {
+        return beams;
+    }
+
+    public ArrayList<Bomb> getBombs() {
+        return bombs;
+    }
+
+
+    public void setDimensions(int width ,int height) {
+        this.width = width ;
+        this.height = height ;
+
+        this.halfWidth = (int) width/2 ;
+        this.halfHeight = (int) height/2 ;
+
+        this.x = Dim.CENTER_X - halfWidth ;
+        this.y = Dim.MAX_Y - height;
+
+
+        this.centerX = getCenterX();
+        this.centerY = getCenterY();
+    }
+
+    public void setDimensions() {
+        this.halfWidth = (int) width/2 ;
+        this.halfHeight = (int) height/2 ;
+
+        this.x = Dim.CENTER_X - halfWidth;
+        this.y = Dim.MAX_Y - height ;
+
+
+        this.centerX = getCenterX();
+        this.centerY = getCenterY();
+    }
+
+
+    public void checkToBeInside() {
+        if(x < 0)
+            x = 0 ;
+        if(y < 0)
+            y = 0 ;
+        if(x + width > Dim.MAX_X)
+            x = Dim.MAX_X - width ;
+        if(y + height > Dim.MAX_Y)
+            y = Dim.MAX_Y - height ;
+    }
+
+    public void draw(Graphics g) {
+        g.drawImage(getImage(), x , y, width, height, null);
+
+    }
+
+
+
+
+}//end of class
+
+
+
 //	public void save(PrintStream p) {
 //		Gson gson = new Gson();
 //		p.println(gson.toJson(this));
@@ -164,212 +378,3 @@ public class SpaceShip extends Image{
 //		Gson gson = new Gson();
 //		return gson.fromJson(sc.nextLine(),SpaceShip.class);
 //	}
-
-    //Attack sub class :
-
-    public class SpaceShipAttack{
-
-        ArrayList<Bomb> bombs = new ArrayList<>(3);
-        ArrayList<Beam> beams = new ArrayList<>();
-//        ArrayList<FireGlobe> fireGlobe = new ArrayList<>();
-//        ArrayList<NitroGlobe> nitroGlobe = new ArrayList<>();
-
-        Timer beamTimer ;
-
-        public SpaceShipAttack() {
-            initialize();
-        }
-
-        public void initialize() {
-            prepareBeamTimer();
-        }
-
-        public void attack() {
-            singleBeamAttack();
-            multiBeamsAttack();
-            bombAttack();
-        }
-
-        private void singleBeamAttack() {
-            if(bml.mousePressed_beam) {
-                produceBeam();
-                bml.mousePressed_beam = false ;
-            }
-        }
-
-        public void produceBeam() {
-            beams.add(new NitroGlobe(bml.x , bml.y));
-            SpaceShip.this.tempController.increaseTemprature();
-        }
-
-        private void multiBeamsAttack() {
-            if(bml.pressDown) {
-                if(! beamTimer.isRunning())
-                    beamTimer.start();
-            }else{
-                if(beamTimer.isRunning()) {
-                    beamTimer.stop();
-                }
-            }
-
-        }
-
-
-        public void bombAttack() {
-            if(bml.mousePressed_bomb) {
-                if(SpaceShip.this.bombCount>0) {
-                    produceBomb();
-                    bml.mousePressed_bomb = false ;
-                }else {
-                    //TODO
-                }
-            }
-
-        }
-
-        public void produceBomb() {
-            if(bombs.size()<3) {
-                bombs.add(new Bomb(bml.x,bml.y));
-                Bomb.count++ ;
-                SpaceShip.this.bombCount-- ;
-            }
-        }
-
-
-
-        public void prepareBeamTimer() {
-
-            beamTimer = new Timer(200 , new ActionListener() {
-
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    produceBeam();
-                }
-
-            });
-        }
-
-
-        public void renderAttack(Graphics g) {
-            renderBeamAttack(g);
-            renderBombAttack(g);
-        }
-
-
-        public void renderBeamAttack(Graphics g) {
-            if(this.beams.size() != 0) {
-                for(Beam beam : this.beams) {
-                    if(beam.getThrowPermission()) {
-                        beam.draw(g);
-                        beam.moveBeam();
-                    }
-
-                }
-            }
-        }
-
-        public void renderBombAttack(Graphics g) {
-            if(this.bombs.size() != 0) {
-                for(Bomb bomb : this.bombs) {
-                    if(bomb.getThrowPermission()) {
-                        bomb.draw(g);
-                        bomb.moveBomb();
-                    }else if(bomb.explode) {
-                        bomb.renderExplosion(g);
-                        bomb.j++ ;
-                        if(bomb.j>13)
-                            bomb.explode = false ;
-                    }
-                }
-            }
-        }
-
-        public ArrayList<Beam> getBeams() {
-            return beams;
-        }
-
-        public ArrayList<Bomb> getBombs() {
-            return bombs;
-        }
-
-
-
-    }// end of Attack sub class
-
-
-// Temperature Controller sub class :
-
-    public class SpaceShipTempController{
-
-        public int temperature = 0;
-        boolean tempInSafeRange = true ;
-
-        java.util.Timer tempTimer ;
-        java.util.Timer restTimer ;
-
-
-
-        public void controlTemp(GamePanel gamePanel) {
-            if(this.tempInSafeRange) {
-                if(this.temperature>=100) {
-                    this.tempInSafeRange=false ;
-                    this.temperature=0 ;
-                    bml.mousePressed_beam =false ;
-                    bml.pressDown = false ;
-                    gamePanel.removeMouseListener(gamePanel.bml);
-                    gamePanel.remove(gamePanel.tempBar);
-                    gamePanel.add(gamePanel.restLabel);
-                    evokeRestTimer(gamePanel);
-                }
-            }
-
-        }
-
-        public void evokeRestTimer(GamePanel gamePanel) {
-            restTimer = new java.util.Timer();
-            restTimer.schedule(new TimerTask() {
-
-                @Override
-                public void run() {
-                    gamePanel.addMouseListener(gamePanel.bml);
-                    gamePanel.remove(gamePanel.restLabel);
-                    gamePanel.add(gamePanel.tempBar);
-                    SpaceShipTempController.this.tempInSafeRange=true ;
-                }
-
-            },4000);
-        }
-
-
-        public void prepareTempTimer() {
-            tempTimer = new java.util.Timer();
-            tempTimer.scheduleAtFixedRate(new TimerTask() {
-
-                @Override
-                public void run() {
-
-                    if(bml.mousePressed_beam ==false && bml.pressDown ==false) {
-                        SpaceShipTempController.this.decreaseTemprature();
-                        if(SpaceShipTempController.this.temperature < 0) {
-                            SpaceShipTempController.this.temperature = 0 ;
-                        }
-                    }
-                }
-
-            },0,1000);
-        }
-
-
-        public void decreaseTemprature() {
-            this.temperature-=40 ;
-        }
-
-        public void increaseTemprature() {
-            this.temperature+=5 ;
-        }
-
-    }// end of SpaceShipTempController sub class
-
-
-
-}

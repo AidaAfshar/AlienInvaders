@@ -20,29 +20,48 @@ import view.screen.GamePanel;
 
 public class Administrator {
 
-    public GamePanel gamePanel ;
+    GamePanel gamePanel ;
+    SpaceShip ship ;
 
-    public SpaceShip ship ;
-    public Group group ;
-    public Player player ;
+    Player player ;
+    Group group ;
 
-    static Timer timer ;
+    Timer timer ;
 
 
-    public Administrator(GamePanel gamePanel,SpaceShip spaceShip,Player player) {
+    public Administrator(GamePanel gamePanel) {
         this.gamePanel = gamePanel ;
-        this.ship = spaceShip ;
-        this.player = player ;
         initialize();
     }
 
 
-
-    private void initialize() {
-        prepareShip();
+    private void initialize(){
+//        preparePlayer();
         prepareEnemy();
+        prepareShip();
         prepareTimer();
         timer.start();
+    }
+
+
+    public void preparePlayer(String name){
+        player = new Player(name);
+    }
+
+    private void prepareEnemy() {
+        group = new RectangularGroup(AlienName.AUGUSTUS) ;
+//       group = new CircularGroup() ;
+//       group = new RotatingGroup() ;
+//       group = new RandomGroup(ship) ;
+    }
+
+    public void prepareShip() {
+        ship = new SpaceShip();
+        ship.bml = gamePanel.bml ;
+        ship.setWidth(200);
+        ship.setHeight(180) ;
+        ship.setDimensions();
+        ship.prepareTempTimer();
     }
 
 
@@ -52,8 +71,8 @@ public class Administrator {
             @Override
             public void actionPerformed(ActionEvent e) {
                 group.moveGroup();
-                ship.shipAttack.attack();
-                ship.tempController.controlTemp(gamePanel);
+                ship.attack();
+                ship.controlTemp(gamePanel);
                 detectCollisions();
                 bombExplosion();
                 group.produceSpike();
@@ -66,7 +85,7 @@ public class Administrator {
 
 
     protected void bombExplosion() {
-        for(Bomb bomb : ship.shipAttack.getBombs()) {
+        for(Bomb bomb : ship.getBombs()) {
             if(bomb.timeToKill)
                 group.killTheGroup();
         }
@@ -74,22 +93,6 @@ public class Administrator {
 
 
 
-    public void prepareShip() {
-        ship.setImage(ImageLoader.Load(ship.getAddress()));
-        ship.bml = gamePanel.bml ;
-        ship.setWidth(200);
-        ship.setHeight(180) ;
-        ship.setDimensions();
-        ship.tempController.prepareTempTimer();
-
-    }
-
-    private void prepareEnemy() {
-       group = new RectangularGroup(AlienName.AUGUSTUS) ;
-//       group = new CircularGroup() ;
-//       group = new RotatingGroup() ;
-//       group = new RandomGroup(ship) ;
-    }
 
 
 
@@ -106,7 +109,7 @@ public class Administrator {
                 if(spike.getX()>ship.getX() && spike.getX()<ship.getX()+ship.getWidth()) {
                     if(spike.getY()>ship.getY() && spike.getY()<ship.getY()+ship.getHeight()) {
                         spike.setCollided(true);
-                        ship.power-- ;
+                        ship.setPower(ship.getPower()-1);
                     }
                 }
 
@@ -116,10 +119,10 @@ public class Administrator {
     }
     private void beamAlienCollision(){
         for(int i=0 ; i<group.getAliens().size() ; i++) {
-            for(int j = 0; j<ship.shipAttack.getBeams().size() ; j++) {
+            for(int j = 0; j<ship.getBeams().size() ; j++) {
                 Alien alien = group.getAliens().get(i);
-                Beam beam = ship.shipAttack.getBeams().get(j);
-                if(beam.getThrowPermission()==true) {
+                Beam beam = ship.getBeams().get(j);
+                if(beam.getThrowPermission()) {
                     double d = Math.sqrt(Math.pow(alien.getX()-beam.getX(),2)+Math.pow(alien.getY()-beam.getY(),2)) ;
                     if(alien.isAlive() && d<alien.getHeight()) {
                         alien.gotHit();
@@ -153,10 +156,37 @@ public class Administrator {
 
 
     public void updateValues() {
-        gamePanel.tempBar.setValue(ship.tempController.temperature);
-        gamePanel.bombLabel.setText("         Bomb : " + ship.bombCount);
-        gamePanel.powerLabel.setText("      Power : " + ship.power);
-        gamePanel.coinLabel.setText("   Coin : " + ship.coin);
+        gamePanel.tempBar.setValue(ship.getTemperature());
+        gamePanel.bombLabel.setText("         Bomb : " + ship.getBombCount());
+        gamePanel.powerLabel.setText("      Power : " + ship.getPower());
+        gamePanel.coinLabel.setText("   Coin : " + ship.getCoin());
     }
 
+
+    //getters & setters :
+
+
+    public GamePanel getGamePanel() {
+        return gamePanel;
+    }
+
+    public void setGamePanel(GamePanel gamePanel) {
+        this.gamePanel = gamePanel;
+    }
+
+    public SpaceShip getShip() {
+        return ship;
+    }
+
+    public void setShip(SpaceShip ship) {
+        this.ship = ship;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
 }
