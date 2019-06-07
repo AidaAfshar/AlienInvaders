@@ -16,7 +16,7 @@ public class FireGlobe extends Beam {
 
     public void initialize() {
         this.setImage(ImageLoader.Load(this.getAddress()));
-        setWidth(120) ;
+        setWidth(80) ;
         setHeight(120) ;
         setV(7);
         setPower(2);

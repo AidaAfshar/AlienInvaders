@@ -198,7 +198,7 @@ public class SpaceShip extends Image{
         }
 
         public void produceBeam() {
-            beams.add(new FireGlobe(bml.x , bml.y));
+            beams.add(new NitroGlobe(bml.x , bml.y));
             SpaceShip.this.tempController.increaseTemprature();
         }
 

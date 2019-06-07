@@ -13,7 +13,11 @@ public class BeamMouseListener implements MouseListener{
 
     @Override
     public void mouseClicked(MouseEvent e) {
-
+        if(e.getButton() == MouseEvent.BUTTON1) {
+            x = e.getX();
+            y = e.getY();
+            mousePressed_beam = true ;
+        }
     }
 
     @Override
