@@ -32,7 +32,7 @@ public class BeamMouseListener implements MouseListener, MouseMotionListener {
             ship.produceBeam(x,y);
 
         if(e.getButton() == MouseEvent.BUTTON3)
-            ship.produceBomb(x,y);
+            ship.produceBomb(x, y);
 
 
     }

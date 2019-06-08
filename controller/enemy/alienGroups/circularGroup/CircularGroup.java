@@ -19,7 +19,7 @@ public class CircularGroup extends Group {
     public CircularGroup() {
         super();
         prepareCircles();
-        initialize();
+//        initialize();
     }
 
     private void prepareCircles() {

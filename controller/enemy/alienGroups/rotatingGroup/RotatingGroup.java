@@ -15,7 +15,7 @@ public class RotatingGroup extends Group {
     public RotatingGroup() {
         super();
         prepareCircles();
-        initialize();
+//        initialize();
     }
 
     public void prepareCircles(){

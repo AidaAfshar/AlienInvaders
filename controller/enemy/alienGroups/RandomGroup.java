@@ -66,7 +66,7 @@ public class RandomGroup extends Group{
         chooserTimer = new Timer(3000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(groupIsDead()) chooserTimer.stop();
+                if(isDead()) chooserTimer.stop();
                 Alien randomAlien = getRandomAlien();
                 randomAlien.setNextX(ship.getX());
                 randomAlien.setNextY(ship.getY());

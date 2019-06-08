@@ -28,8 +28,6 @@ public class SpaceShip extends Image{
 
     Player player ;
 
-//    transient Timer shipTimer ;
-
 
     public SpaceShip(Player player) {
         super(spaceShipAddress);
@@ -40,28 +38,7 @@ public class SpaceShip extends Image{
 
     public void initialize() {
         setImage(ImageLoader.Load(getAddress()));
-//        prepareShipTimer();
-//        shipTimer.start();
     }
-
-
-//    public void prepareShipTimer() {
-//        shipTimer = new Timer(3,new ActionListener() {
-//
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//
-//                x = GamePanel.ml.x - SpaceShip.this.halfWidth;
-//                y = GamePanel.ml.y - SpaceShip.this.halfHeight;
-//                SpaceShip.this.checkToBeInside();
-//
-//
-//            }
-//
-//        });
-//
-//    }
-
 
     //SPACESHIP ATTACK :
 
@@ -109,8 +86,11 @@ public class SpaceShip extends Image{
 
         public void renderBombAttack(Graphics g) {
             if(bombs.size() != 0) {
+            //    System.out.println(1);
                 for(Bomb bomb : bombs) {
+            //        System.out.println(2);
                     if(bomb.getThrowPermission()) {
+            //            System.out.println(3);
                         bomb.draw(g);
                         bomb.moveBomb();
                     }else if(bomb.explode) {
@@ -225,28 +205,13 @@ public class SpaceShip extends Image{
     }
 
 
-    public void setDimensions(int width ,int height) {
-        this.width = width ;
-        this.height = height ;
-
-        this.halfWidth = (int) width/2 ;
-        this.halfHeight = (int) height/2 ;
-
-        this.x = Dim.CENTER_X - halfWidth ;
-        this.y = Dim.MAX_Y - height;
-
-
-        this.centerX = getCenterX();
-        this.centerY = getCenterY();
-    }
 
     public void setDimensions() {
         this.halfWidth = (int) width/2 ;
         this.halfHeight = (int) height/2 ;
 
-        this.x = Dim.CENTER_X - halfWidth;
-        this.y = Dim.MAX_Y - height ;
-
+        this.x = Dim.CENTER_X - halfWidth - 10;
+        this.y = Dim.MAX_Y - height - 10 ;
 
         this.centerX = getCenterX();
         this.centerY = getCenterY();

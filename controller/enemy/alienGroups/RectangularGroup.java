@@ -15,12 +15,12 @@ public class RectangularGroup extends Group {
 
 
 
-    public RectangularGroup(AlienName name) {
-        super(name);
+    public RectangularGroup() {
+        super(AlienName.HESTER);
         count = 30 ;
         Xblank = 25 ;
         Yblank = 20 ;
-        initialize();
+//        initialize();
     }
 
 
@@ -29,7 +29,7 @@ public class RectangularGroup extends Group {
         for(int i=0 ; i<count ; i++) {
                 int p = i%10 ;
                 int q = i/10 ;
-                aliens.add(new Augustus(-1700 + p * (Xblank + alien.getWidth()), -480 + q * (Yblank + alien.getHeight())));
+                aliens.add(new Hester(-1700 + p * (Xblank + alien.getWidth()), -480 + q * (Yblank + alien.getHeight())));
             }
 
     }

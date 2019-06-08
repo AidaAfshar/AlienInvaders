@@ -43,8 +43,6 @@ public abstract class Group {
     public abstract void moveGroup() ;
 
 
-
-
     public void produceSpike(){
         for(Alien alien : aliens){
             if(alien.isAlive()) {
@@ -101,7 +99,7 @@ public abstract class Group {
     }
 
 
-    public boolean groupIsDead() {
+    public boolean isDead() {
 
         for(Alien alien : aliens) {
             if(alien.isAlive())

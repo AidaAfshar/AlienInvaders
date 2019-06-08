@@ -2,6 +2,7 @@ package controller.main;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.Timer;
 
@@ -11,6 +12,8 @@ import controller.attackTools.FlameBall;
 import controller.enemy.alienAttack.Spike;
 import controller.enemy.alienGroups.Group;
 import controller.enemy.alienGroups.RectangularGroup;
+import controller.enemy.alienGroups.circularGroup.CircularGroup;
+import controller.enemy.alienGroups.rotatingGroup.RotatingGroup;
 import controller.enemy.aliens.Alien;
 import controller.enemy.aliens.AlienName;
 import controller.player.Player;
@@ -23,6 +26,7 @@ public class Administrator {
     SpaceShip ship ;
 
     Player player ;
+    ArrayList<Group> groups ;
     Group group ;
 
     Timer timer ;
@@ -44,10 +48,15 @@ public class Administrator {
 
 
     private void prepareEnemy() {
-        group = new RectangularGroup(AlienName.AUGUSTUS) ;
-//       group = new CircularGroup() ;
-//       group = new RotatingGroup() ;
 //       group = new RandomGroup(ship) ;
+
+        groups = new ArrayList<>();
+        groups.add(new RectangularGroup());
+        groups.add(new CircularGroup());
+        groups.add(new RotatingGroup());
+        group = groups.get(0);
+        group.initialize();
+
     }
 
     public void prepareShip() {
@@ -64,6 +73,7 @@ public class Administrator {
 
             @Override
             public void actionPerformed(ActionEvent e) {
+                if(group.isDead()) nextGroup();
                 group.moveGroup();
                 detectCollisions();
                 bombExplosion();
@@ -71,6 +81,16 @@ public class Administrator {
             }
 
         });
+    }
+
+    public void nextGroup(){
+        for(Group group : groups){
+            if(! group.isDead()){
+                this.group = group ;
+                group.initialize();
+                break ;
+            }
+        }
     }
 
 
