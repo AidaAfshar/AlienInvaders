@@ -1,5 +1,6 @@
 package view.imaging;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class Image {
@@ -9,6 +10,10 @@ public class Image {
     transient BufferedImage image ;
     String Address ;
 
+    int x , y;
+    int width , height ;
+
+
     //methods:
 
     public Image() {
@@ -17,6 +22,7 @@ public class Image {
 
     public Image(String imageAddress) {
         this.Address = imageAddress ;
+        this.image = ImageLoader.Load(Address);
     }
 
     public BufferedImage getImage() {
@@ -35,6 +41,43 @@ public class Image {
         Address = address;
     }
 
+    public void draw(Graphics g){
+        g.drawImage(getImage(),x , y , width,height,null);
+    }
 
 
+    //getters & setters:
+
+
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
 }

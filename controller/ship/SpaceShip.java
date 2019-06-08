@@ -21,8 +21,8 @@ public class SpaceShip extends Image{
 
     static String spaceShipAddress = "pictures/spaceships/ship1.png" ;
 
-    int x ,y;
-    int width,height ;
+//    int x ,y;
+//    int width,height ;
     int halfWidth , halfHeight ;
     int centerX , centerY ;
 
@@ -139,44 +139,22 @@ public class SpaceShip extends Image{
     //getters & setters :
 
     public int getCenterY() {
-            return this.x + this.halfWidth;
+            return getX() + this.halfWidth;
         }
 
     public int getCenterX() {
-        return this.y + this.halfHeight;
+        return getY() + this.halfHeight;
     }
 
-    public int getWidth() {
-        return width;
-    }
-
-    public void setWidth(int width) {
-        this.width = width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
-    public void setHeight(int height) {
-        this.height = height;
-    }
-
-    public int getX() {
-        return x;
-    }
-
+    @Override
     public void setX(int x) {
-        this.x = x - halfWidth;
+        setX(x - halfWidth);
         checkXToBeInside();
     }
 
-    public int getY() {
-        return y;
-    }
-
+    @Override
     public void setY(int y) {
-        this.y = y - halfHeight ;
+        setY(y - halfHeight);
         checkYToBeInside();
     }
 
@@ -207,11 +185,11 @@ public class SpaceShip extends Image{
 
 
     public void setDimensions() {
-        this.halfWidth = (int) width/2 ;
-        this.halfHeight = (int) height/2 ;
+        this.halfWidth = (int) getWidth()/2 ;
+        this.halfHeight = (int) getHeight()/2 ;
 
-        this.x = Dim.CENTER_X - halfWidth - 10;
-        this.y = Dim.MAX_Y - height - 10 ;
+        setX(Dim.CENTER_X - halfWidth - 10);
+        setY(Dim.MAX_Y - getHeight() - 10);
 
         this.centerX = getCenterX();
         this.centerY = getCenterY();
@@ -219,21 +197,21 @@ public class SpaceShip extends Image{
 
 
     public void checkXToBeInside(){
-        if(x < -15)
-            x = -15 ;
-        if(x + width > Dim.MAX_X)
-            x = Dim.MAX_X - width ;
+        if(getX() < -15)
+            setX(-15);
+        if(getX() + getWidth() > Dim.MAX_X)
+            setX(Dim.MAX_X - getWidth());
     }
 
     public void checkYToBeInside(){
-        if(y < -35)
-            y = -35 ;
-        if(y + height > Dim.MAX_Y)
-            y = Dim.MAX_Y - height ;
+        if(getY() < -35)
+            setY(-35);
+        if(getY() + getHeight() > Dim.MAX_Y)
+            setY(Dim.MAX_Y - getHeight());
     }
 
     public void draw(Graphics g) {
-        g.drawImage(getImage(), x , y, width, height, null);
+        g.drawImage(getImage(), getX() ,getY(), getWidth(),getHeight(), null);
 
     }
 

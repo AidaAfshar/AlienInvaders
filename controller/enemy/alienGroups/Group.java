@@ -1,5 +1,6 @@
 package controller.enemy.alienGroups;
 
+import controller.bonus.Bonus;
 import controller.enemy.alienAttack.Spike;
 import controller.enemy.aliens.Alien;
 import controller.enemy.aliens.AlienName;
@@ -15,6 +16,7 @@ public abstract class Group {
     protected Alien alien ;
     protected ArrayList<Alien> aliens = new ArrayList<>();
     protected ArrayList<Spike> spikes = new ArrayList<>();
+    protected ArrayList<Bonus> bonus = new ArrayList<>();
 
     protected int count  ;
     protected boolean groupReachedDestination ;
@@ -42,6 +44,7 @@ public abstract class Group {
     public abstract void prepareEntrance() ;
     public abstract void moveGroup() ;
 
+    // SPIKE :
 
     public void produceSpike(){
         for(Alien alien : aliens){
@@ -59,13 +62,8 @@ public abstract class Group {
     }
 
 
-//    public void check(){
-//        for(Alien alien : aliens){
-//            System.out.println(alien.getX());
-//            System.out.println(alien.getY());
-//        }
-//        System.out.println("----------------------------------------------------");
-//    }
+    //BONUS :
+
 
 
     int i=0 ;
@@ -111,7 +109,7 @@ public abstract class Group {
 
     public void killTheGroup() {
         for(Alien alien :aliens) {
-            alien.gotHit();
+            alien.setAlive(false);
         }
     }
 

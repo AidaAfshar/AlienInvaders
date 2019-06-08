@@ -135,7 +135,7 @@ public class Administrator {
                 if(beam.getThrowPermission()) {
                     double d = Math.sqrt(Math.pow(alien.getX()-beam.getX(),2)+Math.pow(alien.getY()-beam.getY(),2)) ;
                     if(alien.isAlive() && d<alien.getHeight()) {
-                        alien.gotHit();
+                        alien.gotHit(alien.getX(),alien.getY());
                         beam.setThrowPermission(false);
                     }
                 }

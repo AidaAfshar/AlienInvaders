@@ -4,6 +4,8 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Random;
 
+import controller.bonus.Coin;
+import controller.enemy.alienGroups.Group;
 import view.imaging.Image;
 import view.imaging.ImageLoader;
 import view.utilities.Dim;
@@ -22,7 +24,7 @@ public class Alien {
     int vx , vy ;
     boolean alive = true ;
 
-
+    Group group ;
 
     public Alien(){
 
@@ -35,11 +37,7 @@ public class Alien {
 
     // POLAR COORDINATES :
 
-    //attributes:
-
     int r ; double teta ;
-
-    //methods:
 
     public Alien(int xc , int yc , int r, double teta){
         this.r = r ;
@@ -75,13 +73,8 @@ public class Alien {
 
     //RANDOM COORDINATES:
 
-    //attributes:
-
     Random random = new Random();
     int nextX ,nextY;
-
-    //methods:
-
 
     public void produceCoordinate(){
         nextX = random.nextInt(Dim.MAX_X);
@@ -125,6 +118,25 @@ public class Alien {
             return false ;
     }
 
+    // BONUS :
+
+    public void produceBonus(int x , int y){
+        int num = random.nextInt(12) + 1;
+        if(num%3==0)
+            produceCoin(x,y);
+        if(num%4==0)
+            produceTurbo(x,y);
+    }
+
+    public void produceCoin(int x , int y){
+
+        Coin coin = new Coin(x,y);
+
+    }
+
+    public void produceTurbo(int x , int y){
+
+    }
 
     //----
 
@@ -242,8 +254,17 @@ public class Alien {
         return alive;
     }
 
-    public void gotHit() {
-        alive = false ;
+    public void setAlive(boolean b){
+        alive = b ;
+    }
+
+    public void setGroup(Group group) {
+        this.group = group;
+    }
+
+    public void gotHit(int x , int y) {
+        setAlive(false);
+        produceBonus(x,y) ;
     }
 
     public boolean isInside(){
