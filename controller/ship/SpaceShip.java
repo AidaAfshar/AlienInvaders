@@ -30,8 +30,6 @@ public class SpaceShip extends Image{
 
     transient Timer shipTimer ;
 
-    public static BeamMouseListener bml = GamePanel.bml;
-
 
     public SpaceShip(Player player) {
         super(spaceShipAddress);
@@ -39,15 +37,10 @@ public class SpaceShip extends Image{
         initialize();
     }
 
-    public SpaceShip(String address) {
-        super(address);
-        initialize();
-    }
 
     public void initialize() {
         setImage(ImageLoader.Load(getAddress()));
         prepareShipTimer();
-        prepareBeamTimer();
         shipTimer.start();
     }
 
@@ -75,74 +68,25 @@ public class SpaceShip extends Image{
         ArrayList<Bomb> bombs = new ArrayList<>(3);
         ArrayList<Beam> beams = new ArrayList<>();
 
-        Timer beamTimer ;
 
-
-
-        public void attack() {
-            singleBeamAttack();
-            multiBeamsAttack();
-            bombAttack();
-        }
-
-        private void singleBeamAttack() {
-            if(bml.mousePressed_beam) {
-                produceBeam();
-                bml.mousePressed_beam = false ;
+        public void produceBeam(int x , int y) {
+            if(isTempInSafeRange()) {
+                beams.add(new FlameBall(x, y));
+                increaseTemperature();
             }
         }
 
-        public void produceBeam() {
-            beams.add(new NitroGlobe(bml.x , bml.y));
-            increaseTemprature();
-        }
 
-        private void multiBeamsAttack() {
-            if(bml.pressDown) {
-                if(! beamTimer.isRunning())
-                    beamTimer.start();
-            }else{
-                if(beamTimer.isRunning()) {
-                    beamTimer.stop();
+        public void produceBomb(int x , int y) {
+            if(isTempInSafeRange()) {
+                if (bombs.size() < 3) {
+                    bombs.add(new Bomb(x, y));
+                    Bomb.count++;
+                    player.setBombCount(player.getBombCount() - 1);
                 }
             }
-
         }
 
-
-        public void bombAttack() {
-            if(bml.mousePressed_bomb) {
-                if(player.getBombCount()>0) {
-                    produceBomb();
-                    bml.mousePressed_bomb = false ;
-                }else {
-                    //TODO
-                }
-            }
-
-        }
-
-        public void produceBomb() {
-            if(bombs.size()<3) {
-                bombs.add(new Bomb(bml.x,bml.y));
-                Bomb.count++ ;
-                player.setBombCount(player.getBombCount()-1);
-            }
-        }
-
-
-
-        public void prepareBeamTimer() {
-
-            beamTimer = new Timer(200 , new ActionListener() {
-
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    produceBeam();
-                }
-
-            });
-        }
 
 
         public void renderAttack(Graphics g) {
@@ -186,41 +130,6 @@ public class SpaceShip extends Image{
         boolean tempInSafeRange = true ;
 
         java.util.Timer tempTimer ;
-//        java.util.Timer restTimer ;
-
-
-
-//        public void controlTemp(GamePanel gamePanel) {
-//            if(isTempInSafeRange()) {
-//                if(getTemperature()>=100) {
-//                    setTempInSafeRange(false);
-//                    setTemperature(0);
-//                    bml.mousePressed_beam =false ;
-//                    bml.pressDown = false ;
-//                    gamePanel.removeMouseListener(gamePanel.bml);
-//                    gamePanel.remove(gamePanel.getTempBar());
-//                    gamePanel.add(gamePanel.getRestLabel());
-//                    evokeRestTimer(gamePanel);
-//                }
-//            }
-//
-//        }
-
-//        public void evokeRestTimer(GamePanel gamePanel) {
-//            restTimer = new java.util.Timer();
-//            restTimer.schedule(new TimerTask() {
-//
-//                @Override
-//                public void run() {
-//                    gamePanel.addMouseListener(gamePanel.bml);
-//                    gamePanel.remove(gamePanel.getRestLabel());
-//                    gamePanel.add(gamePanel.getTempBar());
-//                    setTempInSafeRange(true);
-//                }
-//
-//            },4000);
-//        }
-
 
         public void prepareTempTimer() {
             tempTimer = new java.util.Timer();
@@ -228,12 +137,9 @@ public class SpaceShip extends Image{
 
                 @Override
                 public void run() {
-
-                    if(bml.mousePressed_beam ==false && bml.pressDown ==false) {
-                        decreaseTemprature();
+                        decreaseTemperature();
                         if(temperature < 0) {
                             temperature = 0 ;
-                        }
                     }
                 }
 
@@ -241,15 +147,14 @@ public class SpaceShip extends Image{
         }
 
 
-        public void decreaseTemprature() {
-            this.temperature-=40 ;
-        }
 
-        public void increaseTemprature() {
-            this.temperature+=5 ;
-        }
+    public void decreaseTemperature() {
+        this.temperature-=5 ;
+    }
 
-
+    public void increaseTemperature() {
+        this.temperature+=5 ;
+    }
 
     //getters & setters :
 

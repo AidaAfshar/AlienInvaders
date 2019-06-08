@@ -30,10 +30,10 @@ public class GamePanel extends JPanel {
     Background background1 = new Background("pictures/backgrounds/background1.png");
 
     public static MyMouseListener ml = new MyMouseListener();
-    public static BeamMouseListener bml = new BeamMouseListener();
+    public BeamMouseListener bml ;
+
     MyKeyListener kl ;
     Timer timer ;
-
 
     JLabel coinLabel ;
     JLabel powerLabel ;
@@ -60,7 +60,9 @@ public class GamePanel extends JPanel {
         this.setBackground(Color.gray);
         this.addMouseMotionListener(ml);
         this.addMouseListener(ml);
+        BeamMouseListener bml = new BeamMouseListener(admin.getShip());
         this.addMouseListener(bml);
+        this.addMouseMotionListener(bml);
         kl = new MyKeyListener(contentPane);
         this.addKeyListener(kl);
         this.setFocusable(true);
@@ -136,9 +138,6 @@ public class GamePanel extends JPanel {
             if(admin.getShip().getTemperature()>=100) {
                 admin.getShip().setTempInSafeRange(false);
                 admin.getShip().setTemperature(0);
-                bml.mousePressed_beam =false ;
-                bml.pressDown = false ;
-                removeMouseListener(bml);
                 remove(getTempBar());
                 add(getRestLabel());
                 evokeRestTimer();
@@ -156,7 +155,6 @@ public class GamePanel extends JPanel {
 
             @Override
             public void run() {
-                addMouseListener(bml);
                 remove(getRestLabel());
                 add(getTempBar());
                 admin.getShip().setTempInSafeRange(true);

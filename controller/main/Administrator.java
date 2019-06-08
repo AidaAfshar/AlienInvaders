@@ -65,7 +65,6 @@ public class Administrator {
             @Override
             public void actionPerformed(ActionEvent e) {
                 group.moveGroup();
-                ship.attack();
                 detectCollisions();
                 bombExplosion();
                 group.produceSpike();

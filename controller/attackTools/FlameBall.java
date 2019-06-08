@@ -16,8 +16,8 @@ public class FlameBall extends Beam {
 
     public void initialize() {
         this.setImage(ImageLoader.Load(this.getAddress()));
-        setWidth(25) ;
-        setHeight(80) ;
+        setWidth(30) ;
+        setHeight(90) ;
         setV(7);
         setPower(1);
         setTempUp(5);
