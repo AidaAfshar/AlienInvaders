@@ -74,10 +74,10 @@ public class Administrator {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(group.isDead()) nextGroup();
-                group.moveGroup();
+                group.moveStuffs();
+                group.produceSpike();
                 detectCollisions();
                 bombExplosion();
-                group.produceSpike();
             }
 
         });

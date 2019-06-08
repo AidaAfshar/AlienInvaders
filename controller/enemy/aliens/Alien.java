@@ -4,7 +4,6 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Random;
 
-import controller.bonus.Coin;
 import controller.enemy.alienGroups.Group;
 import view.imaging.Image;
 import view.imaging.ImageLoader;
@@ -118,25 +117,6 @@ public class Alien {
             return false ;
     }
 
-    // BONUS :
-
-    public void produceBonus(int x , int y){
-        int num = random.nextInt(12) + 1;
-        if(num%3==0)
-            produceCoin(x,y);
-        if(num%4==0)
-            produceTurbo(x,y);
-    }
-
-    public void produceCoin(int x , int y){
-
-        Coin coin = new Coin(x,y);
-
-    }
-
-    public void produceTurbo(int x , int y){
-
-    }
 
     //----
 
@@ -264,7 +244,7 @@ public class Alien {
 
     public void gotHit(int x , int y) {
         setAlive(false);
-        produceBonus(x,y) ;
+        group.releaseBonus(x,y) ;
     }
 
     public boolean isInside(){

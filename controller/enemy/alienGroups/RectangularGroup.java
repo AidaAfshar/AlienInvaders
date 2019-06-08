@@ -32,6 +32,8 @@ public class RectangularGroup extends Group {
                 aliens.add(new Hester(-1700 + p * (Xblank + alien.getWidth()), -480 + q * (Yblank + alien.getHeight())));
             }
 
+        for(Alien alien : aliens)
+            alien.setGroup(this);
     }
 
 

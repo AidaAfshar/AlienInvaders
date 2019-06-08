@@ -148,13 +148,13 @@ public class SpaceShip extends Image{
 
     @Override
     public void setX(int x) {
-        setX(x - halfWidth);
+        this.x = x - halfWidth;
         checkXToBeInside();
     }
 
     @Override
     public void setY(int y) {
-        setY(y - halfHeight);
+        this.y = y - halfHeight ;
         checkYToBeInside();
     }
 

@@ -1,6 +1,7 @@
 package controller.enemy.alienGroups;
 
 import controller.bonus.Bonus;
+import controller.bonus.Coin;
 import controller.enemy.alienAttack.Spike;
 import controller.enemy.aliens.Alien;
 import controller.enemy.aliens.AlienName;
@@ -44,6 +45,24 @@ public abstract class Group {
     public abstract void prepareEntrance() ;
     public abstract void moveGroup() ;
 
+    public void moveStuffs(){
+        moveGroup();
+        moveSpikes();
+        moveBonus();
+    }
+
+    private void moveSpikes(){
+        for(Spike spike : spikes){
+            spike.move();
+        }
+    }
+
+    private void moveBonus(){
+        for(Bonus bonus : bonus){
+            bonus.move();
+        }
+    }
+
     // SPIKE :
 
     public void produceSpike(){
@@ -61,8 +80,23 @@ public abstract class Group {
         spikes.add(new Spike(x,y));
     }
 
+    // BONUS :
 
-    //BONUS :
+    public void releaseBonus(int x , int y){
+        int num = random.nextInt(12) + 1;
+        if(num%3==0)
+            releaseCoin(x,y);
+        if(num%4==0)
+            releaseTurbo(x,y);
+    }
+
+    public void releaseCoin(int x , int y){
+        bonus.add(new Coin(x,y));
+    }
+
+    public void releaseTurbo(int x , int y){
+
+    }
 
 
 
@@ -70,8 +104,10 @@ public abstract class Group {
 
     public void renderGroup(Graphics g) {
         renderAliens(g);
-        if(groupReachedDestination)
+        if(groupReachedDestination) {
             renderSpikes(g);
+            renderBonus(g);
+        }
 
     }
 
@@ -87,11 +123,23 @@ public abstract class Group {
     protected void renderSpikes(Graphics g){
         for(Spike spike :spikes){
             if(! spike.isCollided()){
-                spike.render(g);
-                spike.move();
+                spike.draw(g);
+            //    spike.move();
             }
             if(spike.getY()> Dim.MAX_Y+20){
                 spike.setCollided(true);
+            }
+        }
+    }
+
+    protected void renderBonus(Graphics g){
+        for(Bonus bonus :bonus){
+            if(! bonus.isCaught()){
+                bonus.draw(g);
+            //    bonus.move();
+            }
+            if(bonus.getY()> Dim.MAX_Y+20){
+                bonus.setCaught(true);
             }
         }
     }

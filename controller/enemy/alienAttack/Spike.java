@@ -9,51 +9,31 @@ public class Spike extends Image {
 
     String spikeAddress = "pictures/aliens/spikes/spike.png" ;
 
-
-    int x ;
-    int y ;
-    int width = 50 ;
-    int height = 50 ;
     boolean collided = false ;
     boolean release = false ;
 
 
     public Spike(int x , int y){
-        this.x = x ;
-        this.y = y ;
-        this.release = true ;
+        setX(x);
+        setY(y);
         initialize();
     }
 
     public void initialize() {
         this.setAddress(spikeAddress);
         this.setImage(ImageLoader.Load(this.getAddress()));
+        setRelease(true);
+        setHeight(50);
+        setWidth(50);
     }
 
     public void move(){
-        this.y+=5 ;
-    }
-
-    public void render(Graphics g){
-        g.drawImage(this.getImage(),this.x,this.y,this.width,this.height,null);
+        setY(getY()+5);
     }
 
 
-    public int getX() {
-        return x;
-    }
+    // getters & setters :
 
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
-    }
 
     public boolean isCollided() {
         return collided;
@@ -71,12 +51,5 @@ public class Spike extends Image {
         this.release = release;
     }
 
-    public int getWidth() {
-        return width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
 
 }

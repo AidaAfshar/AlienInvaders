@@ -27,9 +27,11 @@ public class CircularGroup extends Group {
         circles.add(new Circle(200, 730, 300, Alien.alien[r.nextInt(4)]));
         circles.add(new Circle(300, 730, 300, Alien.alien[r.nextInt(4)]));
 
-        for(Circle circle : circles){
+        for(Circle circle : circles)
             aliens.addAll(circle.aliens);
-        }
+
+        for(Alien alien : aliens)
+            alien.setGroup(this);
     }
 
 

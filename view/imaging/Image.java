@@ -10,7 +10,7 @@ public class Image {
     transient BufferedImage image ;
     String Address ;
 
-    int x , y;
+    protected int x , y;
     int width , height ;
 
 
