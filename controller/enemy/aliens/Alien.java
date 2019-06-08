@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Random;
 
+import controller.attackTools.BeamType;
 import controller.enemy.alienGroups.Group;
 import view.imaging.Image;
 import view.imaging.ImageLoader;
@@ -242,9 +243,9 @@ public class Alien {
         this.group = group;
     }
 
-    public void gotHit(int x , int y) {
+    public void gotHit(int x , int y , BeamType type) {
         setAlive(false);
-        group.releaseBonus(x,y) ;
+        group.releaseBonus(x,y,type) ;
     }
 
     public boolean isInside(){

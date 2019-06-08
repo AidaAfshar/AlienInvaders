@@ -8,18 +8,16 @@ import javax.swing.Timer;
 
 import controller.attackTools.Beam;
 import controller.attackTools.Bomb;
-import controller.attackTools.FlameBall;
+import controller.bonus.Coin;
+import controller.bonus.empowerment.Turbo;
 import controller.enemy.alienAttack.Spike;
 import controller.enemy.alienGroups.Group;
 import controller.enemy.alienGroups.RectangularGroup;
 import controller.enemy.alienGroups.circularGroup.CircularGroup;
 import controller.enemy.alienGroups.rotatingGroup.RotatingGroup;
 import controller.enemy.aliens.Alien;
-import controller.enemy.aliens.AlienName;
 import controller.player.Player;
 import controller.ship.SpaceShip;
-import view.imaging.ImageLoader;
-import view.screen.GamePanel;
 
 public class Administrator {
 
@@ -73,7 +71,8 @@ public class Administrator {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(group.isDead()) nextGroup();
+                if(group.isDead())
+                    nextGroup();
                 group.moveStuffs();
                 group.produceSpike();
                 detectCollisions();
@@ -110,6 +109,46 @@ public class Administrator {
         beamAlienCollision();
         spaceShipAlienCollision();
         spaceShipSpikeCollision();
+        spaceShipBonusCollision();
+    }
+
+    private void spaceShipBonusCollision(){
+        spaceShipCoinCollision();
+        spaceShipTurboCollision();
+    }
+
+    private void spaceShipCoinCollision(){
+        for (int j = 0; j < group.getCoins().size(); j++) {
+            Coin coin = group.getCoins().get(j);
+            if (! coin.isCaught()) {
+                if(coin.getX()>ship.getX() && coin.getX()<ship.getX()+ship.getWidth()) {
+                    if(coin.getY()>ship.getY() && coin.getY()<ship.getY()+ship.getHeight()) {
+                        coin.setCaught(true);
+                        player.setCoin(player.getCoin()+1);
+                    }
+                }
+
+            }
+
+        }
+    }
+
+
+    private void spaceShipTurboCollision(){
+        for (int j = 0; j < group.getTurbos().size(); j++) {
+            Turbo turbo = group.getTurbos().get(j);
+            if (! turbo.isCaught()) {
+                if(turbo.getX()>ship.getX() && turbo.getX()<ship.getX()+ship.getWidth()) {
+                    if(turbo.getY()>ship.getY() && turbo.getY()<ship.getY()+ship.getHeight()) {
+                        turbo.setCaught(true);
+                     //  TODO diagnose turbo type & handle job!
+                    }
+                }
+
+            }
+
+        }
+
     }
 
     private void spaceShipSpikeCollision() {
@@ -135,7 +174,7 @@ public class Administrator {
                 if(beam.getThrowPermission()) {
                     double d = Math.sqrt(Math.pow(alien.getX()-beam.getX(),2)+Math.pow(alien.getY()-beam.getY(),2)) ;
                     if(alien.isAlive() && d<alien.getHeight()) {
-                        alien.gotHit(alien.getX(),alien.getY());
+                        alien.gotHit(alien.getX(),alien.getY(),ship.getBeamType());
                         beam.setThrowPermission(false);
                     }
                 }

@@ -44,17 +44,37 @@ public class SpaceShip extends Image{
 
     ArrayList<Bomb> bombs = new ArrayList<>(3);
     ArrayList<Beam> beams = new ArrayList<>();
+    BeamType beamType = BeamType.FLAMEBALL;
 
 
         public void produceBeam(int x , int y) {
             if(isTempInSafeRange()) {
-                beams.add(new FlameBall(x, y));
+                beams.add(diagnoseBeamType(getBeamType(),x,y));
                 increaseTemperature();
             }
         }
 
+    public Beam diagnoseBeamType(BeamType type ,int x , int y){
+        if(type.equals(BeamType.FLAMEBALL)) {
+            setBeamType(BeamType.FLAMEBALL);
+            return new FlameBall(x, y);
+        }
+        if(type.equals(BeamType.FIREGLOBE)) {
+            setBeamType(BeamType.FIREGLOBE);
+            return new FireGlobe(x, y);
+        }
+        if(type.equals(BeamType.NITROGLOBE)) {
+            setBeamType(BeamType.NITROGLOBE);
+            return new NitroGlobe(x, y);
+        }
 
-        public void produceBomb(int x , int y) {
+        return null ;
+    }
+
+
+
+
+    public void produceBomb(int x , int y) {
             if(isTempInSafeRange()) {
                 if (bombs.size() < 3) {
                     bombs.add(new Bomb(x, y));
@@ -136,6 +156,41 @@ public class SpaceShip extends Image{
         this.temperature+=5 ;
     }
 
+    //---
+
+    public void setDimensions() {
+        this.halfWidth = (int) getWidth()/2 ;
+        this.halfHeight = (int) getHeight()/2 ;
+
+        setX(Dim.CENTER_X - halfWidth - 10);
+        setY(Dim.MAX_Y - getHeight() - 10);
+
+        this.centerX = getCenterX();
+        this.centerY = getCenterY();
+    }
+
+
+    public void checkXToBeInside(){
+        if(getX() < -15)
+            this.x = -15 ;
+        if(getX() + getWidth() > Dim.MAX_X)
+            this.x = Dim.MAX_X - getWidth();
+    }
+
+    public void checkYToBeInside(){
+        if(getY() < -35)
+            this.y = -35 ;
+        if(getY() + getHeight() > Dim.MAX_Y)
+            this.y = Dim.MAX_Y - getHeight();
+    }
+
+    public void draw(Graphics g) {
+        g.drawImage(getImage(), getX() ,getY(), getWidth(),getHeight(), null);
+
+    }
+
+
+
     //getters & setters :
 
     public int getCenterY() {
@@ -156,6 +211,14 @@ public class SpaceShip extends Image{
     public void setY(int y) {
         this.y = y - halfHeight ;
         checkYToBeInside();
+    }
+
+    public BeamType getBeamType() {
+        return beamType;
+    }
+
+    public void setBeamType(BeamType beamType) {
+        this.beamType = beamType;
     }
 
     public int getTemperature() {
@@ -181,40 +244,6 @@ public class SpaceShip extends Image{
     public ArrayList<Bomb> getBombs() {
         return bombs;
     }
-
-
-
-    public void setDimensions() {
-        this.halfWidth = (int) getWidth()/2 ;
-        this.halfHeight = (int) getHeight()/2 ;
-
-        setX(Dim.CENTER_X - halfWidth - 10);
-        setY(Dim.MAX_Y - getHeight() - 10);
-
-        this.centerX = getCenterX();
-        this.centerY = getCenterY();
-    }
-
-
-    public void checkXToBeInside(){
-        if(getX() < -15)
-            setX(-15);
-        if(getX() + getWidth() > Dim.MAX_X)
-            setX(Dim.MAX_X - getWidth());
-    }
-
-    public void checkYToBeInside(){
-        if(getY() < -35)
-            setY(-35);
-        if(getY() + getHeight() > Dim.MAX_Y)
-            setY(Dim.MAX_Y - getHeight());
-    }
-
-    public void draw(Graphics g) {
-        g.drawImage(getImage(), getX() ,getY(), getWidth(),getHeight(), null);
-
-    }
-
 
 
 

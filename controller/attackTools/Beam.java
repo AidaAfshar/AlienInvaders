@@ -54,10 +54,10 @@ public abstract class Beam extends Image{
 
     }
 
-
     public void draw(Graphics g) {
         g.drawImage(this.getImage(),this.x,this.y,this.width,this.height, null);
     }
+
 
     //getters & setters :
 

@@ -1,19 +1,19 @@
-package controller.bonus.empowerment;
+package controller.bonus.empowerment.beamTypeChanger;
 
+import controller.bonus.empowerment.Turbo;
 import view.imaging.ImageLoader;
 
-public class TempInterval extends Turbo {
+public class NitroToFlame extends Turbo {
 
-    static String redCubeAddress = "pictures/bonus/redCube.png" ;
+    static String purpleCubeAddress = "pictures/bonus/purpleCube.png" ;
 
-    public TempInterval(int x, int y) {
+    public NitroToFlame(int x, int y) {
         super(x, y);
         initialize();
     }
 
-
     public void initialize(){
-        setAddress(redCubeAddress);
+        setAddress(purpleCubeAddress);
         setImage(ImageLoader.Load(getAddress()));
         setWidth(60);
         setHeight(60);

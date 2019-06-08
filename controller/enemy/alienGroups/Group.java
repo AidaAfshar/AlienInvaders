@@ -1,7 +1,9 @@
 package controller.enemy.alienGroups;
 
-import controller.bonus.Bonus;
+import controller.attackTools.BeamType;
 import controller.bonus.Coin;
+import controller.bonus.empowerment.Turbo;
+import controller.bonus.empowerment.TempInterval;
 import controller.enemy.alienAttack.Spike;
 import controller.enemy.aliens.Alien;
 import controller.enemy.aliens.AlienName;
@@ -16,8 +18,6 @@ public abstract class Group {
 
     protected Alien alien ;
     protected ArrayList<Alien> aliens = new ArrayList<>();
-    protected ArrayList<Spike> spikes = new ArrayList<>();
-    protected ArrayList<Bonus> bonus = new ArrayList<>();
 
     protected int count  ;
     protected boolean groupReachedDestination ;
@@ -51,19 +51,32 @@ public abstract class Group {
         moveBonus();
     }
 
+    private void moveBonus(){
+        moveCoins();
+        moveTurbos();
+    }
+
     private void moveSpikes(){
         for(Spike spike : spikes){
             spike.move();
         }
     }
 
-    private void moveBonus(){
-        for(Bonus bonus : bonus){
-            bonus.move();
+    private void moveCoins(){
+        for(Coin coin : coins){
+            coin.move();
+        }
+    }
+
+    private void moveTurbos(){
+        for(Turbo turbo : turbos){
+            turbo.move();
         }
     }
 
     // SPIKE :
+
+    protected ArrayList<Spike> spikes = new ArrayList<>();
 
     public void produceSpike(){
         for(Alien alien : aliens){
@@ -82,23 +95,35 @@ public abstract class Group {
 
     // BONUS :
 
-    public void releaseBonus(int x , int y){
+    protected ArrayList<Turbo> turbos = new ArrayList<>();
+    protected ArrayList<Coin> coins = new ArrayList<>();
+
+
+    public void releaseBonus(int x , int y , BeamType type){
         int num = random.nextInt(12) + 1;
         if(num%3==0)
             releaseCoin(x,y);
         if(num%4==0)
-            releaseTurbo(x,y);
+            releaseTurbo(x,y,type);
     }
 
     public void releaseCoin(int x , int y){
-        bonus.add(new Coin(x,y));
+        coins.add(new Coin(x,y));
     }
 
-    public void releaseTurbo(int x , int y){
+    public void releaseTurbo(int x , int y ,BeamType type){
+        int num = random.nextInt(2);
+        if(num == 0)
+            turbos.add(new TempInterval(x,y));
+
+        if(num == 1)
+            turbos.add(Turbo.diagnoseTurbo(x,y,type));
 
     }
 
 
+
+    //----
 
     int i=0 ;
 
@@ -106,7 +131,8 @@ public abstract class Group {
         renderAliens(g);
         if(groupReachedDestination) {
             renderSpikes(g);
-            renderBonus(g);
+            renderTurbos(g);
+            renderCoins(g);
         }
 
     }
@@ -122,24 +148,33 @@ public abstract class Group {
 
     protected void renderSpikes(Graphics g){
         for(Spike spike :spikes){
-            if(! spike.isCollided()){
+            if(! spike.isCollided())
                 spike.draw(g);
-            //    spike.move();
-            }
+
             if(spike.getY()> Dim.MAX_Y+20){
                 spike.setCollided(true);
             }
         }
     }
 
-    protected void renderBonus(Graphics g){
-        for(Bonus bonus :bonus){
-            if(! bonus.isCaught()){
-                bonus.draw(g);
-            //    bonus.move();
+    protected void renderTurbos(Graphics g){
+        for(Turbo turbo : turbos){
+            if(! turbo.isCaught())
+                turbo.draw(g);
+
+            if(turbo.getY()> Dim.MAX_Y+20){
+                turbo.setCaught(true);
             }
-            if(bonus.getY()> Dim.MAX_Y+20){
-                bonus.setCaught(true);
+        }
+    }
+
+    protected void renderCoins(Graphics g){
+        for(Coin coin:coins){
+            if(! coin.isCaught())
+                coin.draw(g);
+
+            if(coin.getY()> Dim.MAX_Y+20){
+                coin.setCaught(true);
             }
         }
     }
@@ -179,5 +214,19 @@ public abstract class Group {
         return alien;
     }
 
+    public ArrayList<Turbo> getTurbos() {
+        return turbos;
+    }
 
+    public void setTurbos(ArrayList<Turbo> turbo) {
+        this.turbos = turbo;
+    }
+
+    public ArrayList<Coin> getCoins() {
+        return coins;
+    }
+
+    public void setCoins(ArrayList<Coin> coins) {
+        this.coins = coins;
+    }
 }

@@ -11,14 +11,20 @@ public class Coin extends Bonus {
         initialize();
     }
 
+
     public void initialize(){
         setAddress(coinAddress);
         setImage(ImageLoader.Load(getAddress()));
         setWidth(40);
         setHeight(40);
         setInScreen(true);
+        handleJob();
     }
 
+    @Override
+    public void handleJob() {
+
+    }
 
 
 }
