@@ -24,9 +24,6 @@ public abstract class Beam extends Image{
 
     }
 
-    public Beam() {
-        initialize();
-    }
 
     public void initialize() {
 
@@ -52,8 +49,8 @@ public abstract class Beam extends Image{
         this.halfWidth = (int) width/2 ;
         this.halfHeight = (int) height/2 ;
 
-        this.x = GamePanel.ml.x - this.halfWidth ;
-        this.y = GamePanel.ml.y - this.halfHeight-40 ;
+        this.x = x0 - halfWidth ;
+        this.y = y0 - halfHeight - 35 ;
 
     }
 

@@ -29,7 +29,7 @@ public class GamePanel extends JPanel {
 
     Background background1 = new Background("pictures/backgrounds/background1.png");
 
-    public static MyMouseListener ml = new MyMouseListener();
+    public MyMouseListener ml ;
     public BeamMouseListener bml ;
 
     MyKeyListener kl ;
@@ -58,9 +58,10 @@ public class GamePanel extends JPanel {
     public void initialize() {
         this.setLayout(null);
         this.setBackground(Color.gray);
+        ml = new MyMouseListener(admin.getShip());
         this.addMouseMotionListener(ml);
         this.addMouseListener(ml);
-        BeamMouseListener bml = new BeamMouseListener(admin.getShip());
+        bml = new BeamMouseListener(admin.getShip());
         this.addMouseListener(bml);
         this.addMouseMotionListener(bml);
         kl = new MyKeyListener(contentPane);

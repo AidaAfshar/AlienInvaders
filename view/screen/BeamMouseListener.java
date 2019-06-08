@@ -45,13 +45,11 @@ public class BeamMouseListener implements MouseListener, MouseMotionListener {
 
     @Override
     public void mouseEntered(MouseEvent e) {
-        // TODO Auto-generated method stub
 
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-        // TODO Auto-generated method stub
 
     }
 
@@ -61,7 +59,7 @@ public class BeamMouseListener implements MouseListener, MouseMotionListener {
     public void mouseDragged(MouseEvent e) {
         x=e.getX();
         y=e.getY();
-        if(i%20==0)
+        if(i%10==0)
             ship.produceBeam(x,y);
         i++ ;
     }
@@ -71,7 +69,7 @@ public class BeamMouseListener implements MouseListener, MouseMotionListener {
 
     }
 
-    //getters & settters :
+    //getters & setters :
 
 
     public int getX() {

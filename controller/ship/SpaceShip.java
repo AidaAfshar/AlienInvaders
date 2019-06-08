@@ -28,7 +28,7 @@ public class SpaceShip extends Image{
 
     Player player ;
 
-    transient Timer shipTimer ;
+//    transient Timer shipTimer ;
 
 
     public SpaceShip(Player player) {
@@ -40,33 +40,33 @@ public class SpaceShip extends Image{
 
     public void initialize() {
         setImage(ImageLoader.Load(getAddress()));
-        prepareShipTimer();
-        shipTimer.start();
+//        prepareShipTimer();
+//        shipTimer.start();
     }
 
 
-    public void prepareShipTimer() {
-        shipTimer = new Timer(3,new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                SpaceShip.this.x = GamePanel.ml.x - SpaceShip.this.halfWidth;
-                SpaceShip.this.y = GamePanel.ml.y - SpaceShip.this.halfHeight;
-                SpaceShip.this.checkToBeInside();
-
-
-            }
-
-        });
-
-    }
+//    public void prepareShipTimer() {
+//        shipTimer = new Timer(3,new ActionListener() {
+//
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//
+//                x = GamePanel.ml.x - SpaceShip.this.halfWidth;
+//                y = GamePanel.ml.y - SpaceShip.this.halfHeight;
+//                SpaceShip.this.checkToBeInside();
+//
+//
+//            }
+//
+//        });
+//
+//    }
 
 
     //SPACESHIP ATTACK :
 
-        ArrayList<Bomb> bombs = new ArrayList<>(3);
-        ArrayList<Beam> beams = new ArrayList<>();
+    ArrayList<Bomb> bombs = new ArrayList<>(3);
+    ArrayList<Beam> beams = new ArrayList<>();
 
 
         public void produceBeam(int x , int y) {
@@ -187,7 +187,8 @@ public class SpaceShip extends Image{
     }
 
     public void setX(int x) {
-        this.x = x;
+        this.x = x - halfWidth;
+        checkXToBeInside();
     }
 
     public int getY() {
@@ -195,7 +196,8 @@ public class SpaceShip extends Image{
     }
 
     public void setY(int y) {
-        this.y = y;
+        this.y = y - halfHeight ;
+        checkYToBeInside();
     }
 
     public int getTemperature() {
@@ -251,13 +253,16 @@ public class SpaceShip extends Image{
     }
 
 
-    public void checkToBeInside() {
+    public void checkXToBeInside(){
         if(x < 0)
             x = 0 ;
-        if(y < 0)
-            y = 0 ;
         if(x + width > Dim.MAX_X)
             x = Dim.MAX_X - width ;
+    }
+
+    public void checkYToBeInside(){
+        if(y < 0)
+            y = 0 ;
         if(y + height > Dim.MAX_Y)
             y = Dim.MAX_Y - height ;
     }
