@@ -254,15 +254,15 @@ public class SpaceShip extends Image{
 
 
     public void checkXToBeInside(){
-        if(x < 0)
-            x = 0 ;
+        if(x < -15)
+            x = -15 ;
         if(x + width > Dim.MAX_X)
             x = Dim.MAX_X - width ;
     }
 
     public void checkYToBeInside(){
-        if(y < 0)
-            y = 0 ;
+        if(y < -35)
+            y = -35 ;
         if(y + height > Dim.MAX_Y)
             y = Dim.MAX_Y - height ;
     }
