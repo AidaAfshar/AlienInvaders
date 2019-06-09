@@ -17,6 +17,7 @@ public class RectangularGroup extends Group {
 
     public RectangularGroup() {
         super(AlienName.HESTER);
+        setType(GroupType.RECTANGULAR);
         count = 30 ;
         Xblank = 25 ;
         Yblank = 20 ;

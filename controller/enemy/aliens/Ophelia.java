@@ -22,6 +22,8 @@ public class Ophelia extends Alien{
 
     public void initialize(){
         setName(AlienName.OPHELIA) ;
+        setProbablity(1500);
+        setPower(2);
         setImages(Assets.ophelia1Image,Assets.ophelia2Image );
         setHeight(75);
         setWidth(95);

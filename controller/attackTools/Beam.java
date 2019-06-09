@@ -18,6 +18,7 @@ public abstract class Beam extends Image{
     boolean throwPermission = false ;
 
 
+
     public Beam() {
         super();
         initialize();

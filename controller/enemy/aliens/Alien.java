@@ -24,6 +24,8 @@ public class Alien extends Image{
     int x , y ;
     int vx , vy ;
     boolean alive = true ;
+    int probablity ;
+    int power ;
 
     Group group ;
 
@@ -255,5 +257,19 @@ public class Alien extends Image{
         return true ;
     }
 
+    public int getProbablity() {
+        return probablity;
+    }
 
+    public void setProbablity(int probablity) {
+        this.probablity = probablity;
+    }
+
+    public int getPower() {
+        return power;
+    }
+
+    public void setPower(int power) {
+        this.power = power;
+    }
 }

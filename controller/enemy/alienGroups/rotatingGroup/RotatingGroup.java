@@ -1,6 +1,7 @@
 package controller.enemy.alienGroups.rotatingGroup;
 
 import controller.enemy.alienGroups.Group;
+import controller.enemy.alienGroups.GroupType;
 import controller.enemy.aliens.Alien;
 import controller.enemy.aliens.AlienName;
 
@@ -15,6 +16,7 @@ public class RotatingGroup extends Group {
 
     public RotatingGroup() {
         super();
+        setType(GroupType.ROTATING);
         prepareCircles();
 //        initialize();
     }

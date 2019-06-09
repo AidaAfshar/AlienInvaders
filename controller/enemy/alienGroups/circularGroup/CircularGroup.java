@@ -1,6 +1,7 @@
 package controller.enemy.alienGroups.circularGroup;
 
 import controller.enemy.alienGroups.Group;
+import controller.enemy.alienGroups.GroupType;
 import controller.enemy.aliens.Alien;
 
 import javax.swing.*;
@@ -18,6 +19,7 @@ public class CircularGroup extends Group {
 
     public CircularGroup() {
         super();
+        setType(GroupType.CIRCULAR);
         prepareCircles();
 //        initialize();
     }

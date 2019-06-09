@@ -21,6 +21,7 @@ public class Gravitus extends Alien {
     public void initialize(){
         setName(AlienName.GRAVITUS) ;
         setImage(Assets.gravitusImage );
+        setPower(100);
         setAlive(true);
         setHeight(540);
         setWidth(540);

@@ -101,5 +101,7 @@ public class Assets {
     public static String gameOverPanelBackgroundAddress = "pictures/backgrounds/gameOverPanel.png" ;
     public static BufferedImage gameOverPanelBackgroundImage = ImageLoader.load(gameOverPanelBackgroundAddress);
 
+    public static String winPanelBackgroundAddress = "pictures/backgrounds/winPanel.png" ;
+    public static BufferedImage winPanelBackgroundImage = ImageLoader.load(winPanelBackgroundAddress);
 
 }

@@ -14,6 +14,7 @@ import controller.bonus.empowerment.TurboType;
 import controller.enemy.alienAttack.Spike;
 import controller.enemy.alienGroups.FinalWave;
 import controller.enemy.alienGroups.Group;
+import controller.enemy.alienGroups.GroupType;
 import controller.enemy.alienGroups.RectangularGroup;
 import controller.enemy.alienGroups.circularGroup.CircularGroup;
 import controller.enemy.alienGroups.rotatingGroup.RotatingGroup;
@@ -62,6 +63,19 @@ public class Administrator {
         groups.add(new CircularGroup());
         groups.add(new RotatingGroup());
         groups.add(new FinalWave());
+        groups.add(new RectangularGroup());
+        groups.add(new CircularGroup());
+        groups.add(new RotatingGroup());
+        groups.add(new FinalWave());
+        groups.add(new RectangularGroup());
+        groups.add(new CircularGroup());
+        groups.add(new RotatingGroup());
+        groups.add(new FinalWave());
+        groups.add(new RectangularGroup());
+        groups.add(new CircularGroup());
+        groups.add(new RotatingGroup());
+        groups.add(new FinalWave());
+
         group = groups.get(0);
         group.initialize();
 
@@ -92,16 +106,26 @@ public class Administrator {
         });
     }
 
+    int round = 0 ;
+
     public void nextGroup(){
         for(Group group : groups){
             if(! group.isDead()){
                 this.group = group ;
                 this.group.initialize();
                 break ;
+            }else if(group.getType().equals(GroupType.FINALWAVE)){
+                round++ ;
+                if(round == 4) finishGame();
             }
         }
     }
 
+
+    public void finishGame(){
+        contentPane.showWinPanel(player.getCoin());
+        timer.stop();
+    }
 
     protected void bombExplosion() {
         for(Bomb bomb : ship.getBombs()) {
@@ -187,8 +211,10 @@ public class Administrator {
                 if(beam.getThrowPermission()) {
                     double d = Math.sqrt(Math.pow(alien.getX()-beam.getX(),2)+Math.pow(alien.getY()-beam.getY(),2)) ;
                     if(alien.isAlive() && d<alien.getHeight()) {
-                        alien.gotHit(alien.getX(),alien.getY(),ship.getBeamType());
                         beam.setThrowPermission(false);
+                        alien.setPower(alien.getPower()-beam.getPower());
+                        if(alien.getPower()<=0)
+                            alien.gotHit(alien.getX(),alien.getY(),ship.getBeamType());
                     }
                 }
             }

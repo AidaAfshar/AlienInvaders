@@ -26,6 +26,8 @@ public abstract class Group {
 
     protected Timer entranceTimer ;
 
+    GroupType type ;
+
 
     public Group() {
 
@@ -81,8 +83,7 @@ public abstract class Group {
     public void produceSpike(){
         for(Alien alien : aliens){
             if(alien.isAlive()) {
-                //TODO
-                if (random.nextInt(15000) % 1000 == 0) {
+                if (random.nextInt(15000) % alien.getProbablity() == 0) {
                     releaseSpike(alien.getX(), alien.getY());
                 }
             }
@@ -228,5 +229,13 @@ public abstract class Group {
 
     public void setCoins(ArrayList<Coin> coins) {
         this.coins = coins;
+    }
+
+    public GroupType getType() {
+        return type;
+    }
+
+    public void setType(GroupType type) {
+        this.type = type;
     }
 }

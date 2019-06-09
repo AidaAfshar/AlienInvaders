@@ -22,6 +22,8 @@ public class Hester extends Alien {
 
     public void initialize(){
         setName(AlienName.HESTER) ;
+        setProbablity(2000);
+        setPower(1);
         setImages(Assets.hester1Image,Assets.hester2Image );
         setHeight(90);
         setWidth(80);

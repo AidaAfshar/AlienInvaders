@@ -24,6 +24,7 @@ public class ContentPane extends JPanel {
     GamePanel gamePanel ;
     EscapePanel escapePanel ;
     GameOverPanel gameOverPanel ;
+    WinPanel winPanel;
 
     Player player ;
     Administrator admin ;
@@ -111,10 +112,28 @@ public class ContentPane extends JPanel {
 
     }
 
+    public void showWinPanel(int score){
+        winPanel = new WinPanel(this,score);
+        add(winPanel);
+        gamePanel.setVisible(false);
+        winPanel.setVisible(true);
+    }
+
     public void afterGameOver(){
+        player.initialize();
         admin = new Administrator(this);
         prepareAdministrator();
         gameOverPanel.setVisible(false);
+        prepareGamePanel();
+        add(gamePanel);
+        gamePanel.requestFocus();
+    }
+
+    public void afterWin(){
+        player.initialize();
+        admin = new Administrator(this);
+        prepareAdministrator();
+        winPanel.setVisible(false);
         prepareGamePanel();
         add(gamePanel);
         gamePanel.requestFocus();

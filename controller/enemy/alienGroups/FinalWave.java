@@ -17,7 +17,7 @@ public class FinalWave  extends Group{
     public FinalWave() {
         super();
         aliens.add(new Gravitus(Dim.CENTER_X-300,-500));
-
+        setType(GroupType.FINALWAVE);
     }
 
     @Override
