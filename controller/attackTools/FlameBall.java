@@ -1,7 +1,6 @@
 package controller.attackTools;
 
 import view.imaging.Assets;
-import view.imaging.ImageLoader;
 
 public class FlameBall extends Beam {
 

@@ -98,4 +98,8 @@ public class Assets {
     public static String usersPanelBackgroundAddress = "pictures/backgrounds/usersPanel.png" ;
     public static BufferedImage usersPanelBackgroundImage = ImageLoader.load(usersPanelBackgroundAddress);
 
+    public static String gameOverPanelBackgroundAddress = "pictures/backgrounds/gameOverPanel.png" ;
+    public static BufferedImage gameOverPanelBackgroundImage = ImageLoader.load(gameOverPanelBackgroundAddress);
+
+
 }

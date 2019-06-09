@@ -113,7 +113,7 @@ public class MenuPanel extends JPanel {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                //TODO
+                System.exit(0);
             }
 
         });

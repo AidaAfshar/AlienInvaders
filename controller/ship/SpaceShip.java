@@ -78,7 +78,6 @@ public class SpaceShip extends Image{
             if(isTempInSafeRange()) {
                 if (bombs.size() < 3) {
                     bombs.add(new Bomb(x, y));
-                    Bomb.count++;
                     player.setBombCount(player.getBombCount() - 1);
                 }
             }
@@ -106,18 +105,15 @@ public class SpaceShip extends Image{
 
         public void renderBombAttack(Graphics g) {
             if(bombs.size() != 0) {
-            //    System.out.println(1);
                 for(Bomb bomb : bombs) {
-            //        System.out.println(2);
                     if(bomb.getThrowPermission()) {
-            //            System.out.println(3);
                         bomb.draw(g);
-                        bomb.moveBomb();
-                    }else if(bomb.explode) {
-                        bomb.renderExplosion(g);
-                        bomb.j++ ;
-                        if(bomb.j>13)
-                            bomb.explode = false ;
+                        bomb.moveBeam();
+                    }else if(bomb.isExploded()) {
+//                        bomb.renderExplosion(g);
+//                        bomb.j++ ;
+//                        if(bomb.j>13)
+//                            bomb.explode = false ;
                     }
                 }
             }

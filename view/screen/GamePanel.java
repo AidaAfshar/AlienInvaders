@@ -104,7 +104,7 @@ public class GamePanel extends JPanel {
         tempBar = new JProgressBar(0,admin.getShip().getMaximumTemp());
         tempBar.setOrientation(SwingConstants.HORIZONTAL);
         tempBar.setStringPainted(true);
-        tempBar.setBounds(85,20,400,40);
+        tempBar.setBounds(85,20,4*admin.getShip().getMaximumTemp(),40);
         tempBar.setBackground(Color.darkGray);
         tempBar.setForeground(Color.cyan.darker());
 
@@ -156,6 +156,7 @@ public class GamePanel extends JPanel {
 
     public void increaseTempInterval(){
         tempBar.setMaximum(admin.getShip().getMaximumTemp());
+        tempBar.setBounds(85,20,4*admin.getShip().getMaximumTemp(),40);
         TempColorThread tempColorChanger = new TempColorThread(this) ;
         tempColorChanger.start();
     }

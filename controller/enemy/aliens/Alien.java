@@ -12,7 +12,7 @@ import view.imaging.ImageLoader;
 import view.utilities.Dim;
 
 
-public class Alien {
+public class Alien extends Image{
 
 
     public static AlienName[] alien = {AlienName.HESTER , AlienName.OPHELIA, AlienName.AUGUSTUS ,AlienName.BLOODREX};

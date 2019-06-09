@@ -1,6 +1,9 @@
 package controller.enemy.aliens;
 
+import controller.attackTools.BeamType;
 import view.imaging.Assets;
+
+import java.awt.*;
 
 public class Gravitus extends Alien {
 
@@ -15,16 +18,23 @@ public class Gravitus extends Alien {
     }
 
 
-    public Gravitus(int xc , int yc , int r, double teta){
-        super(xc , yc , r , teta) ;
-        initialize();
-    }
-
     public void initialize(){
         setName(AlienName.GRAVITUS) ;
-        setImages(Assets.gravitusImage );
-        setHeight(100);
-        setWidth(200);
+        setImage(Assets.gravitusImage );
+        setAlive(true);
+        setHeight(540);
+        setWidth(540);
+    }
+
+    @Override
+    public void draw(Graphics g){
+        g.drawImage(getImage(), x, y, width, height, null);
+
+    }
+
+    @Override
+    public void gotHit(int x , int y , BeamType type){
+        setAlive(false);
     }
 
 }

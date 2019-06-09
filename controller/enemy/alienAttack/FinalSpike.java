@@ -1,5 +1,7 @@
 package controller.enemy.alienAttack;
 
+import view.imaging.Assets;
+
 public class FinalSpike extends Spike {
 
     int vx ,vy ;
@@ -8,7 +10,16 @@ public class FinalSpike extends Spike {
         super(x, y);
         this.vx = vx;
         this.vy = vy;
+        initialize();
     }
+
+    public void initialize() {
+        this.setImage(Assets.spikeImage);
+        setRelease(true);
+        setHeight(50);
+        setWidth(50);
+    }
+
 
     @Override
     public void move() {

@@ -20,6 +20,7 @@ import controller.enemy.alienGroups.rotatingGroup.RotatingGroup;
 import controller.enemy.aliens.Alien;
 import controller.player.Player;
 import controller.ship.SpaceShip;
+import view.screen.ContentPane;
 
 public class Administrator {
 
@@ -31,10 +32,16 @@ public class Administrator {
 
     Timer timer ;
 
+    ContentPane contentPane ;
 
     public Administrator(Player player) {
         this.player = player ;
-        initialize();
+    //    initialize();
+    }
+
+    public Administrator(ContentPane contentPane) {
+        this.contentPane = contentPane ;
+        //    initialize();
     }
 
 
@@ -89,7 +96,7 @@ public class Administrator {
         for(Group group : groups){
             if(! group.isDead()){
                 this.group = group ;
-                group.initialize();
+                this.group.initialize();
                 break ;
             }
         }
@@ -98,8 +105,10 @@ public class Administrator {
 
     protected void bombExplosion() {
         for(Bomb bomb : ship.getBombs()) {
-            if(bomb.timeToKill)
+            if(bomb.isExploded()){
                 group.killTheGroup();
+                bomb.setExplode(false);
+            }
         }
     }
 
@@ -191,19 +200,16 @@ public class Administrator {
 
     private void spaceShipAlienCollision(){
 
-        //TODO
-
-
-//		for(Alien alien :rect.getAliens()) {
-//			if(alien.isAlive()) {
-//				double d = Math.sqrt(Math.pow(alien.getX()-ship.getX(),2)+Math.pow(alien.getY()-ship.getY(),2)) ;
-//				if(d<alien.getHeight() || d<alien.getWidth()) {
-//					gamePanel.ml.setClickCount(0);
-//					ship.setY(ship.getY()+100);
-//					ship.power -- ;
-//				}
-//			}
-//		}
+		for(Alien alien :group.getAliens()) {
+			if(alien.isAlive()) {
+				double d = Math.sqrt(Math.pow(alien.getX()-ship.getX(),2)+Math.pow(alien.getY()-ship.getY(),2)) ;
+				if(d<Math.min(alien.getHeight() , alien.getWidth())) {
+					timer.stop();
+					contentPane.showGameOverPanel();
+					timer.stop();
+				}
+			}
+		}
     }
 
 
@@ -228,6 +234,7 @@ public class Administrator {
 
     public void setPlayer(Player player) {
         this.player = player;
+        initialize();
     }
 
     public Group getGroup() {

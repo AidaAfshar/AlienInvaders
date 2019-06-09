@@ -23,6 +23,7 @@ public class ContentPane extends JPanel {
     MenuPanel menuPanel ;
     GamePanel gamePanel ;
     EscapePanel escapePanel ;
+    GameOverPanel gameOverPanel ;
 
     Player player ;
     Administrator admin ;
@@ -36,6 +37,7 @@ public class ContentPane extends JPanel {
     }
 
     public void initialize() {
+        admin = new Administrator(this);
         fileManager = new FileManager();
         setLayout(new BorderLayout());
         setBackground(Color.blue);
@@ -46,6 +48,7 @@ public class ContentPane extends JPanel {
     public void preparePanels(){
         invitationPanel= new InvitationPanel(this);
         escapePanel = new EscapePanel(this);
+
     }
 
     public void saveState() {
@@ -94,18 +97,36 @@ public class ContentPane extends JPanel {
     }
 
     public void resumeGameFromEscapePanel(){
-            ContentPane.this.remove(escapePanel);
+            this.remove(escapePanel);
             escapePanel.setVisible(false);
             gamePanel.setVisible(true);
             gamePanel.requestFocus();
     }
 
+    public void showGameOverPanel(){
+        gameOverPanel = new GameOverPanel(this);
+        add(gameOverPanel);
+        gameOverPanel.setVisible(true);
+        gamePanel.setVisible(false);
+
+    }
+
+    public void afterGameOver(){
+        admin = new Administrator(this);
+        prepareAdministrator();
+        gameOverPanel.setVisible(false);
+        prepareGamePanel();
+        add(gamePanel);
+        gamePanel.requestFocus();
+    }
+
     public void prepareGamePanel() {
         gamePanel = new GamePanel(this ,admin);
+        gamePanel.setVisible(true);
     }
 
     public void prepareAdministrator(){
-        admin = new Administrator(player);
+        admin.setPlayer(player);
     }
 
     //getters & setters:

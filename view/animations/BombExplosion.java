@@ -1,7 +1,9 @@
 package view.animations;
 
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 
+import view.imaging.Assets;
 import view.imaging.Image;
 import view.imaging.ImageLoader;
 import view.utilities.Dim;
@@ -9,10 +11,9 @@ import view.utilities.Dim;
 
 public class BombExplosion {
 
-    //TODO
 
     int explosionImagesSize = 14 ;
-    public Image[] explosionImages ;
+    public static BufferedImage[] explosionImages ;
 
     static String explosionPictureAddress_1 = "pictures/beams/bomb/explosion/1.png" ;
     static String explosionPictureAddress_2 = "pictures/beams/bomb/explosion/2.png" ;
@@ -30,40 +31,38 @@ public class BombExplosion {
     static String explosionPictureAddress_14 = "pictures/beams/bomb/explosion/14.png" ;
 
 
+    private static BombExplosion ourInstance = new BombExplosion();
 
-    public BombExplosion() {
+    public static BombExplosion getInstance() {
+        return ourInstance;
+    }
+
+    private BombExplosion() {
         initialize();
     }
 
 
     public void initialize() {
 
-        explosionImages = new Image[14];
-        explosionImages[0] = new Image(explosionPictureAddress_1) ;
-        explosionImages[1] = new Image(explosionPictureAddress_2) ;
-        explosionImages[2] = new Image(explosionPictureAddress_3) ;
-        explosionImages[3] = new Image(explosionPictureAddress_4) ;
-        explosionImages[4] = new Image(explosionPictureAddress_5) ;
-        explosionImages[5] = new Image(explosionPictureAddress_6) ;
-        explosionImages[6] = new Image(explosionPictureAddress_7) ;
-        explosionImages[7] = new Image(explosionPictureAddress_8) ;
-        explosionImages[8] = new Image(explosionPictureAddress_9) ;
-        explosionImages[9] = new Image(explosionPictureAddress_10) ;
-        explosionImages[10] = new Image(explosionPictureAddress_11) ;
-        explosionImages[11] = new Image(explosionPictureAddress_12) ;
-        explosionImages[12] = new Image(explosionPictureAddress_13) ;
-        explosionImages[13] = new Image(explosionPictureAddress_14) ;
+        explosionImages = new BufferedImage[14];
+        explosionImages[0] = ImageLoader.load(explosionPictureAddress_1) ;
+        explosionImages[1] = ImageLoader.load(explosionPictureAddress_2);
+        explosionImages[2] = ImageLoader.load(explosionPictureAddress_3) ;
+        explosionImages[3] = ImageLoader.load(explosionPictureAddress_4) ;
+        explosionImages[4] = ImageLoader.load(explosionPictureAddress_5) ;
+        explosionImages[5] = ImageLoader.load(explosionPictureAddress_6) ;
+        explosionImages[6] = ImageLoader.load(explosionPictureAddress_7) ;
+        explosionImages[7] = ImageLoader.load(explosionPictureAddress_8) ;
+        explosionImages[8] = ImageLoader.load(explosionPictureAddress_9) ;
+        explosionImages[9] = ImageLoader.load(explosionPictureAddress_10) ;
+        explosionImages[10] = ImageLoader.load(explosionPictureAddress_11) ;
+        explosionImages[11] = ImageLoader.load(explosionPictureAddress_12) ;
+        explosionImages[12] = ImageLoader.load(explosionPictureAddress_13) ;
+        explosionImages[13] = ImageLoader.load(explosionPictureAddress_14) ;
 
-
-        for(int i=0 ; i < explosionImagesSize ; i++) {
-            explosionImages[i].setImage(ImageLoader.load(explosionImages[i].getAddress())) ;
-        }
 
     }
 
 
-    public void renderExplosion(Graphics g,int j) {
-        g.drawImage(explosionImages[j].getImage(),Dim.CENTER_X-120,Dim.CENTER_Y-120,250,250,null);
-    }
 
 }

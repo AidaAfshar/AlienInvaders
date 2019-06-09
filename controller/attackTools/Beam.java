@@ -36,14 +36,6 @@ public abstract class Beam extends Image{
             setThrowPermission(false);
     }
 
-    public void setDimensions(int width ,int height) {
-        this.width = width ;
-        this.height = height ;
-
-        this.halfWidth = (int) width/2 ;
-        this.halfHeight = (int) height/2 ;
-
-    }
 
     public void setDimensions() {
         this.halfWidth = (int) width/2 ;
