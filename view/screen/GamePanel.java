@@ -102,12 +102,14 @@ public class GamePanel extends JPanel {
 
 
     public void prepareTempBar(){
-        tempBar = new JProgressBar(0,100);
+        tempBar = new JProgressBar(0,admin.getShip().getMaximumTemp());
         tempBar.setOrientation(SwingConstants.HORIZONTAL);
         tempBar.setStringPainted(true);
         tempBar.setBounds(85,20,400,40);
         tempBar.setBackground(Color.darkGray);
         tempBar.setForeground(Color.cyan.darker());
+
+        shipMaxTemp = admin.getShip().getMaximumTemp();
     }
 
     public void prepareTempLabel(){
@@ -133,18 +135,63 @@ public class GamePanel extends JPanel {
     }
 
 
+    int shipMaxTemp ;
 
     public void controlTemp() {
-        if(admin.getShip().isTempInSafeRange()) {
-            if(admin.getShip().getTemperature()>=100) {
-                admin.getShip().setTempInSafeRange(false);
-                admin.getShip().setTemperature(0);
+        SpaceShip ship = admin.getShip();
+        if( shipMaxTemp != ship.getMaximumTemp()){
+            shipMaxTemp = ship.getMaximumTemp() ;
+            increaseTempInterval();
+        }
+        if(ship.isTempInSafeRange()) {
+            if(ship.getTemperature()>=ship.getMaximumTemp()) {
+                ship.setTempInSafeRange(false);
+                ship.setTemperature(0);
                 remove(getTempBar());
                 add(getRestLabel());
                 evokeRestTimer();
             }
         }
 
+    }
+
+    public void increaseTempInterval(){
+        tempBar.setMaximum(admin.getShip().getMaximumTemp());
+        TempColorThread tempColorChanger = new TempColorThread(this) ;
+        tempColorChanger.start();
+    }
+
+    public class TempColorThread extends Thread{
+        int delay = 100 ;
+
+        GamePanel panel ;
+
+        public TempColorThread(GamePanel panel) {
+            this.panel = panel ;
+        }
+
+        @Override
+        public void run() {
+            super.run();
+            for(int i=0 ; i<5 ; i++){
+                tempBar.setBackground(Color.yellow);
+                tempBar.setForeground(Color.orange);
+                try {
+                    Thread.sleep(delay);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                tempBar.setBackground(Color.darkGray);
+                tempBar.setForeground(Color.cyan.darker());
+                try {
+                    Thread.sleep(delay);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+            }
+            currentThread().interrupt();
+        }
     }
 
     java.util.Timer restTimer ;

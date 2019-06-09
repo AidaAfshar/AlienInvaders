@@ -2,6 +2,6 @@ package controller.bonus.empowerment;
 
 public enum TurboType {
 
-    TEMP_INTERVAL,FLAME_TO_FIRE,FIRE_TO_NITRO,NITRO_TO_FLAME ;
+    TEMP_INTERVAL,FIRE_TURBO,NITRO_TURBO,FLAME_TURBO ;
 
 }

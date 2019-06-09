@@ -1,5 +1,6 @@
 package controller.bonus.empowerment;
 
+import controller.ship.SpaceShip;
 import view.imaging.ImageLoader;
 
 public class TempInterval extends Turbo {
@@ -13,17 +14,17 @@ public class TempInterval extends Turbo {
 
 
     public void initialize(){
+        setType(TurboType.TEMP_INTERVAL);
         setAddress(redCubeAddress);
         setImage(ImageLoader.Load(getAddress()));
         setWidth(60);
         setHeight(60);
         setInScreen(true);
-        handleJob();
     }
 
     @Override
-    public void handleJob() {
-
+    public void handleJob(SpaceShip ship) {
+        ship.setMaximumTemp(ship.getMaximumTemp()+5);
     }
 
 

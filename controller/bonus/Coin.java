@@ -18,12 +18,6 @@ public class Coin extends Bonus {
         setWidth(40);
         setHeight(40);
         setInScreen(true);
-        handleJob();
-    }
-
-    @Override
-    public void handleJob() {
-
     }
 
 

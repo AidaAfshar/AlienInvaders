@@ -10,6 +10,7 @@ import controller.attackTools.Beam;
 import controller.attackTools.Bomb;
 import controller.bonus.Coin;
 import controller.bonus.empowerment.Turbo;
+import controller.bonus.empowerment.TurboType;
 import controller.enemy.alienAttack.Spike;
 import controller.enemy.alienGroups.Group;
 import controller.enemy.alienGroups.RectangularGroup;
@@ -141,7 +142,7 @@ public class Administrator {
                 if(turbo.getX()>ship.getX() && turbo.getX()<ship.getX()+ship.getWidth()) {
                     if(turbo.getY()>ship.getY() && turbo.getY()<ship.getY()+ship.getHeight()) {
                         turbo.setCaught(true);
-                     //  TODO diagnose turbo type & handle job!
+                        turbo.handleJob(ship);
                     }
                 }
 
@@ -150,6 +151,7 @@ public class Administrator {
         }
 
     }
+
 
     private void spaceShipSpikeCollision() {
         for (int j = 0; j < group.getSpikes().size(); j++) {

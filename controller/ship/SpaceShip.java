@@ -127,6 +127,7 @@ public class SpaceShip extends Image{
         //TEMPERATURE :
 
         int temperature = 0;
+        int maximumTemp = 100 ;
         boolean tempInSafeRange = true ;
 
         java.util.Timer tempTimer ;
@@ -235,6 +236,14 @@ public class SpaceShip extends Image{
 
     public void setTempInSafeRange(boolean tempInSafeRange) {
         this.tempInSafeRange = tempInSafeRange;
+    }
+
+    public int getMaximumTemp() {
+        return maximumTemp;
+    }
+
+    public void setMaximumTemp(int maximumTemp) {
+        this.maximumTemp = maximumTemp;
     }
 
     public ArrayList<Beam> getBeams() {
