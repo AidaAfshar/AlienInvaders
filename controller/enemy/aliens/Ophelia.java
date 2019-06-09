@@ -1,5 +1,7 @@
 package controller.enemy.aliens;
 
+import view.imaging.Assets;
+
 public class Ophelia extends Alien{
 
     public Ophelia() {
@@ -20,7 +22,7 @@ public class Ophelia extends Alien{
 
     public void initialize(){
         setName(AlienName.OPHELIA) ;
-        setImages("pictures/aliens/ophelia/1.png" ,"pictures/aliens/ophelia/2.png" );
+        setImages(Assets.ophelia1Image,Assets.ophelia2Image );
         setHeight(75);
         setWidth(95);
     }

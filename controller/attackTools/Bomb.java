@@ -3,13 +3,14 @@ package controller.attackTools;
 import java.awt.Graphics;
 
 import view.animations.BombExplosion;
+import view.imaging.Assets;
 import view.imaging.Image;
 import view.imaging.ImageLoader;
 import view.utilities.Dim;
 
 public class Bomb extends Beam {
 
-    static String bombImageAddress = "pictures/beams/bomb/bomb.png" ;
+
 //    static String explosionImageAddress = "pictures/beams/bomb/exp.png" ;
 
 
@@ -32,15 +33,14 @@ public class Bomb extends Beam {
 
 
     public Bomb(int x0 , int y0) {
-        super(bombImageAddress);
+        super();
         this.x0 = x0 ;
         this.y0 = y0 ;
         initialize();
     }
 
     public void initialize() {
-        this.setAddress( bombImageAddress );
-        this.setImage(ImageLoader.Load(bombImageAddress));
+        this.setImage(Assets.bombImage);
         this.width = 150 ;
         this.height = 150 ;
         this.setDimensions();

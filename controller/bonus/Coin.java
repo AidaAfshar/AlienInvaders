@@ -1,10 +1,9 @@
 package controller.bonus;
 
-import view.imaging.ImageLoader;
+import view.imaging.Assets;
 
 public class Coin extends Bonus {
 
-    static String coinAddress = "pictures/bonus/coin.png" ;
 
     public Coin(int x, int y) {
         super(x, y);
@@ -13,8 +12,7 @@ public class Coin extends Bonus {
 
 
     public void initialize(){
-        setAddress(coinAddress);
-        setImage(ImageLoader.Load(getAddress()));
+        setImage(Assets.coinImage);
         setWidth(40);
         setHeight(40);
         setInScreen(true);

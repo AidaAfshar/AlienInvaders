@@ -1,11 +1,10 @@
 package controller.bonus.empowerment;
 
 import controller.ship.SpaceShip;
-import view.imaging.ImageLoader;
+import view.imaging.Assets;
 
 public class TempInterval extends Turbo {
 
-    static String redCubeAddress = "pictures/bonus/redCube.png" ;
 
     public TempInterval(int x, int y) {
         super(x, y);
@@ -15,8 +14,7 @@ public class TempInterval extends Turbo {
 
     public void initialize(){
         setType(TurboType.TEMP_INTERVAL);
-        setAddress(redCubeAddress);
-        setImage(ImageLoader.Load(getAddress()));
+        setImage(Assets.redCubeImage);
         setWidth(60);
         setHeight(60);
         setInScreen(true);

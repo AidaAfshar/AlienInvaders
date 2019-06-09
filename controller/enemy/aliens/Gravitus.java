@@ -1,5 +1,7 @@
 package controller.enemy.aliens;
 
+import view.imaging.Assets;
+
 public class Gravitus extends Alien {
 
     public Gravitus() {
@@ -20,7 +22,7 @@ public class Gravitus extends Alien {
 
     public void initialize(){
         setName(AlienName.GRAVITUS) ;
-        setImages("pictures//aliens//gravitus//gravitus.png" );
+        setImages(Assets.gravitusImage );
         setHeight(100);
         setWidth(200);
     }

@@ -4,11 +4,10 @@ import controller.attackTools.BeamType;
 import controller.bonus.empowerment.Turbo;
 import controller.bonus.empowerment.TurboType;
 import controller.ship.SpaceShip;
-import view.imaging.ImageLoader;
+import view.imaging.Assets;
 
 public class FireTurbo extends Turbo {
 
-    static String starAddress = "pictures/bonus/star.png" ;
 
     public FireTurbo(int x, int y) {
         super(x, y);
@@ -17,8 +16,7 @@ public class FireTurbo extends Turbo {
 
     public void initialize(){
         setType(TurboType.FIRE_TURBO);
-        setAddress(starAddress);
-        setImage(ImageLoader.Load(getAddress()));
+        setImage(Assets.starImage);
         setWidth(60);
         setHeight(60);
         setInScreen(true);

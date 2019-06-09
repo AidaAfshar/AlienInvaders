@@ -22,7 +22,7 @@ public class Image {
 
     public Image(String imageAddress) {
         this.Address = imageAddress ;
-        this.image = ImageLoader.Load(Address);
+        this.image = ImageLoader.load(Address);
     }
 
     public BufferedImage getImage() {

@@ -1,6 +1,7 @@
 package controller.enemy.aliens;
 
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -17,7 +18,7 @@ public class Alien {
     public static AlienName[] alien = {AlienName.HESTER , AlienName.OPHELIA, AlienName.AUGUSTUS ,AlienName.BLOODREX};
 
     AlienName name ;
-    ArrayList<Image> image = new ArrayList<>() ;
+    ArrayList<BufferedImage> image = new ArrayList<>() ;
     int width ;
     int height ;
     int x , y ;
@@ -122,11 +123,10 @@ public class Alien {
     //----
 
 
-    public void setImages(String... address) {
-        for(int i=0 ; i<address.length ; i++) {
-            image.add(new Image(address[i]));
-            image.get(i).setImage(ImageLoader.Load(image.get(i).getAddress()));
-        }
+    public void setImages(BufferedImage... images) {
+        for(int i=0 ; i<images.length ; i++)
+            image.add(images[i]) ;
+
     }
 
 
@@ -134,7 +134,7 @@ public class Alien {
     int j=0 ;
 
     public void draw(Graphics g) {
-            g.drawImage(image.get(j).getImage(), x, y, width, height, null);
+            g.drawImage(image.get(j), x, y, width, height, null);
 
              if (i % 25 < 12)
                 j = 0;

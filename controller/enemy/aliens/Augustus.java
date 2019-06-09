@@ -1,6 +1,8 @@
 package controller.enemy.aliens;
 
 
+import view.imaging.Assets;
+
 public class Augustus extends Alien{
 
     public Augustus() {
@@ -21,7 +23,7 @@ public class Augustus extends Alien{
 
     public void initialize(){
         setName(AlienName.AUGUSTUS) ;
-        setImages("pictures/aliens/augustus/1.png" ,"pictures/aliens/augustus/2.png","pictures/aliens/augustus/3.png" );
+        setImages(Assets.augustus1Image ,Assets.augustus2Image);
         setHeight(95);
         setWidth(90);
     }

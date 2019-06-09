@@ -4,11 +4,10 @@ import controller.attackTools.BeamType;
 import controller.bonus.empowerment.Turbo;
 import controller.bonus.empowerment.TurboType;
 import controller.ship.SpaceShip;
-import view.imaging.ImageLoader;
+import view.imaging.Assets;
 
 public class FlameTurbo extends Turbo {
 
-    static String purpleCubeAddress = "pictures/bonus/purpleCube.png" ;
 
     public FlameTurbo(int x, int y) {
         super(x, y);
@@ -17,8 +16,7 @@ public class FlameTurbo extends Turbo {
 
     public void initialize(){
         setType(TurboType.FLAME_TURBO);
-        setAddress(purpleCubeAddress);
-        setImage(ImageLoader.Load(getAddress()));
+        setImage(Assets.purpleCubeImage);
         setWidth(60);
         setHeight(60);
         setInScreen(true);

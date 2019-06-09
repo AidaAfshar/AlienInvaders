@@ -1,5 +1,6 @@
 package controller.enemy.alienAttack;
 
+import view.imaging.Assets;
 import view.imaging.Image;
 import view.imaging.ImageLoader;
 
@@ -7,7 +8,6 @@ import java.awt.*;
 
 public class Spike extends Image {
 
-    String spikeAddress = "pictures/aliens/spikes/spike.png" ;
 
     boolean collided = false ;
     boolean release = false ;
@@ -20,8 +20,7 @@ public class Spike extends Image {
     }
 
     public void initialize() {
-        this.setAddress(spikeAddress);
-        this.setImage(ImageLoader.Load(this.getAddress()));
+        this.setImage(Assets.spikeImage);
         setRelease(true);
         setHeight(50);
         setWidth(50);

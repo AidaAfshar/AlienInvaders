@@ -10,7 +10,7 @@ public class ImageLoader {
 
     //methods:
 
-    public static BufferedImage Load(String imageAddress) {
+    public static BufferedImage load(String imageAddress) {
         BufferedImage image = null ;
         try {
             image  = ImageIO.read(new File(imageAddress));

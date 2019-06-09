@@ -14,10 +14,9 @@ import javax.swing.SwingConstants;
 import javax.swing.Timer;
 
 import controller.main.Administrator;
-import controller.player.Player;
 import controller.ship.SpaceShip;
+import view.imaging.Assets;
 import view.imaging.Background;
-import view.imaging.ImageLoader;
 import view.utilities.Dim;
 
 public class GamePanel extends JPanel {
@@ -27,7 +26,7 @@ public class GamePanel extends JPanel {
     Administrator admin ;
     ContentPane contentPane ;
 
-    Background background1 = new Background("pictures/backgrounds/background1.png");
+    Background gamePanelBackground = new Background();
 
     public MyMouseListener ml ;
     public BeamMouseListener bml ;
@@ -87,7 +86,7 @@ public class GamePanel extends JPanel {
     }
 
     public void prepareBackground() {
-        background1.setImage(ImageLoader.Load(background1.getAddress()));
+        gamePanelBackground.setImage(Assets.gamePanelBackgroundImage);
         prepareLabels();
         addLabels() ;
         prepareTempTools();
@@ -277,7 +276,7 @@ public class GamePanel extends JPanel {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        background1.draw(g);
+        gamePanelBackground.draw(g);
         admin.getShip().draw(g);
         admin.getShip().renderAttack(g);
         admin.getGroup().renderGroup(g);

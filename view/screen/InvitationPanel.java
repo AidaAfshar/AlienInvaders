@@ -10,6 +10,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import view.imaging.Assets;
 import view.imaging.Background;
 import view.imaging.ImageLoader;
 import view.utilities.Dim;
@@ -17,7 +18,7 @@ import view.utilities.Dim;
 
 public class InvitationPanel extends JPanel {
 
-    Background background4 = new Background("pictures/backgrounds/background4.png");
+    Background invitationPanelBackground = new Background();
     ContentPane contentPane ;
 
     JLabel label ;
@@ -31,7 +32,7 @@ public class InvitationPanel extends JPanel {
 
     private void initialize() {
         this.setLayout(null);
-        this.setBackground(Color.magenta);
+        this.setBackground(Color.black);
         prepareBackground();
         prepareLabel();
         this.add(label);
@@ -40,7 +41,7 @@ public class InvitationPanel extends JPanel {
     }
 
     public void prepareBackground() {
-        background4.setImage(ImageLoader.Load(background4.getAddress()));
+        invitationPanelBackground.setImage(Assets.invitationPanelBackgroundImage);
     }
 
     private void prepareLabel() {
@@ -69,7 +70,7 @@ public class InvitationPanel extends JPanel {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(background4.getImage(),0,0,Dim.MAX_X,Dim.MAX_Y,null);
+        g.drawImage(invitationPanelBackground.getImage(),Dim.CENTER_X-310,Dim.CENTER_Y-320,580,580,null);
     }
 
 }

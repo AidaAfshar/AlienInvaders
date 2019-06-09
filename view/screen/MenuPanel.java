@@ -11,15 +11,15 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-import controller.player.Player;
 import view.animations.Skeleton;
+import view.imaging.Assets;
 import view.imaging.Background;
 import view.imaging.ImageLoader;
 import view.utilities.Dim;
 
 public class MenuPanel extends JPanel {
 
-    Background background5 = new Background("pictures/backgrounds/background5.png");
+    Background menuPanelBackground = new Background();
 
     ContentPane contentPane ;
 
@@ -62,7 +62,7 @@ public class MenuPanel extends JPanel {
 
 
     public void prepareBackground() {
-        background5.setImage(ImageLoader.Load(background5.getAddress()));
+        menuPanelBackground.setImage(Assets.menuPanelBackgroundImage);
     }
 
     public void prepareWelcomeLabel() {
@@ -140,7 +140,7 @@ public class MenuPanel extends JPanel {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(background5.getImage(),0,0,Dim.MAX_X,Dim.MAX_Y,null);
+        g.drawImage(menuPanelBackground.getImage(),0,0,Dim.MAX_X,Dim.MAX_Y,null);
         skeleton.renderMovement(g, skeleton.j%25);
     }
 

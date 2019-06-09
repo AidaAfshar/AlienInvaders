@@ -25,7 +25,7 @@ public class Skeleton {
         }
 
         for(int i=0 ; i <26; i++) {
-            skeletonImages[i].setImage(ImageLoader.Load(skeletonImages[i].getAddress())) ;
+            skeletonImages[i].setImage(ImageLoader.load(skeletonImages[i].getAddress())) ;
         }
 
     }

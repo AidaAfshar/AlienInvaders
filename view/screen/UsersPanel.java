@@ -12,7 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import controller.player.Player;
+import view.imaging.Assets;
 import view.imaging.Background;
 import view.imaging.ImageLoader;
 import view.utilities.Dim;
@@ -20,7 +20,7 @@ import view.utilities.Dim;
 
 public class UsersPanel extends JPanel {
 
-    Background background3 = new Background("pictures/backgrounds/background3.png");
+    Background usersPanelBackground = new Background();
     ContentPane contentPane ;
 
     ArrayList<UserLabel> playersLabel = new ArrayList<UserLabel>(5);
@@ -41,7 +41,7 @@ public class UsersPanel extends JPanel {
 
     public void initialize() {
         this.setLayout(null);
-        this.setBackground(Color.magenta);
+        this.setBackground(Color.black);
         prepareBackground();
         prepareLabel();
         prepareUserLabels();
@@ -52,7 +52,7 @@ public class UsersPanel extends JPanel {
     }
 
     public void prepareBackground() {
-        background3.setImage(ImageLoader.Load(background3.getAddress()));
+        usersPanelBackground.setImage(Assets.usersPanelBackgroundImage);
     }
 
     public void prepareLabel() {
@@ -191,7 +191,7 @@ public class UsersPanel extends JPanel {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(background3.getImage(),0,0,Dim.MAX_X,Dim.MAX_Y,null);
+        g.drawImage(usersPanelBackground.getImage(),Dim.CENTER_X +170,Dim.CENTER_Y-280,480,500,null);
     }
 
 

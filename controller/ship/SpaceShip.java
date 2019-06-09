@@ -10,6 +10,7 @@ import javax.swing.Timer;
 
 import controller.attackTools.*;
 import controller.player.Player;
+import view.imaging.Assets;
 import view.imaging.Image;
 import view.imaging.ImageLoader;
 import view.screen.BeamMouseListener;
@@ -19,7 +20,6 @@ import view.utilities.Dim;
 
 public class SpaceShip extends Image{
 
-    static String spaceShipAddress = "pictures/spaceships/ship1.png" ;
 
 //    int x ,y;
 //    int width,height ;
@@ -30,14 +30,14 @@ public class SpaceShip extends Image{
 
 
     public SpaceShip(Player player) {
-        super(spaceShipAddress);
+        super();
         this.player = player ;
         initialize();
     }
 
 
     public void initialize() {
-        setImage(ImageLoader.Load(getAddress()));
+        setImage(Assets.spaceShipImage);
     }
 
     //SPACESHIP ATTACK :
@@ -163,8 +163,12 @@ public class SpaceShip extends Image{
         this.halfWidth = (int) getWidth()/2 ;
         this.halfHeight = (int) getHeight()/2 ;
 
-        setX(Dim.CENTER_X - halfWidth - 10);
-        setY(Dim.MAX_Y - getHeight() - 10);
+//        setX(Dim.CENTER_X - halfWidth - 10);
+//        setY(Dim.MAX_Y - getHeight() - 10);
+
+        setX(Dim.CENTER_X );
+        setY(Dim.MAX_Y - 30);
+
 
         this.centerX = getCenterX();
         this.centerY = getCenterY();

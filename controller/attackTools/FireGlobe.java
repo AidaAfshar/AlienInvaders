@@ -1,21 +1,20 @@
 package controller.attackTools;
 
-import view.imaging.ImageLoader;
+import view.imaging.Assets;
 
 public class FireGlobe extends Beam {
 
-    static String fireGlobeAddress = "pictures/beams/fire.png" ;
 
 
     public FireGlobe(int x0, int y0) {
-        super(fireGlobeAddress);
+        super();
         this.x0 = x0 ;
         this.y0 = y0 ;
         initialize();
     }
 
     public void initialize() {
-        this.setImage(ImageLoader.Load(this.getAddress()));
+        this.setImage(Assets.fireGlobeImage);
         setWidth(80) ;
         setHeight(120) ;
         setV(7);

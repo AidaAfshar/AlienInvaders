@@ -56,7 +56,7 @@ public class BombExplosion {
 
 
         for(int i=0 ; i < explosionImagesSize ; i++) {
-            explosionImages[i].setImage(ImageLoader.Load(explosionImages[i].getAddress())) ;
+            explosionImages[i].setImage(ImageLoader.load(explosionImages[i].getAddress())) ;
         }
 
     }

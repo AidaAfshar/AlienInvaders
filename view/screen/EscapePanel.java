@@ -9,15 +9,16 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import view.imaging.Assets;
 import view.imaging.Background;
-import view.imaging.ImageLoader;
 import view.utilities.Dim;
 
 
 public class EscapePanel extends JPanel {
 
-    Background background1 = new Background("pictures/backgrounds/background1.png");
+    Background escapePanelBackground = new Background();
     ContentPane contentPane ;
+
 
     JButton resumeButton;
     JButton exitButton;
@@ -42,7 +43,7 @@ public class EscapePanel extends JPanel {
     }
 
     public void prepareBackground() {
-        background1.setImage(ImageLoader.Load(background1.getAddress()));
+        escapePanelBackground.setImage(Assets.gamePanelBackgroundImage);
     }
 
 
@@ -83,7 +84,7 @@ public class EscapePanel extends JPanel {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(background1.getImage(),0,0,Dim.MAX_X,Dim.MAX_Y,null);
+        g.drawImage(escapePanelBackground.getImage(),0,0,Dim.MAX_X,Dim.MAX_Y,null);
     }
 
     @Override

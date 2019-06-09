@@ -1,5 +1,7 @@
 package controller.enemy.aliens;
 
+import view.imaging.Assets;
+
 public class Bloodrex extends Alien{
 
     public Bloodrex() {
@@ -21,7 +23,7 @@ public class Bloodrex extends Alien{
 
     public void initialize(){
         setName(AlienName.BLOODREX) ;
-        setImages("pictures/aliens/bloodrex/1.png" ,"pictures/aliens/bloodrex/2.png" );
+        setImages(Assets.bloodrex1Image ,Assets.bloodrex2Image );
         setHeight(90);
         setWidth(85);
     }

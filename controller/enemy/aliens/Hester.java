@@ -1,5 +1,7 @@
 package controller.enemy.aliens;
 
+import view.imaging.Assets;
+
 public class Hester extends Alien {
 
 
@@ -20,7 +22,7 @@ public class Hester extends Alien {
 
     public void initialize(){
         setName(AlienName.HESTER) ;
-        setImages("pictures/aliens/hester/1.png" ,"pictures/aliens/hester/2.png" );
+        setImages(Assets.hester1Image,Assets.hester2Image );
         setHeight(90);
         setWidth(80);
     }
