@@ -14,7 +14,7 @@ import view.utilities.Dim;
 public class Alien {
 
 
-    public static AlienName[] alien = {AlienName.HESTER , AlienName.OPHELIA, AlienName.AUGUSTUS ,AlienName.BLOODREX };
+    public static AlienName[] alien = {AlienName.HESTER , AlienName.OPHELIA, AlienName.AUGUSTUS ,AlienName.BLOODREX};
 
     AlienName name ;
     ArrayList<Image> image = new ArrayList<>() ;

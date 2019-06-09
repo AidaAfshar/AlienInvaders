@@ -12,6 +12,7 @@ import controller.bonus.Coin;
 import controller.bonus.empowerment.Turbo;
 import controller.bonus.empowerment.TurboType;
 import controller.enemy.alienAttack.Spike;
+import controller.enemy.alienGroups.FinalWave;
 import controller.enemy.alienGroups.Group;
 import controller.enemy.alienGroups.RectangularGroup;
 import controller.enemy.alienGroups.circularGroup.CircularGroup;
@@ -53,6 +54,7 @@ public class Administrator {
         groups.add(new RectangularGroup());
         groups.add(new CircularGroup());
         groups.add(new RotatingGroup());
+        groups.add(new FinalWave());
         group = groups.get(0);
         group.initialize();
 
