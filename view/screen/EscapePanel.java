@@ -23,7 +23,6 @@ public class EscapePanel extends JPanel {
     JButton resumeButton;
     JButton exitButton;
 
-//    MyKeyListener kl ;
 
 
     public EscapePanel(ContentPane contentPane) {
@@ -36,8 +35,6 @@ public class EscapePanel extends JPanel {
     public void initialize() {
         this.setLayout(null);
         this.setBackground(Color.red);
-//        kl = new MyKeyListener(contentPane);
-//        this.addKeyListener(kl);
         prepareBackground();
         prepareButtons() ;
     }

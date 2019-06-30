@@ -104,4 +104,12 @@ public class Assets {
     public static String winPanelBackgroundAddress = "pictures/backgrounds/winPanel.png" ;
     public static BufferedImage winPanelBackgroundImage = ImageLoader.load(winPanelBackgroundAddress);
 
+//    public static String singleMultiPanelBackgroundAddress = "pictures/backgrounds/singleMultiPanel.png" ;
+//    public static BufferedImage singleMultiPanelBackgroundImage = ImageLoader.load(singleMultiPanelBackgroundAddress);
+
+    public static String serverClientPanelBackgroundAddress = "pictures/backgrounds/serverClientPanel.png" ;
+    public static BufferedImage serverClientPanelBackgroundImage = ImageLoader.load(serverClientPanelBackgroundAddress);
+
+
+
 }

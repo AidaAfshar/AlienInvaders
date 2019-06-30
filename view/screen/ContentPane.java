@@ -2,16 +2,12 @@ package view.screen;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.JPanel;
-import javax.swing.Timer;
 
 import controller.main.Administrator;
 import controller.player.Player;
 import model.fileManagement.FileManager;
-import controller.ship.SpaceShip;
 
 
 public class ContentPane extends JPanel {
@@ -20,6 +16,12 @@ public class ContentPane extends JPanel {
 
     InvitationPanel invitationPanel ;
     UsersPanel usersPanel ;
+    SingleMultiPanel singleMultiPanel ;
+    ServerClientPanel serverClientPanel ;
+    ClientInfoPanel clientInfoPanel;
+    ServerInfoPanel serverInfoPanel;
+    ClientPanel clientPanel ;
+    ServerPanel serverPanel ;
     MenuPanel menuPanel ;
     GamePanel gamePanel ;
     EscapePanel escapePanel ;
@@ -69,24 +71,63 @@ public class ContentPane extends JPanel {
 
     public void afterUsersPanel(){
         usersPanel.setVisible(false);
-        menuPanel = new MenuPanel(this);
-        add(menuPanel);
+        singleMultiPanel = new SingleMultiPanel(this);
+        add(singleMultiPanel);
     }
 
     public void afterMenuPanel(){
-        if(menuPanel.newGameSelected) {
+        if(menuPanel.isNewGameSelected()) {
             menuPanel.setVisible(false);
             add(escapePanel);
             prepareGamePanel();
             add(gamePanel);
             gamePanel.requestFocus();
         }
-        if(menuPanel.resumeGameSelected) {
+        if(menuPanel.isResumeGameSelected()) {
             menuPanel.setVisible(false);
             add(escapePanel);
 //			ContentPane.this.add(gamePanel = new GamePanel(FileManager.load(),menuPanel.player));
             gamePanel.requestFocus();
         }
+    }
+
+    public void afterSingleMultiPanel(){
+        if (singleMultiPanel.isSinglePlayerSelected()) {
+            singleMultiPanel.setVisible(false);
+            menuPanel = new MenuPanel(this);
+            add(menuPanel);
+        }
+        if (singleMultiPanel.isMultiPlayerSelected()) {
+            singleMultiPanel.setVisible(false);
+            serverClientPanel = new ServerClientPanel(this);
+            add(serverClientPanel);
+        }
+    }
+
+    public void afterServerClientPanel(){
+        if (serverClientPanel.isServerSelected()) {
+            serverClientPanel.setVisible(false);
+            serverInfoPanel = new ServerInfoPanel(this);
+            add(serverInfoPanel);
+        }
+        if (serverClientPanel.isClientSelected()) {
+            serverClientPanel.setVisible(false);
+            clientInfoPanel = new ClientInfoPanel(this);
+            add(clientInfoPanel);
+        }
+
+    }
+
+    public void afterClientInfoPanel(){
+        clientInfoPanel.setVisible(false);
+        clientPanel = new ClientPanel(this) ;
+        add(clientPanel);
+    }
+
+    public void afterServerInfoPanel(){
+        serverInfoPanel.setVisible(false);
+        serverPanel = new ServerPanel(this);
+        add(serverPanel);
     }
 
 

@@ -71,6 +71,9 @@ public class InvitationPanel extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.drawImage(invitationPanelBackground.getImage(),Dim.CENTER_X-310,Dim.CENTER_Y-320,580,580,null);
+//          g.drawImage(invitationPanelBackground.getImage(),-75,140,900,850,null);
+
+
     }
 
 }

@@ -23,8 +23,8 @@ public class MenuPanel extends JPanel {
 
     ContentPane contentPane ;
 
-    boolean newGameSelected = false ;
-    boolean resumeGameSelected = false ;
+    private boolean newGameSelected = false ;
+    private boolean resumeGameSelected = false ;
 
 
     JLabel welcomeLabel ;
@@ -145,5 +145,11 @@ public class MenuPanel extends JPanel {
     }
 
 
+    public boolean isNewGameSelected() {
+        return newGameSelected;
+    }
 
+    public boolean isResumeGameSelected() {
+        return resumeGameSelected;
+    }
 }
