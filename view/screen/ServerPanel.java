@@ -13,21 +13,23 @@ public class ServerPanel extends JPanel {
     Background serverPanelBackground = new Background();
     ContentPane contentPane ;
 
-    ArrayList<UserLabel> playersLabel = new ArrayList<UserLabel>(5);
+    int playersCount ;
+
+    ArrayList<UserLabel> playersLabel ;
 
 
     public ServerPanel(ContentPane contentPane) {
         super();
         this.contentPane = contentPane ;
-        initialize();
+        this.setLayout(null);
+        this.setBackground(Color.black);
     }
 
 
     public void initialize() {
-        this.setLayout(null);
-        this.setBackground(Color.black);
         prepareBackground();
         preparePlayersLabels();
+        addPlayer(contentPane.getServerPlayer().getPlayerName());
     }
 
     public void prepareBackground() {
@@ -35,7 +37,10 @@ public class ServerPanel extends JPanel {
     }
 
     public void preparePlayersLabels() {
-        for(int i=0 ; i<5 ; i++)
+
+        playersLabel = new ArrayList<UserLabel>(playersCount);
+
+        for(int i=0 ; i<playersCount ; i++)
             playersLabel.add(new UserLabel());
 
         for(int i=0 ; i<playersLabel.size();i++) {
@@ -83,11 +88,21 @@ public class ServerPanel extends JPanel {
     }
 
 
+    //getters & setters:
+
+
+    public int getPlayersCount() {
+        return playersCount;
+    }
+
+    public void setPlayersCount(int playersCount) {
+        this.playersCount = playersCount;
+    }
 
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(serverPanelBackground.getImage(), Dim.CENTER_X +170,Dim.CENTER_Y-280,480,500,null);
+        g.drawImage(serverPanelBackground.getImage(), 0,0,Dim.MAX_X,Dim.MAX_Y,null);
     }
 
 }

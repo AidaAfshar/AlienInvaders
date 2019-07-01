@@ -2,6 +2,7 @@ package controller.main.server;
 
 import controller.main.client.Client;
 import controller.player.Player;
+import model.dataManagement.DataManager;
 import view.screen.ContentPane;
 import view.screen.ServerPanel;
 
@@ -36,7 +37,8 @@ public class Server extends Thread {
 
 
     private void initialize(){
-
+        panel.setPlayersCount(playersCount);
+        panel.initialize();
     }
 
     @Override
@@ -49,8 +51,7 @@ public class Server extends Thread {
             while (true){
 
                 Socket socket = serverSocket.accept() ;
-                //TODO obtaining player with GSON
-                Player player = new Player() ;
+                Player player = DataManager.load(socket.getInputStream());
                 player.setInputStream(socket.getInputStream());
                 player.setOutputStream(socket.getOutputStream());
                 player.setPanel(panel);

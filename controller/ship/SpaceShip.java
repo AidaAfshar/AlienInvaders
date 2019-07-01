@@ -24,7 +24,7 @@ public class SpaceShip extends Image{
     int halfWidth , halfHeight ;
     int centerX , centerY ;
 
-    int bombCount ;
+    int bombCount = 3;
 
 
     public SpaceShip() {

@@ -1,6 +1,7 @@
 package controller.player;
 
 import controller.ship.SpaceShip;
+import model.dataManagement.DataManager;
 import view.screen.ServerPanel;
 
 import java.awt.image.BufferedImage;
@@ -23,7 +24,7 @@ public class Player extends Thread{
 
     int x ;
     int y ;
-    BufferedImage shipImage ;
+//    BufferedImage shipImage ;
 
     String data ;
 
@@ -42,13 +43,36 @@ public class Player extends Thread{
 
 
     public void initialize() {
-        shipImage = ship.getImage() ;
+        prepareShip();
+        setInitialValues();
+    }
+
+    public void prepareShip() {
+        ship = new SpaceShip();
+        ship.setWidth(200);
+        ship.setHeight(180) ;
+        ship.setDimensions();
+        ship.prepareTempTimer();
+    }
+
+    public void setInitialValues(){
+        //        shipImage = ship.getImage() ;
         score = 0 ;
         coin = 0 ;
         power = 5 ;
         bombCount = ship.getBombCount() ;
         x = ship.getX() ;
         y = ship.getY() ;
+        setData();
+
+    }
+
+    @Override
+    public void run() {
+        super.run();
+        updateValues();
+        panel.addPlayer(name);
+
     }
 
 
@@ -59,14 +83,21 @@ public class Player extends Thread{
 
         //TODO correct score
         score = coin*3 ;
+        setData();
     }
 
     @Override
-    public void run() {
-        super.run();
-        panel.addPlayer(name);
-        updateValues();
+    public String toString() {
+        return "Player{" +
+                "name=" + name +
+                "score=" + score +
+                "coin=" + coin +
+                "bombCount=" + bombCount +
+                "x=" + x +
+                ", y=" + y +
+                '}';
     }
+
 
 
     //getters & setters:
@@ -113,11 +144,12 @@ public class Player extends Thread{
     }
 
     public String getData() {
+        updateValues();
         return data;
     }
 
-    public void setData(String data) {
-        this.data = data;
+    public void setData() {
+        data = DataManager.save(this) ;
     }
 
     public PrintStream getOutputStream() {

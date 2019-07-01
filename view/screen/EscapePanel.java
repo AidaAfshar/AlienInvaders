@@ -67,7 +67,6 @@ public class EscapePanel extends JPanel {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                contentPane.saveState();
                 contentPane.fileManager.close();
                 System.exit(0);
             }

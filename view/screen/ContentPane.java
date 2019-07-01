@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import controller.main.Administrator;
 import controller.main.server.Server;
 import controller.player.Player;
+import controller.ship.SpaceShip;
 import model.fileManagement.FileManager;
 
 
@@ -29,6 +30,8 @@ public class ContentPane extends JPanel {
     GameOverPanel gameOverPanel ;
     WinPanel winPanel;
 
+    Player serverPlayer ;
+    Player clientPlayer ;
     Player player ;
     Administrator admin ;
 
@@ -54,14 +57,6 @@ public class ContentPane extends JPanel {
         escapePanel = new EscapePanel(this);
 
     }
-
-    public void saveState() {
-//		fileManager.save(gamePanel.ship1);
-    }
-
-//	public void loadState() {
-//		FileManager.load();
-//	}
 
 
     public void afterInvitationPanel(){
@@ -129,6 +124,7 @@ public class ContentPane extends JPanel {
         serverInfoPanel.setVisible(false);
         serverPanel = new ServerPanel(this);
         add(serverPanel);
+        setServerPlayer(player);
         Server server = new Server(serverPanel , serverInfoPanel.getPort() , serverInfoPanel.getLevelsCount() , serverInfoPanel.getPlayersCount()) ;
         server.start();
     }
@@ -200,9 +196,15 @@ public class ContentPane extends JPanel {
     }
 
     public void setPlayer(String playerName) {
-        player = new Player(playerName , admin.getShip()) ;
+        player = new Player(playerName , new SpaceShip()) ;
         prepareAdministrator() ;
     }
 
+    public Player getServerPlayer() {
+        return serverPlayer;
+    }
 
+    public void setServerPlayer(Player serverPlayer) {
+        this.serverPlayer = serverPlayer;
+    }
 }
