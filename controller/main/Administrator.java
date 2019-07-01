@@ -82,7 +82,7 @@ public class Administrator {
     }
 
     public void prepareShip() {
-        ship = new SpaceShip(player);
+        ship = new SpaceShip();
         ship.setWidth(200);
         ship.setHeight(180) ;
         ship.setDimensions();

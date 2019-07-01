@@ -16,9 +16,9 @@ public class ServerInfoPanel extends JPanel {
     Background serverInfoPanelBackground = new Background();
     ContentPane contentPane ;
 
-    int port ;
-    int levelsCount ;
-    int playersCount ;
+    private int port ;
+    private int levelsCount ;
+    private int playersCount ;
 
 
     JLabel portLabel ;
@@ -29,9 +29,6 @@ public class ServerInfoPanel extends JPanel {
     JTextField levelsCountTextField ;
     JTextField playersCountTextField ;
 
-    JButton portButton ;
-    JButton levelsCountButton ;
-    JButton playersCountButton;
     JButton submitButton ;
 
 
@@ -49,7 +46,7 @@ public class ServerInfoPanel extends JPanel {
         prepareBackground();
         prepareLabels() ;
         prepareTextFields();
-        prepareButtons();
+        prepareButton();
     }
 
     public void prepareBackground() {
@@ -114,6 +111,8 @@ public class ServerInfoPanel extends JPanel {
 
     }
 
+
+
     class TextFieldMouseListener implements MouseListener {
 
         JTextField textField ;
@@ -148,49 +147,9 @@ public class ServerInfoPanel extends JPanel {
         }
     }
 
-    public void prepareButtons(){
 
-//        portButton = new JButton("Submit");
-//        portButton.setBounds(Dim.CENTER_X+200,Dim.CENTER_Y-400+200,100,80);
-//        //submitButton.setFont(new Font("Footlight MT Light",Font.BOLD,40));
-//        this.add(portButton);
-//        portButton.addActionListener(new ActionListener() {
-//
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                port = Integer.valueOf(portTextField.getText());
-//            }
-//
-//        });
-//
-//        levelsCountButton = new JButton("Submit");
-//        levelsCountButton.setBounds(Dim.CENTER_X+200,Dim.CENTER_Y-400,100,80);
-//        //levelsCountButton.setFont(new Font("Footlight MT Light",Font.BOLD,40));
-//        add(levelsCountButton);
-//        levelsCountButton.addActionListener(new ActionListener() {
-//
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                levelsCount = Integer.valueOf(levelsCountTextField.getText());
-//            }
-//
-//        });
-//
-//
-//        playersCountButton = new JButton("Submit");
-//        playersCountButton.setBounds(Dim.CENTER_X+200,Dim.CENTER_Y-400,100,80);
-//        //playersCountButton.setFont(new Font("Footlight MT Light",Font.BOLD,40));
-//        add(playersCountButton);
-//        playersCountButton.addActionListener(new ActionListener() {
-//
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                playersCount = Integer.valueOf(playersCountTextField.getText());
-//            }
-//
-//        });
-//
 
+    public void prepareButton(){
 
         submitButton = new JButton("SUBMIT !");
         submitButton.setBounds(Dim.CENTER_X + 400,Dim.CENTER_Y-50,200,60);
@@ -217,5 +176,18 @@ public class ServerInfoPanel extends JPanel {
         g.drawImage(serverInfoPanelBackground.getImage(),0,0,Dim.MAX_X,Dim.MAX_Y,null);
     }
 
+    //getters & setters :
 
+
+    public int getPort() {
+        return port;
+    }
+
+    public int getLevelsCount() {
+        return levelsCount;
+    }
+
+    public int getPlayersCount() {
+        return playersCount;
+    }
 }

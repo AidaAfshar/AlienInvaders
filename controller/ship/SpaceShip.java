@@ -21,17 +21,14 @@ import view.utilities.Dim;
 public class SpaceShip extends Image{
 
 
-//    int x ,y;
-//    int width,height ;
     int halfWidth , halfHeight ;
     int centerX , centerY ;
 
-    Player player ;
+    int bombCount ;
 
 
-    public SpaceShip(Player player) {
+    public SpaceShip() {
         super();
-        this.player = player ;
         initialize();
     }
 
@@ -78,7 +75,7 @@ public class SpaceShip extends Image{
             if(isTempInSafeRange()) {
                 if (bombs.size() < 3) {
                     bombs.add(new Bomb(x, y));
-                    player.setBombCount(player.getBombCount() - 1);
+                    bombCount -- ;
                 }
             }
         }
@@ -254,8 +251,13 @@ public class SpaceShip extends Image{
         return bombs;
     }
 
+    public int getBombCount() {
+        return bombCount;
+    }
 
-
+    public void setBombCount(int bombCount) {
+        this.bombCount = bombCount;
+    }
 }//end of class
 
 

@@ -14,7 +14,6 @@ import javax.swing.Timer;
 import view.animations.Skeleton;
 import view.imaging.Assets;
 import view.imaging.Background;
-import view.imaging.ImageLoader;
 import view.utilities.Dim;
 
 public class MenuPanel extends JPanel {
@@ -66,7 +65,7 @@ public class MenuPanel extends JPanel {
     }
 
     public void prepareWelcomeLabel() {
-        welcomeLabel = new JLabel("Welcome  " + contentPane.getPlayer().getName() + "  !");
+        welcomeLabel = new JLabel("Welcome  " + contentPane.getPlayer().getPlayerName() + "  !");
         welcomeLabel.setBounds(Dim.CENTER_X-250,Dim.CENTER_Y-100,700,200);
         welcomeLabel.setForeground(Color.red);
         welcomeLabel.setFont(new Font("Chiller", Font.BOLD , 80));

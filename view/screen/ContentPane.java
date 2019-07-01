@@ -6,6 +6,7 @@ import java.awt.Color;
 import javax.swing.JPanel;
 
 import controller.main.Administrator;
+import controller.main.server.Server;
 import controller.player.Player;
 import model.fileManagement.FileManager;
 
@@ -128,6 +129,8 @@ public class ContentPane extends JPanel {
         serverInfoPanel.setVisible(false);
         serverPanel = new ServerPanel(this);
         add(serverPanel);
+        Server server = new Server(serverPanel , serverInfoPanel.getPort() , serverInfoPanel.getLevelsCount() , serverInfoPanel.getPlayersCount()) ;
+        server.start();
     }
 
 
@@ -197,7 +200,7 @@ public class ContentPane extends JPanel {
     }
 
     public void setPlayer(String playerName) {
-        player = new Player(playerName) ;
+        player = new Player(playerName , admin.getShip()) ;
         prepareAdministrator() ;
     }
 
