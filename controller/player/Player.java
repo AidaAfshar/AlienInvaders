@@ -68,17 +68,19 @@ public class Player {
 
     }
 
-    public void preparePlayerThread(){
+    public void preparePlayer(){
 //        System.out.println("inside preparePlayerThread-player");
         prepareShip();
-        playerThread = new PlayerThread(this) ;
         updateValues();
         panel.addPlayer(name);
     }
 
+    public void preparePlayerThread(){
+        playerThread = new PlayerThread(this) ;
+    }
+
 
     public void updateValues(){
-        System.out.println(ship);
         bombCount = ship.getBombCount() ;
         x = ship.getX() ;
         y = ship.getY() ;

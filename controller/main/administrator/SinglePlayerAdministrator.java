@@ -1,4 +1,4 @@
-package controller.main;
+package controller.main.administrator;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,7 +10,6 @@ import controller.attackTools.Beam;
 import controller.attackTools.Bomb;
 import controller.bonus.Coin;
 import controller.bonus.empowerment.Turbo;
-import controller.bonus.empowerment.TurboType;
 import controller.enemy.alienAttack.Spike;
 import controller.enemy.alienGroups.FinalWave;
 import controller.enemy.alienGroups.Group;
@@ -23,7 +22,7 @@ import controller.player.Player;
 import controller.ship.SpaceShip;
 import view.screen.ContentPane;
 
-public class Administrator {
+public class SinglePlayerAdministrator {
 
     SpaceShip ship ;
 
@@ -35,12 +34,8 @@ public class Administrator {
 
     ContentPane contentPane ;
 
-    public Administrator(Player player) {
-        this.player = player ;
-    //    initialize();
-    }
 
-    public Administrator(ContentPane contentPane) {
+    public SinglePlayerAdministrator(ContentPane contentPane) {
         this.contentPane = contentPane ;
         //    initialize();
     }

@@ -1,20 +1,12 @@
 package controller.ship;
 
 import java.awt.Graphics;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.TimerTask;
 
-import javax.swing.Timer;
-
 import controller.attackTools.*;
-import controller.player.Player;
 import view.imaging.Assets;
 import view.imaging.Image;
-import view.imaging.ImageLoader;
-import view.screen.BeamMouseListener;
-import view.screen.GamePanel;
 import view.utilities.Dim;
 
 

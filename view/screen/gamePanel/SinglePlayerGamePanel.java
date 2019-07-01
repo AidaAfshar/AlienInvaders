@@ -1,4 +1,4 @@
-package view.screen;
+package view.screen.gamePanel;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -13,17 +13,21 @@ import javax.swing.JProgressBar;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
 
-import controller.main.Administrator;
+import controller.main.administrator.SinglePlayerAdministrator;
 import controller.ship.SpaceShip;
 import view.imaging.Assets;
 import view.imaging.Background;
+import view.screen.BeamMouseListener;
+import view.screen.ContentPane;
+import view.screen.MyKeyListener;
+import view.screen.MyMouseListener;
 import view.utilities.Dim;
 
-public class GamePanel extends JPanel {
+public class SinglePlayerGamePanel extends JPanel {
 
     //attributes:
 
-    Administrator admin ;
+    SinglePlayerAdministrator admin ;
     ContentPane contentPane ;
 
     Background gamePanelBackground = new Background();
@@ -46,7 +50,7 @@ public class GamePanel extends JPanel {
     //methods:
 
 
-    public GamePanel(ContentPane contentPane , Administrator admin) {
+    public SinglePlayerGamePanel(ContentPane contentPane , SinglePlayerAdministrator admin) {
         super();
         this.contentPane = contentPane ;
         this.admin = admin;
@@ -164,9 +168,9 @@ public class GamePanel extends JPanel {
     public class TempColorThread extends Thread{
         int delay = 100 ;
 
-        GamePanel panel ;
+        SinglePlayerGamePanel panel ;
 
-        public TempColorThread(GamePanel panel) {
+        public TempColorThread(SinglePlayerGamePanel panel) {
             this.panel = panel ;
         }
 

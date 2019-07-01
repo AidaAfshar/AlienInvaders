@@ -3,7 +3,6 @@ package controller.attackTools;
 import java.awt.Graphics;
 
 import view.imaging.Image;
-import view.screen.GamePanel;
 
 
 public abstract class Beam extends Image{

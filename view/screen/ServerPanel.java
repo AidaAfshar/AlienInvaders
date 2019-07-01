@@ -43,12 +43,13 @@ public class ServerPanel extends JPanel {
 
     public void prepareButton(){
         button = new JButton("Start Game!") ;
-        button.setBounds(Dim.CENTER_X-200 , Dim.MAX_Y-300 , 400 , 60);
+        button.setBounds(Dim.CENTER_X-200 , Dim.MAX_Y-200 , 400 , 60);
         button.setFont(new Font("Footlight MT Light",Font.BOLD,30));
         add(button) ;
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                contentPane.setPlayers(contentPane.server.getPlayers());
                 contentPane.afterServerPanel();
             }
         });

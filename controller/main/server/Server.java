@@ -57,7 +57,7 @@ public class Server extends Thread {
 //                player.setOutputStream(socket.getOutputStream());
                 player.setPanel(panel);
                 players.add(player) ;
-                player.preparePlayerThread();
+                player.preparePlayer();
 
             }
 
