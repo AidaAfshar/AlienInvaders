@@ -29,7 +29,7 @@ public class ServerPanel extends JPanel {
     public void initialize() {
         prepareBackground();
         preparePlayersLabels();
-        addPlayer(contentPane.getServerPlayer().getPlayerName());
+        addPlayer(contentPane.getServerPlayer().getPlayerName() + "(main server)");
     }
 
     public void prepareBackground() {
@@ -51,7 +51,10 @@ public class ServerPanel extends JPanel {
     }
 
     public void updatePlayersList() {
-        ArrayList<UserLabel> a = new ArrayList<UserLabel>(5);
+
+    //    System.out.println("inside updatePlayersList-serverPanel");
+
+        ArrayList<UserLabel> a = new ArrayList<UserLabel>(playersCount);
         ArrayList<Integer> b = new ArrayList<Integer>();
 
         for(int i=0 ; i<playersLabel.size();i++) {
@@ -75,6 +78,8 @@ public class ServerPanel extends JPanel {
     }
 
     public void addPlayer(String playerName) {
+    //   System.out.println("inside addPlayer-serverPanel");
+
         if(playerName!= null && playerName.length()>0) {
             for(int i=0 ; i<playersLabel.size();i++) {
                 if(playersLabel.get(i).full==false) {
@@ -85,6 +90,8 @@ public class ServerPanel extends JPanel {
                 }
             }
         }
+
+        updatePlayersList();
     }
 
 

@@ -1,35 +1,57 @@
 package model.dataManagement;
 
 import com.gilecode.yagson.YaGson;
+import com.gilecode.yagson.YaGsonBuilder;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import controller.player.Player;
 
 import java.io.InputStream;
+import java.lang.reflect.Modifier;
 import java.util.Scanner;
 
 public class DataManager {
 
-//    public static String save(Player player){
-//        Gson gson = new Gson() ;
-//        return gson.toJson(player) ;
-//    }
-//
-//    public static Player load(InputStream inputStream){
-//        Gson gson = new Gson() ;
-//        Scanner scanner = new Scanner(inputStream) ;
-//        return gson.fromJson(scanner.nextLine() , Player.class) ;
-//    }
-
     public static String save(Player player){
-        YaGson gson = new YaGson() ;
+        Gson gson = new Gson() ;
         return gson.toJson(player) ;
     }
 
     public static Player load(InputStream inputStream){
-        YaGson gson = new YaGson() ;
+
+        GsonBuilder gsonBuilder = new GsonBuilder() ;
+        Gson gson = gsonBuilder.excludeFieldsWithModifiers(Modifier.TRANSIENT).create() ;
+
         Scanner scanner = new Scanner(inputStream) ;
-        return gson.fromJson(scanner.nextLine() , Player.class) ;
+        String data = scanner.nextLine() ;
+        scanner.close();
+
+        Player player = gson.fromJson(data, Player.class) ;
+        return player ;
     }
 
+//    public static String save(Player player){
+//        YaGson gson = new YaGson() ;
+//        return gson.toJson(player) ;
+//    }
+//
+//    public static Player load(InputStream inputStream){
+//    //    System.out.println("inside load-DataManager 1");
+//        YaGsonBuilder gsonBuilder = new YaGsonBuilder() ;
+//        YaGson gson = gsonBuilder.excludeFieldsWithModifiers(Modifier.TRANSIENT).create() ;
+//
+//        //    System.out.println("inside load-DataManager 2");
+//
+//        Scanner scanner = new Scanner(inputStream) ;
+//        String data = scanner.nextLine() ;
+//        scanner.close();
+//        System.out.println(data);
+//
+//        Player player = gson.fromJson(data , Player.class) ;
+//    //    System.out.println("inside load-DataManager 3");
+//        System.out.println(player.getPlayerName());
+//
+//        return player ;
+//    }
 
 }

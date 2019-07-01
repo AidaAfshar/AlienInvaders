@@ -1,5 +1,7 @@
 package controller.player;
 
+import com.gilecode.yagson.YaGson;
+import com.google.gson.Gson;
 import controller.ship.SpaceShip;
 import model.dataManagement.DataManager;
 import view.screen.ServerPanel;
@@ -11,27 +13,26 @@ import java.io.PrintStream;
 import java.util.Scanner;
 
 
-public class Player extends Thread{
+public class Player {
 
+    transient Thread playerThread ;
 
     String name ;
-    SpaceShip ship ;
-
+    transient SpaceShip ship ;
     int score ;
     int coin ;
     int power ;
     int bombCount ;
-
     int x ;
     int y ;
 //    BufferedImage shipImage ;
 
-    String data ;
+    transient String data ;
 
 
-    PrintStream printer ;
-    Scanner scanner ;
-    ServerPanel panel ;
+    transient PrintStream printer ;
+    transient Scanner scanner ;
+    transient ServerPanel panel ;
 
 
 
@@ -53,6 +54,7 @@ public class Player extends Thread{
         ship.setHeight(180) ;
         ship.setDimensions();
         ship.prepareTempTimer();
+        ship.setBombCount(bombCount);
     }
 
     public void setInitialValues(){
@@ -63,41 +65,48 @@ public class Player extends Thread{
         bombCount = ship.getBombCount() ;
         x = ship.getX() ;
         y = ship.getY() ;
-        setData();
 
     }
 
-    @Override
-    public void run() {
-        super.run();
+    public void preparePlayerThread(){
+//        System.out.println("inside preparePlayerThread-player");
+        prepareShip();
+        playerThread = new PlayerThread(this) ;
         updateValues();
         panel.addPlayer(name);
-
     }
 
 
     public void updateValues(){
+        System.out.println(ship);
         bombCount = ship.getBombCount() ;
         x = ship.getX() ;
         y = ship.getY() ;
 
         //TODO correct score
         score = coin*3 ;
-        setData();
     }
+
+    public void save(){
+        updateValues();
+        Gson gson = new Gson() ;
+        data = gson.toJson(this) ;
+//        YaGson gson = new YaGson() ;
+//        data = gson.toJson(this) ;
+    }
+
 
     @Override
     public String toString() {
-        return "Player{" +
+        return "{" +
                 "name=" + name +
-                "score=" + score +
-                "coin=" + coin +
-                "bombCount=" + bombCount +
-                "x=" + x +
+                ", score=" + score +
+                ", coin=" + coin +
+                ", bombCount=" + bombCount +
+                ", x=" + x +
                 ", y=" + y +
                 '}';
     }
-
 
 
     //getters & setters:
@@ -144,12 +153,11 @@ public class Player extends Thread{
     }
 
     public String getData() {
-        updateValues();
         return data;
     }
 
-    public void setData() {
-        data = DataManager.save(this) ;
+    public void setData(String data) {
+     this.data = data ;
     }
 
     public PrintStream getOutputStream() {

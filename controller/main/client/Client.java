@@ -30,8 +30,12 @@ public class Client extends Thread {
 
             socket = new Socket(IP , port) ;
             printer = new PrintStream(socket.getOutputStream()) ;
-            printer.println(player.getData());
+            player.save();
+    //        System.out.println(player);
+            printer.println(player);
             printer.flush();
+    //        System.out.println("inside run-client");
+
 
         } catch (IOException e) {
             e.printStackTrace();

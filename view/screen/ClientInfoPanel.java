@@ -91,8 +91,8 @@ public class ClientInfoPanel extends JPanel {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-              IP = IPTextField.getText();
-              port = Integer.valueOf(portTextField.getText());
+                IP = IPTextField.getText();
+                port = Integer.valueOf(portTextField.getText());
             }
 
         });
@@ -114,6 +114,8 @@ public class ClientInfoPanel extends JPanel {
 
     }
 
+
+
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -121,5 +123,22 @@ public class ClientInfoPanel extends JPanel {
     }
 
 
+    //getters & setters:
 
+
+    public String getIP() {
+        return IP;
+    }
+
+    public void setIP(String IP) {
+        this.IP = IP;
+    }
+
+    public int getPort() {
+        return port;
+    }
+
+    public void setPort(int port) {
+        this.port = port;
+    }
 }

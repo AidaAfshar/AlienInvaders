@@ -11,7 +11,7 @@ public class UserLabel extends JLabel {
     String name ="";
     int x = 150 ;
     int y ;
-    int width = 200 ;
+    int width = 600 ;
     int height = 50 ;
     boolean chosen = false ;
     boolean full = false ;

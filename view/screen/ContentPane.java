@@ -6,6 +6,7 @@ import java.awt.Color;
 import javax.swing.JPanel;
 
 import controller.main.Administrator;
+import controller.main.client.Client;
 import controller.main.server.Server;
 import controller.player.Player;
 import controller.ship.SpaceShip;
@@ -118,6 +119,10 @@ public class ContentPane extends JPanel {
         clientInfoPanel.setVisible(false);
         clientPanel = new ClientPanel(this) ;
         add(clientPanel);
+        setClientPlayer(player);
+        Client client = new Client(clientInfoPanel.getIP(),clientInfoPanel.getPort(),getClientPlayer()) ;
+        client.start();
+
     }
 
     public void afterServerInfoPanel(){
@@ -206,5 +211,13 @@ public class ContentPane extends JPanel {
 
     public void setServerPlayer(Player serverPlayer) {
         this.serverPlayer = serverPlayer;
+    }
+
+    public Player getClientPlayer() {
+        return clientPlayer;
+    }
+
+    public void setClientPlayer(Player clientPlayer) {
+        this.clientPlayer = clientPlayer;
     }
 }
