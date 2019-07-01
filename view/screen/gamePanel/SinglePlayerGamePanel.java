@@ -23,20 +23,11 @@ import view.screen.MyKeyListener;
 import view.screen.MyMouseListener;
 import view.utilities.Dim;
 
-public class SinglePlayerGamePanel extends JPanel {
+public class SinglePlayerGamePanel extends GamePanel {
 
     //attributes:
 
     SinglePlayerAdministrator admin ;
-    ContentPane contentPane ;
-
-    Background gamePanelBackground = new Background();
-
-    public MyMouseListener ml ;
-    public BeamMouseListener bml ;
-
-    MyKeyListener kl ;
-    Timer timer ;
 
     JLabel coinLabel ;
     JLabel powerLabel ;
@@ -51,31 +42,15 @@ public class SinglePlayerGamePanel extends JPanel {
 
 
     public SinglePlayerGamePanel(ContentPane contentPane , SinglePlayerAdministrator admin) {
-        super();
+        super(contentPane,admin);
         this.contentPane = contentPane ;
         this.admin = admin;
         initialize();
     }
 
 
-    public void initialize() {
-        this.setLayout(null);
-        this.setBackground(Color.gray);
-        ml = new MyMouseListener(admin.getShip());
-        this.addMouseMotionListener(ml);
-        this.addMouseListener(ml);
-        bml = new BeamMouseListener(admin.getShip());
-        this.addMouseListener(bml);
-        this.addMouseMotionListener(bml);
-        kl = new MyKeyListener(contentPane);
-        this.addKeyListener(kl);
-        this.setFocusable(true);
-        prepareBackground();
-        prepareTimer();
-        timer.start();
-    }
 
-
+    @Override
     public void prepareTimer() {
         timer = new Timer(10,new ActionListener() {
 
@@ -89,8 +64,10 @@ public class SinglePlayerGamePanel extends JPanel {
         });
     }
 
+
+    @Override
     public void prepareBackground() {
-        gamePanelBackground.setImage(Assets.gamePanelBackgroundImage);
+        super.prepareBackground();
         prepareLabels();
         addLabels() ;
         prepareTempTools();
@@ -281,18 +258,10 @@ public class SinglePlayerGamePanel extends JPanel {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        gamePanelBackground.draw(g);
         admin.getShip().draw(g);
         admin.getShip().renderAttack(g);
-        admin.getGroup().renderGroup(g);
     }
 
-
-    @Override
-    public void addNotify() {
-        super.addNotify();
-        requestFocus();
-    }
 
 
     //getters & setters :

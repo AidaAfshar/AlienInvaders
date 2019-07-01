@@ -6,12 +6,14 @@ import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
+import controller.main.administrator.Administrator;
 import controller.main.administrator.MultiPlayerAdministrator;
 import controller.main.administrator.SinglePlayerAdministrator;
 import controller.main.client.Client;
 import controller.main.server.Server;
 import controller.player.Player;
 import controller.ship.SpaceShip;
+import view.screen.gamePanel.GamePanel;
 import view.screen.gamePanel.MultiPlayerGamePanel;
 import view.screen.gamePanel.SinglePlayerGamePanel;
 
@@ -29,8 +31,7 @@ public class ContentPane extends JPanel {
     ClientPanel clientPanel ;
     ServerPanel serverPanel ;
     MenuPanel menuPanel ;
-    SinglePlayerGamePanel singlePlayerGamePanel;
-    MultiPlayerGamePanel multiPlayerGamePanel ;
+    GamePanel gamePanel ;
     EscapePanel escapePanel ;
     GameOverPanel gameOverPanel ;
     WinPanel winPanel;
@@ -86,14 +87,14 @@ public class ContentPane extends JPanel {
             menuPanel.setVisible(false);
             add(escapePanel);
             prepareSinglePlayerGamePanel();
-            add(singlePlayerGamePanel);
-            singlePlayerGamePanel.requestFocus();
+            add(gamePanel);
+            gamePanel.requestFocus();
         }
         if(menuPanel.isResumeGameSelected()) {
             menuPanel.setVisible(false);
             add(escapePanel);
 //			ContentPane.this.add(singlePlayerGamePanel = new SinglePlayerGamePanel(FileManager.load(),menuPanel.player));
-            singlePlayerGamePanel.requestFocus();
+            gamePanel.requestFocus();
         }
     }
 
@@ -148,8 +149,8 @@ public class ContentPane extends JPanel {
         serverPanel.setVisible(false);
         add(escapePanel);
         prepareMultiPlayerGamePanel();
-        add(multiPlayerGamePanel) ;
-        multiPlayerGamePanel.requestFocus();
+        add(gamePanel) ;
+        gamePanel.requestFocus();
 
     }
 
@@ -164,7 +165,7 @@ public class ContentPane extends JPanel {
     }
 
     public void handleEscapePanel(){
-            singlePlayerGamePanel.setVisible(false);
+            gamePanel.setVisible(false);
             add(escapePanel);
             escapePanel.setVisible(true);
             escapePanel.requestFocus();
@@ -174,22 +175,22 @@ public class ContentPane extends JPanel {
     public void resumeGameFromEscapePanel(){
             this.remove(escapePanel);
             escapePanel.setVisible(false);
-            singlePlayerGamePanel.setVisible(true);
-            singlePlayerGamePanel.requestFocus();
+            gamePanel.setVisible(true);
+            gamePanel.requestFocus();
     }
 
     public void showGameOverPanel(){
         gameOverPanel = new GameOverPanel(this);
         add(gameOverPanel);
         gameOverPanel.setVisible(true);
-        singlePlayerGamePanel.setVisible(false);
+        gamePanel.setVisible(false);
 
     }
 
     public void showWinPanel(int score){
         winPanel = new WinPanel(this,score);
         add(winPanel);
-        singlePlayerGamePanel.setVisible(false);
+        gamePanel.setVisible(false);
         winPanel.setVisible(true);
     }
 
@@ -199,8 +200,8 @@ public class ContentPane extends JPanel {
         prepareSinglePlayerAdministrator();
         gameOverPanel.setVisible(false);
         prepareSinglePlayerGamePanel();
-        add(singlePlayerGamePanel);
-        singlePlayerGamePanel.requestFocus();
+        add(gamePanel);
+        gamePanel.requestFocus();
     }
 
     public void afterWin(){
@@ -209,13 +210,13 @@ public class ContentPane extends JPanel {
         prepareSinglePlayerAdministrator();
         winPanel.setVisible(false);
         prepareSinglePlayerGamePanel();
-        add(singlePlayerGamePanel);
-        singlePlayerGamePanel.requestFocus();
+        add(gamePanel);
+        gamePanel.requestFocus();
     }
 
     public void prepareSinglePlayerGamePanel() {
-        singlePlayerGamePanel = new SinglePlayerGamePanel(this , singlePlayerAdministrator);
-        singlePlayerGamePanel.setVisible(true);
+        gamePanel = new SinglePlayerGamePanel(this , singlePlayerAdministrator);
+        gamePanel.setVisible(true);
     }
 
     public void prepareSinglePlayerAdministrator(){
@@ -223,8 +224,8 @@ public class ContentPane extends JPanel {
     }
 
     public void prepareMultiPlayerGamePanel() {
-        multiPlayerGamePanel = new MultiPlayerGamePanel(this , multiPlayerAdministrator);
-        multiPlayerGamePanel.setVisible(true);
+        gamePanel = new MultiPlayerGamePanel(this ,multiPlayerAdministrator);
+        gamePanel.setVisible(true);
     }
 
 

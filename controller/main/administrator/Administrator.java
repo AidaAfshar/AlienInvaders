@@ -41,7 +41,7 @@ public abstract class Administrator {
     }
 
 
-    private void initialize(){
+    protected void initialize(){
         prepareEnemy();
         prepareShip();
         prepareTimer();
