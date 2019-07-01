@@ -24,8 +24,6 @@ public class Server extends Thread {
     ArrayList<Player> players = new ArrayList<>() ;
 
 
-
-
     public Server(ServerPanel panel, int port , int levelsCount , int playersCount) {
         super() ;
         this.panel = panel ;
@@ -98,5 +96,7 @@ public class Server extends Thread {
         this.playersCount = playersCount;
     }
 
-
+    public ArrayList<Player> getPlayers() {
+        return players;
+    }
 }

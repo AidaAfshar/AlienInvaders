@@ -134,6 +134,10 @@ public class ContentPane extends JPanel {
         server.start();
     }
 
+    public void afterServerPanel(){
+
+    }
+
 
     public void handleEscapePanel(){
             gamePanel.setVisible(false);

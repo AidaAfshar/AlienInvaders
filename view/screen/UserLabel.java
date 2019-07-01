@@ -22,8 +22,6 @@ public class UserLabel extends JLabel {
 
     UserLabelListener ul ;
 
-
-
     public UserLabel() {
         super("");
         initialize();

@@ -6,6 +6,8 @@ import view.utilities.Dim;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class ServerPanel extends JPanel {
@@ -16,6 +18,8 @@ public class ServerPanel extends JPanel {
     int playersCount ;
 
     ArrayList<UserLabel> playersLabel ;
+
+    JButton button ;
 
 
     public ServerPanel(ContentPane contentPane) {
@@ -29,11 +33,25 @@ public class ServerPanel extends JPanel {
     public void initialize() {
         prepareBackground();
         preparePlayersLabels();
+        prepareButton() ;
         addPlayer(contentPane.getServerPlayer().getPlayerName() + "(main server)");
     }
 
     public void prepareBackground() {
         serverPanelBackground.setImage(Assets.menuPanelBackgroundImage);
+    }
+
+    public void prepareButton(){
+        button = new JButton("Start Game!") ;
+        button.setBounds(Dim.CENTER_X-200 , Dim.MAX_Y-300 , 400 , 60);
+        button.setFont(new Font("Footlight MT Light",Font.BOLD,30));
+        add(button) ;
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                contentPane.afterServerPanel();
+            }
+        });
     }
 
     public void preparePlayersLabels() {
