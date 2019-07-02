@@ -230,7 +230,7 @@ public class SinglePlayerGamePanel extends GamePanel {
 
 
     public void prepareNameLabel() {
-        nameLabel = new JLabel("   Player :     " + admin.getPlayer().getPlayerName());
+        nameLabel = new JLabel("   Player :     " + admin.getPlayer().getName());
         nameLabel.setBounds(Dim.MAX_X-300,20,300,50);
         nameLabel.setFont(new Font("Footlight MT Light",Font.BOLD,30));
         nameLabel.setForeground(Color.white);

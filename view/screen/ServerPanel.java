@@ -30,11 +30,21 @@ public class ServerPanel extends JPanel {
     }
 
 
+    public ServerPanel(ContentPane contentPane , int playersCount ) {
+        super();
+        this.contentPane = contentPane ;
+        this.playersCount = playersCount ;
+        initialize() ;
+    }
+
+
     public void initialize() {
+        this.setLayout(null);
+        this.setBackground(Color.black);
         prepareBackground();
         preparePlayersLabels();
         prepareButton() ;
-        addPlayer(contentPane.getServerPlayer().getPlayerName() + "(main server)");
+        addPlayer(contentPane.getServerPlayer().getName() + "(main server)");
     }
 
     public void prepareBackground() {

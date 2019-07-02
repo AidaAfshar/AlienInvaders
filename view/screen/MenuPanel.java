@@ -65,7 +65,7 @@ public class MenuPanel extends JPanel {
     }
 
     public void prepareWelcomeLabel() {
-        welcomeLabel = new JLabel("Welcome  " + contentPane.getPlayer().getPlayerName() + "  !");
+        welcomeLabel = new JLabel("Welcome  " + contentPane.getPlayer().getName() + "  !");
         welcomeLabel.setBounds(Dim.CENTER_X-250,Dim.CENTER_Y-100,700,200);
         welcomeLabel.setForeground(Color.red);
         welcomeLabel.setFont(new Font("Chiller", Font.BOLD , 80));

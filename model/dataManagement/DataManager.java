@@ -12,11 +12,6 @@ import java.util.Scanner;
 
 public class DataManager {
 
-    public static String save(Player player){
-        Gson gson = new Gson() ;
-        return gson.toJson(player) ;
-    }
-
     public static Player load(InputStream inputStream){
 
         GsonBuilder gsonBuilder = new GsonBuilder() ;
@@ -29,6 +24,29 @@ public class DataManager {
         Player player = gson.fromJson(data, Player.class) ;
         return player ;
     }
+
+
+    public static Player load(Scanner scanner){
+
+        GsonBuilder gsonBuilder = new GsonBuilder() ;
+        Gson gson = gsonBuilder.excludeFieldsWithModifiers(Modifier.TRANSIENT).create() ;
+
+        String data = scanner.nextLine() ;
+        scanner.close();
+
+        Player player = gson.fromJson(data, Player.class) ;
+        return player ;
+    }
+
+
+
+}
+
+
+//    public static String save(Player player){
+//        Gson gson = new Gson() ;
+//        return gson.toJson(player) ;
+//    }
 
 //    public static String save(Player player){
 //        YaGson gson = new YaGson() ;
@@ -53,5 +71,3 @@ public class DataManager {
 //
 //        return player ;
 //    }
-
-}

@@ -18,24 +18,19 @@ public class Server extends Thread {
     ServerPanel panel ;
 
     private int port ;
-    private int levelsCount ;
-    private int playersCount ;
 
     ArrayList<Player> players = new ArrayList<>() ;
 
 
-    public Server(ServerPanel panel, int port , int levelsCount , int playersCount) {
+    public Server( int port ,  ServerPanel panel) {
         super() ;
         this.panel = panel ;
         this.port = port ;
-        this.levelsCount = levelsCount ;
-        this.playersCount = playersCount ;
         initialize();
     }
 
 
     private void initialize(){
-        panel.setPlayersCount(playersCount);
         panel.initialize();
     }
 
@@ -50,9 +45,7 @@ public class Server extends Thread {
 
                 Socket socket = serverSocket.accept() ;
                 Player player = DataManager.load(socket.getInputStream());
-//                player.setInputStream(socket.getInputStream());
-//                player.setOutputStream(socket.getOutputStream());
-                player.setPanel(panel);
+                panel.addPlayer(player.getName());
                 players.add(player) ;
                 player.preparePlayer();
 
@@ -77,21 +70,6 @@ public class Server extends Thread {
         this.port = port;
     }
 
-    public int getLevelsCount() {
-        return levelsCount;
-    }
-
-    public void setLevelsCount(int levelsCount) {
-        this.levelsCount = levelsCount;
-    }
-
-    public int getPlayersCount() {
-        return playersCount;
-    }
-
-    public void setPlayersCount(int playersCount) {
-        this.playersCount = playersCount;
-    }
 
     public ArrayList<Player> getPlayers() {
         return players;

@@ -136,11 +136,11 @@ public class ContentPane extends JPanel {
     }
 
     public void afterServerInfoPanel(){
-        serverInfoPanel.setVisible(false);
-        serverPanel = new ServerPanel(this);
-        add(serverPanel);
         setServerPlayer(player);
-        server = new Server(serverPanel , serverInfoPanel.getPort() , serverInfoPanel.getLevelsCount() , serverInfoPanel.getPlayersCount()) ;
+        serverInfoPanel.setVisible(false);
+        serverPanel = new ServerPanel(this , serverInfoPanel.getPlayersCount());
+        add(serverPanel);
+        server = new Server(serverInfoPanel.getPort() , serverPanel) ;
         server.start();
     }
 

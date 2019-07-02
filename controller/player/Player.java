@@ -25,16 +25,11 @@ public class Player {
     int bombCount ;
     int x ;
     int y ;
-//    BufferedImage shipImage ;
 
     transient String data ;
 
-
     transient PrintStream printer ;
     transient Scanner scanner ;
-    transient ServerPanel panel ;
-
-
 
     public Player(String name ,SpaceShip ship) {
         this.name = name ;
@@ -58,7 +53,6 @@ public class Player {
     }
 
     public void setInitialValues(){
-        //        shipImage = ship.getImage() ;
         score = 0 ;
         coin = 0 ;
         power = 5 ;
@@ -71,7 +65,6 @@ public class Player {
     public void preparePlayer(){
         prepareShip();
         updateValues();
-        panel.addPlayer(name);
     }
 
     public void preparePlayerThread(){
@@ -113,11 +106,11 @@ public class Player {
     //getters & setters:
 
 
-    public String getPlayerName() {
+    public String getName() {
         return name;
     }
 
-    public void setPlayerName(String name) {
+    public void setName(String name) {
         this.name = name;
     }
 
@@ -177,11 +170,5 @@ public class Player {
         this.scanner = new Scanner(inputStream);
     }
 
-    public ServerPanel getPanel() {
-        return panel;
-    }
 
-    public void setPanel(ServerPanel panel) {
-        this.panel = panel;
-    }
 }
