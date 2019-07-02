@@ -48,11 +48,8 @@ public class Server extends Thread {
 
             while (true){
 
-//                System.out.println("inside run-server before accept");
                 Socket socket = serverSocket.accept() ;
-//                System.out.println("inside run-server after accept");
                 Player player = DataManager.load(socket.getInputStream());
-//                System.out.println(player.getPlayerName()) ;
 //                player.setInputStream(socket.getInputStream());
 //                player.setOutputStream(socket.getOutputStream());
                 player.setPanel(panel);

@@ -69,7 +69,6 @@ public class Player {
     }
 
     public void preparePlayer(){
-//        System.out.println("inside preparePlayerThread-player");
         prepareShip();
         updateValues();
         panel.addPlayer(name);

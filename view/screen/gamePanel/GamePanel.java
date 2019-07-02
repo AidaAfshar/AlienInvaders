@@ -1,8 +1,6 @@
 package view.screen.gamePanel;
 
 import controller.main.administrator.Administrator;
-import controller.main.administrator.MultiPlayerAdministrator;
-import controller.player.Player;
 import view.imaging.Assets;
 import view.imaging.Background;
 import view.screen.BeamMouseListener;
@@ -33,7 +31,6 @@ public abstract class GamePanel extends JPanel{
         super();
         this.contentPane = contentPane ;
         this.admin = admin;
-        initialize();
     }
 
 
