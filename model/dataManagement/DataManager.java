@@ -39,6 +39,15 @@ public class DataManager {
     }
 
 
+    public static Player load(String data){
+
+        GsonBuilder gsonBuilder = new GsonBuilder() ;
+        Gson gson = gsonBuilder.excludeFieldsWithModifiers(Modifier.TRANSIENT).create() ;
+
+        Player player = gson.fromJson(data, Player.class) ;
+        return player ;
+    }
+
 
 }
 

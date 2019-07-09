@@ -130,6 +130,14 @@ public class Player {
         this.power = power;
     }
 
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
     public int getBombCount() {
         return bombCount;
     }

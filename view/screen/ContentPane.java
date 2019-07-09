@@ -2,6 +2,7 @@ package view.screen;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.JPanel;
@@ -125,14 +126,24 @@ public class ContentPane extends JPanel {
 
     }
 
-    public void afterClientInfoPanel(){
-        clientInfoPanel.setVisible(false);
-        clientPanel = new ClientPanel(this) ;
-        add(clientPanel);
+    public void afterClientInfoPanel() throws InterruptedException, IOException {
         setClientPlayer(player);
-        client = new Client(clientInfoPanel.getIP(),clientInfoPanel.getPort(),getClientPlayer()) ;
+        client = new Client(clientInfoPanel.getIP(),clientInfoPanel.getPort(), clientPlayer ) ;
         client.start();
+        client.join();
+        client.receiveOtherPlayersFromServer();
+        clientInfoPanel.setVisible(false);
+        clientPanel = new ClientPanel(this, clientPlayer, client.getOtherPlayers());
+        add(clientPanel);
+    }
 
+    public void afterClientPanel(String clientState){
+        if(clientState.equals("player")){
+
+        }
+        if(clientState.equals("spectator")){
+
+        }
     }
 
     public void afterServerInfoPanel(){
@@ -140,7 +151,7 @@ public class ContentPane extends JPanel {
         serverInfoPanel.setVisible(false);
         serverPanel = new ServerPanel(this , serverInfoPanel.getPlayersCount());
         add(serverPanel);
-        server = new Server(serverInfoPanel.getPort() , serverPanel) ;
+        server = new Server(serverInfoPanel.getPort() , serverPlayer , serverPanel) ;
         server.start();
     }
 

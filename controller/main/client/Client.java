@@ -1,10 +1,11 @@
 package controller.main.client;
 
+import controller.main.server.Server;
 import controller.player.Player;
 import model.dataManagement.DataManager;
+import view.screen.ClientPanel;
 
-import java.io.IOException;
-import java.io.PrintStream;
+import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -17,11 +18,11 @@ public class Client extends Thread {
     int port ;
     Player clientPlayer;
 
+
     ArrayList<Player> otherPlayers ;
 
-    PrintStream printer ;
+    PrintWriter printer ;
     Scanner scanner ;
-
     public Client(String IP , int port , Player player){
         this.IP = IP ;
         this.port = port ;
@@ -35,12 +36,16 @@ public class Client extends Thread {
         try {
 
             socket = new Socket(IP , port) ;
+            printer = new PrintWriter(socket.getOutputStream()) ;
             scanner = new Scanner(socket.getInputStream()) ;
-            printer = new PrintStream(socket.getOutputStream()) ;
 
-         //   receiveOtherPlayersFromServer() ;
+
             sendClientPlayerToServer() ;
+        //    receiveOtherPlayersFromServer() ;
 
+
+            //why is it working well without synchronization? :)) :/
+            //its not working -_-
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -55,12 +60,14 @@ public class Client extends Thread {
         printer.flush();
     }
 
-    private void receiveOtherPlayersFromServer(){
-        otherPlayers = new ArrayList<>() ;
-        while (scanner.hasNextLine()){
-            otherPlayers.add(DataManager.load(scanner)) ;
-        }
+
+    public void receiveOtherPlayersFromServer() throws IOException {
+        otherPlayers = new ArrayList<>();
+            System.out.println(scanner.nextLine());
     }
+
+
+
 
     //getters & setters:
 

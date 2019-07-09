@@ -15,7 +15,7 @@ public class ServerPanel extends JPanel {
     Background serverPanelBackground = new Background();
     ContentPane contentPane ;
 
-    int playersCount ;
+    int playersCount = 5;
 
     ArrayList<UserLabel> playersLabel ;
 
