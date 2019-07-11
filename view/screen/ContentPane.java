@@ -131,7 +131,7 @@ public class ContentPane extends JPanel {
         client = new Client(clientInfoPanel.getIP(),clientInfoPanel.getPort(), clientPlayer ) ;
         client.start();
         client.join();
-        client.receiveOtherPlayersFromServer();
+//        client.receiveOtherPlayersFromServer();
         clientInfoPanel.setVisible(false);
         clientPanel = new ClientPanel(this, clientPlayer, client.getOtherPlayers());
         add(clientPanel);

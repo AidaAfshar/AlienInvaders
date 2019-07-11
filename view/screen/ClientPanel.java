@@ -40,7 +40,6 @@ public class ClientPanel extends JPanel {
         this.contentPane = contentPane ;
         this.clientPlayer = clientPlayer ;
         this.otherPlayers = otherPlayers ;
-        //System.out.println(otherPlayers.size());
         initialize();
     }
 
@@ -102,8 +101,10 @@ public class ClientPanel extends JPanel {
         addPlayer(clientPlayer.getName() + "(You)" , clientPlayer.getScore());
 
         for(int i=1 ; i<playersLabels.size() ;i++){
-            playersLabels.get(i).setText(otherPlayers.get(i-1).getName());
-            scoresLabels.get(i).setText(String.valueOf(otherPlayers.get(i-1).getScore()));
+//            playersLabels.get(i).setText(otherPlayers.get(i-1).getName());
+//            scoresLabels.get(i).setText(String.valueOf(otherPlayers.get(i-1).getScore()));
+            addPlayer(otherPlayers.get(i-1).getName(), otherPlayers.get(i-1).getScore());
+
         }
     }
 

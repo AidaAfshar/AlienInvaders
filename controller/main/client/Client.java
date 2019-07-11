@@ -41,7 +41,7 @@ public class Client extends Thread {
 
 
             sendClientPlayerToServer() ;
-        //    receiveOtherPlayersFromServer() ;
+            receiveOtherPlayersFromServer() ;
 
 
             //why is it working well without synchronization? :)) :/
@@ -63,7 +63,10 @@ public class Client extends Thread {
 
     public void receiveOtherPlayersFromServer() throws IOException {
         otherPlayers = new ArrayList<>();
-            System.out.println(scanner.nextLine());
+        while (scanner.hasNextLine()){
+            Player player = DataManager.load(scanner.nextLine()) ;
+            otherPlayers.add(player) ;
+        }
     }
 
 

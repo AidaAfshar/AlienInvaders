@@ -60,10 +60,8 @@ public class Server extends Thread {
                 Socket socket = serverSocket.accept() ;
                 printer = new PrintWriter(socket.getOutputStream()) ;
                 scanner = new Scanner(socket.getInputStream()) ;
-                Player player = DataManager.load(scanner);
-                printer.println("hoooy");
-                printer.flush();
                 sendOtherPlayersToClient();
+                Player player = DataManager.load(scanner);
                 panel.addPlayer(player.getName());
                 players.add(player) ;
                 player.preparePlayer();
@@ -83,7 +81,6 @@ public class Server extends Thread {
             player.save();
             printer.println(player);
             printer.flush();
-            System.out.println(player);
         }
     }
 
