@@ -1,10 +1,12 @@
-package controller.main.client;
+package controller.main.Connection.client;
 
-import controller.main.server.Server;
 import controller.player.Player;
 import model.dataManagement.DataManager;
-import view.screen.ClientPanel;
+import view.screen.ClientPanel2;
 
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -16,17 +18,19 @@ public class Client extends Thread {
 
     String IP ;
     int port ;
-    Player clientPlayer;
 
+    Player clientPlayer;
+    ClientPanel2 clientPanel ;
 
     ArrayList<Player> otherPlayers ;
 
     PrintWriter printer ;
     Scanner scanner ;
-    public Client(String IP , int port , Player player){
+    public Client(String IP , int port , Player player , ClientPanel2 clientPanel){
         this.IP = IP ;
         this.port = port ;
         this.clientPlayer = player ;
+        this.clientPanel = clientPanel ;
     }
 
 
@@ -39,6 +43,8 @@ public class Client extends Thread {
             printer = new PrintWriter(socket.getOutputStream()) ;
             scanner = new Scanner(socket.getInputStream()) ;
 
+            prepareTimer();
+            timer.start();
 
             sendClientPlayerToServer() ;
             receiveOtherPlayersFromServer() ;
@@ -61,7 +67,7 @@ public class Client extends Thread {
     }
 
 
-    public void receiveOtherPlayersFromServer() throws IOException {
+    public void receiveOtherPlayersFromServer() {
         otherPlayers = new ArrayList<>();
         while (scanner.hasNextLine()){
             Player player = DataManager.load(scanner.nextLine()) ;
@@ -70,6 +76,19 @@ public class Client extends Thread {
     }
 
 
+    Timer timer ;
+    void prepareTimer(){
+         timer = new Timer(3000, new ActionListener() {
+             @Override
+             public void actionPerformed(ActionEvent e) {
+                 receiveOtherPlayersFromServer();
+                 clientPanel.setOtherPlayers(otherPlayers);
+                 clientPanel.setPlayersCount(otherPlayers.size()+1);
+                 clientPanel.updatePlayersList();
+             }
+         });
+         timer.start();
+     }
 
 
     //getters & setters:

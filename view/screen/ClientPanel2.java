@@ -11,7 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class ClientPanel extends JPanel {
+public class ClientPanel2 extends JPanel {
 
     Background clientPanelBackground = new Background();
     ContentPane contentPane ;
@@ -28,14 +28,14 @@ public class ClientPanel extends JPanel {
     JButton spectatorButton ;
 
 
-    public ClientPanel(ContentPane contentPane) {
+    public ClientPanel2(ContentPane contentPane) {
         super();
         this.contentPane = contentPane ;
         initialize();
     }
 
 
-    public ClientPanel(ContentPane contentPane , Player clientPlayer , ArrayList<Player> otherPlayers) {
+    public ClientPanel2(ContentPane contentPane , Player clientPlayer , ArrayList<Player> otherPlayers) {
         super();
         this.contentPane = contentPane ;
         this.clientPlayer = clientPlayer ;
@@ -101,8 +101,6 @@ public class ClientPanel extends JPanel {
         addPlayer(clientPlayer.getName() + "(You)" , clientPlayer.getScore());
 
         for(int i=1 ; i<playersLabels.size() ;i++){
-//            playersLabels.get(i).setText(otherPlayers.get(i-1).getName());
-//            scoresLabels.get(i).setText(String.valueOf(otherPlayers.get(i-1).getScore()));
             addPlayer(otherPlayers.get(i-1).getName(), otherPlayers.get(i-1).getScore());
 
         }
@@ -110,7 +108,6 @@ public class ClientPanel extends JPanel {
 
     public void updatePlayersList() {
 
-        //    System.out.println("inside updatePlayersList-serverPanel");
 
         ArrayList<UserLabel> a = new ArrayList<UserLabel>(playersCount);
         ArrayList<Integer> b = new ArrayList<Integer>();
@@ -136,8 +133,6 @@ public class ClientPanel extends JPanel {
     }
 
     public void addPlayer(String playerName) {
-        //   System.out.println("inside addPlayer-serverPanel");
-
         if(playerName!= null && playerName.length()>0) {
             for(int i = 0; i< playersLabels.size(); i++) {
                 if(playersLabels.get(i).full==false) {
@@ -187,5 +182,9 @@ public class ClientPanel extends JPanel {
 
     public void setPlayersCount(int playersCount) {
         this.playersCount = playersCount;
+    }
+
+    public void setOtherPlayers(ArrayList<Player> otherPlayers) {
+        this.otherPlayers = otherPlayers;
     }
 }

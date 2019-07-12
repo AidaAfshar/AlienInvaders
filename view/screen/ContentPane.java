@@ -10,8 +10,8 @@ import javax.swing.JPanel;
 import controller.main.administrator.Administrator;
 import controller.main.administrator.MultiPlayerAdministrator;
 import controller.main.administrator.SinglePlayerAdministrator;
-import controller.main.client.Client;
-import controller.main.server.Server;
+import controller.main.Connection.client.Client;
+import controller.main.Connection.server.Server;
 import controller.player.Player;
 import controller.ship.SpaceShip;
 import view.screen.gamePanel.GamePanel;
@@ -29,7 +29,7 @@ public class ContentPane extends JPanel {
     ServerClientPanel serverClientPanel ;
     ClientInfoPanel clientInfoPanel;
     ServerInfoPanel serverInfoPanel;
-    ClientPanel clientPanel ;
+    ClientPanel2 clientPanel ;
     ServerPanel serverPanel ;
     MenuPanel menuPanel ;
     GamePanel gamePanel ;
@@ -128,13 +128,13 @@ public class ContentPane extends JPanel {
 
     public void afterClientInfoPanel() throws InterruptedException, IOException {
         setClientPlayer(player);
-        client = new Client(clientInfoPanel.getIP(),clientInfoPanel.getPort(), clientPlayer ) ;
+        clientPanel = new ClientPanel2(this, clientPlayer, client.getOtherPlayers());
+        add(clientPanel);
+        client = new Client(clientInfoPanel.getIP(),clientInfoPanel.getPort(), clientPlayer ,clientPanel) ;
         client.start();
         client.join();
-//        client.receiveOtherPlayersFromServer();
         clientInfoPanel.setVisible(false);
-        clientPanel = new ClientPanel(this, clientPlayer, client.getOtherPlayers());
-        add(clientPanel);
+
     }
 
     public void afterClientPanel(String clientState){

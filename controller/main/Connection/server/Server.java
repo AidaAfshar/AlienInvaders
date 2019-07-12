@@ -1,9 +1,7 @@
-package controller.main.server;
+package controller.main.Connection.server;
 
-import controller.main.client.Client;
+import controller.main.Connection.ConnectionService;
 import controller.player.Player;
-import model.dataManagement.DataManager;
-import view.screen.ContentPane;
 import view.screen.ServerPanel;
 
 import java.io.*;
@@ -27,6 +25,7 @@ public class Server extends Thread {
     ArrayList<Player> players = new ArrayList<>() ;
     Player serverPlayer ;
 
+    ArrayList<ConnectionService> clients = new ArrayList<>();
 
     public Server( int port ,  ServerPanel panel) {
         super() ;
@@ -58,17 +57,24 @@ public class Server extends Thread {
             while (true){
 
                 Socket socket = serverSocket.accept() ;
-                printer = new PrintWriter(socket.getOutputStream()) ;
-                scanner = new Scanner(socket.getInputStream()) ;
-                sendOtherPlayersToClient();
-                Player player = DataManager.load(scanner);
-                panel.addPlayer(player.getName());
-                players.add(player) ;
-                player.preparePlayer();
+                ConnectionService  service = new ConnectionService(
+                        socket.getOutputStream(),
+                        socket.getInputStream(),
+                        players) ;
+
+                clients.add(service) ;
+                service.start();
+                service.join();
+
+                Player player = service.getNewPlayer() ;
+                addNewPlayer(player) ;
+                sendNewPlayerToOtherClients(player);
 
             }
 
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
@@ -76,14 +82,19 @@ public class Server extends Thread {
     }
 
 
-    public void sendOtherPlayersToClient(){
-        for (Player player : players) {
-            player.save();
-            printer.println(player);
-            printer.flush();
-        }
+
+    void addNewPlayer(Player player){
+        panel.addPlayer(player.getName());
+        players.add(player) ;
+        player.preparePlayer();
     }
 
+
+    void sendNewPlayerToOtherClients(Player player){
+        for(ConnectionService client :clients){
+            client.updatePlayersList(player);
+        }
+    }
 
     //getters & setters :
 
