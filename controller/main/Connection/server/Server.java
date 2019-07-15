@@ -12,11 +12,8 @@ import java.util.Scanner;
 
 public class Server extends Thread {
 
-    public static Object synchObject = new Object();
 
     ServerSocket serverSocket ;
-    Scanner scanner ;
-    PrintWriter printer ;
 
     ServerPanel panel ;
 
@@ -57,18 +54,25 @@ public class Server extends Thread {
             while (true){
 
                 Socket socket = serverSocket.accept() ;
+//                for(Player player:players){
+//                    System.out.println(player.getName());
+//                }
+//                System.out.println("------------------");
+
                 ConnectionService  service = new ConnectionService(
                         socket.getOutputStream(),
                         socket.getInputStream(),
                         players) ;
 
-                clients.add(service) ;
                 service.start();
                 service.join();
 
                 Player player = service.getNewPlayer() ;
+//                System.out.println(player.getName());
+//                System.out.println("------------------");
                 addNewPlayer(player) ;
                 sendNewPlayerToOtherClients(player);
+                clients.add(service) ;
 
             }
 

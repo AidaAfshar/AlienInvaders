@@ -11,12 +11,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class ClientPanell extends JPanel {
+public class ClientPanel extends JPanel {
 
     Background clientPanelBackground = new Background();
     ContentPane contentPane ;
 
-    int playersCount = 5 ;
+    int playersCount = 8 ;
 
     Player clientPlayer ;
     ArrayList<Player> otherPlayers ;
@@ -30,7 +30,9 @@ public class ClientPanell extends JPanel {
     JButton spectatorButton ;
 
 
-    public ClientPanell(){
+    public ClientPanel(ContentPane contentPane,Player clientPlayer){
+        this.contentPane = contentPane ;
+        this.clientPlayer = clientPlayer ;
         initialize();
     }
 
@@ -82,10 +84,10 @@ public class ClientPanell extends JPanel {
         }
 
         for (int i = 0; i < playersCount; i++) {
-            playersLabels.get(i).setBounds(playersLabels.get(i).x, 250 + i * 70, playersLabels.get(i).width, playersLabels.get(i).height);
+            playersLabels.get(i).setBounds(playersLabels.get(i).x, 100 + i * 70, playersLabels.get(i).width, playersLabels.get(i).height);
             this.add(playersLabels.get(i));
 
-            scoresLabels.get(i).setBounds(scoresLabels.get(i).x + 700, 250 + i * 70, 200, scoresLabels.get(i).height);
+            scoresLabels.get(i).setBounds(scoresLabels.get(i).x + 700, 100 + i * 70, 200, scoresLabels.get(i).height);
             this.add(scoresLabels.get(i));
         }
 

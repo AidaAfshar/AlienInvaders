@@ -111,8 +111,6 @@ public class ClientInfoPanel extends JPanel {
                     contentPane.afterClientInfoPanel();
                 } catch (InterruptedException ex) {
                     ex.printStackTrace();
-                } catch (IOException ex) {
-                    ex.printStackTrace();
                 }
             }
         });

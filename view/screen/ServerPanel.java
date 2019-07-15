@@ -34,7 +34,7 @@ public class ServerPanel extends JPanel {
         super();
         this.contentPane = contentPane ;
         this.playersCount = playersCount ;
-        initialize() ;
+
     }
 
 

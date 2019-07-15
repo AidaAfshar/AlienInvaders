@@ -29,7 +29,7 @@ public class ContentPane extends JPanel {
     ServerClientPanel serverClientPanel ;
     ClientInfoPanel clientInfoPanel;
     ServerInfoPanel serverInfoPanel;
-    ClientPanel2 clientPanel ;
+    ClientPanel clientPanel ;
     ServerPanel serverPanel ;
     MenuPanel menuPanel ;
     GamePanel gamePanel ;
@@ -126,13 +126,16 @@ public class ContentPane extends JPanel {
 
     }
 
-    public void afterClientInfoPanel() throws InterruptedException, IOException {
+    public void afterClientInfoPanel() throws InterruptedException{
         setClientPlayer(player);
-        clientPanel = new ClientPanel2(this, clientPlayer, client.getOtherPlayers());
+        clientPanel = new ClientPanel(this, clientPlayer);
         add(clientPanel);
         client = new Client(clientInfoPanel.getIP(),clientInfoPanel.getPort(), clientPlayer ,clientPanel) ;
         client.start();
+        System.out.println("after start");
         client.join();
+        System.out.println("after join");
+        //client.prepareTimer();
         clientInfoPanel.setVisible(false);
 
     }
