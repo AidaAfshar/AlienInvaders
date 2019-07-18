@@ -2,7 +2,6 @@ package view.screen;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.JPanel;
@@ -132,22 +131,62 @@ public class ContentPane extends JPanel {
         add(clientPanel);
         client = new Client(clientInfoPanel.getIP(),clientInfoPanel.getPort(), clientPlayer ,clientPanel) ;
         client.start();
-        System.out.println("after start");
         client.join();
-        System.out.println("after join");
-        //client.prepareTimer();
         clientInfoPanel.setVisible(false);
 
     }
 
     public void afterClientPanel(String clientState){
-        if(clientState.equals("player")){
+        if(clientState.equals("player"))
+            prepareGamePanelForPlayerClient() ;
 
-        }
-        if(clientState.equals("spectator")){
-
-        }
+        if(clientState.equals("spectator"))
+            prepareGamePanelForObserverClient() ;
     }
+
+    public void prepareGamePanelForPlayerClient(){
+        preparePlayersForPlayerClient();
+        clientPanel.setVisible(false);
+        add(escapePanel);
+        prepareMultiPlayerAdministrator();
+        prepareMultiPlayerGamePanel();
+        add(gamePanel) ;
+        gamePanel.requestFocus();
+    }
+    public void preparePlayersForPlayerClient(){
+        players = new ArrayList<>(client.getOtherPlayers().size()+1) ;
+
+        for (Player player:client.getOtherPlayers())
+            player.preparePlayer();
+
+        players.add(client.getClientPlayer()) ;
+        players.addAll(client.getOtherPlayers());
+
+
+//        for (Player player:players)
+//            player.preparePlayerThread();
+    }
+
+    public void prepareGamePanelForObserverClient(){
+        preparePlayersForObserverClient();
+        clientPanel.setVisible(false);
+        add(escapePanel);
+        prepareMultiPlayerAdministrator();
+        prepareMultiPlayerGamePanel();
+        add(gamePanel) ;
+        gamePanel.requestFocus();
+    }
+
+    public void preparePlayersForObserverClient(){
+        players = new ArrayList<>(client.getOtherPlayers().size()) ;
+
+        for (Player player:client.getOtherPlayers())
+            player.preparePlayer();
+
+        players.addAll(client.getOtherPlayers());
+    }
+
+
 
     public void afterServerInfoPanel(){
         setServerPlayer(player);
@@ -160,7 +199,7 @@ public class ContentPane extends JPanel {
 
 
     public void afterServerPanel(){
-        preparePlayers();
+        preparePlayersForServerPlayer();
         serverPanel.setVisible(false);
         add(escapePanel);
         prepareMultiPlayerAdministrator();
@@ -170,13 +209,14 @@ public class ContentPane extends JPanel {
     }
 
 
-    public void preparePlayers(){
+    public void preparePlayersForServerPlayer(){
         players = new ArrayList<>(server.getPlayers().size()+1) ;
-        players.add(serverPlayer) ;
+//        players.add(serverPlayer) ;
+        players.add(server.getServerPlayer()) ; //I think it's not needed!
         players.addAll(server.getPlayers());
 
-        for (Player player:players)
-            player.preparePlayerThread();
+//        for (Player player:players)
+//            player.preparePlayerThread();
     }
 
 

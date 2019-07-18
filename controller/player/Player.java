@@ -15,7 +15,7 @@ import java.util.Scanner;
 
 public class Player {
 
-    transient Thread playerThread ;
+//    transient Thread playerThread ;
 
     String name ;
     transient SpaceShip ship ;
@@ -67,9 +67,9 @@ public class Player {
         updateValues();
     }
 
-    public void preparePlayerThread(){
-        playerThread = new PlayerThread(this) ;
-    }
+//    public void preparePlayerThread(){
+//        playerThread = new PlayerThread(this) ;
+//    }
 
 
     public void updateValues(){

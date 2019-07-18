@@ -27,6 +27,4 @@ public class MultiPlayerGamePanel extends GamePanel {
 
     }
 
-
-
 }

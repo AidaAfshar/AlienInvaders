@@ -8,7 +8,6 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Server extends Thread {
 
@@ -41,6 +40,7 @@ public class Server extends Thread {
 
     private void initialize(){
         players.add(serverPlayer) ;
+        serverPlayer.preparePlayer();
         panel.initialize();
     }
 
@@ -54,11 +54,6 @@ public class Server extends Thread {
             while (true){
 
                 Socket socket = serverSocket.accept() ;
-//                for(Player player:players){
-//                    System.out.println(player.getName());
-//                }
-//                System.out.println("------------------");
-
                 ConnectionService  service = new ConnectionService(
                         socket.getOutputStream(),
                         socket.getInputStream(),
@@ -68,8 +63,6 @@ public class Server extends Thread {
                 service.join();
 
                 Player player = service.getNewPlayer() ;
-//                System.out.println(player.getName());
-//                System.out.println("------------------");
                 addNewPlayer(player) ;
                 sendNewPlayerToOtherClients(player);
                 clients.add(service) ;

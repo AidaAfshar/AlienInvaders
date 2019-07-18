@@ -10,7 +10,6 @@ import java.awt.event.ActionListener;
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Client extends Thread {
 
@@ -25,7 +24,6 @@ public class Client extends Thread {
     ArrayList<Player> otherPlayers ;
 
     PrintWriter printer ;
-//    Scanner scanner ;
     BufferedReader reader ;
 
     public Client(String IP , int port , Player player , ClientPanel clientPanel){
@@ -43,15 +41,15 @@ public class Client extends Thread {
 
             socket = new Socket(IP , port) ;
             printer = new PrintWriter(socket.getOutputStream()) ;
-//            scanner = new Scanner(socket.getInputStream()) ;
             reader = new BufferedReader(new InputStreamReader(socket.getInputStream())) ;
 
 
             sendClientPlayerToServer() ;
             receiveOtherPlayersFromServer() ;
 
+            prepareTimer();
 
-        } catch (IOException e) {
+        } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
 
@@ -65,80 +63,44 @@ public class Client extends Thread {
     }
 
 
-    public void receiveOtherPlayersFromServer() throws IOException {
+    public void receiveOtherPlayersFromServer() throws IOException, InterruptedException {
         otherPlayers = new ArrayList<>();
-//        while (scanner.hasNextLine()){
-//            Player player = DataManager.load(scanner.nextLine()) ;
-//            otherPlayers.add(player) ;
-//            clientPanel.addPlayer(player);
-//        }
+
         String data ;
+        Thread.currentThread().sleep(500);
         while (reader.ready() &&(data = reader.readLine())!=null){
             Player player = DataManager.load(data) ;
             otherPlayers.add(player) ;
             clientPanel.addPlayer(player);
         }
-
-
-            System.out.println("after while");
     }
 
 
-//    void receiveNewPlayerFromServer(){
-//        if(scanner.hasNextLine()){
-//            Player newPlayer = DataManager.load(scanner.nextLine()) ;
-//            otherPlayers.add(newPlayer) ;
-//            clientPanel.addPlayer(newPlayer);
-//        }
-//    }
+    void receiveNewPlayerFromServer() throws IOException {
+        String data ;
+        if(reader.ready() &&(data = reader.readLine())!=null){
+            Player newPlayer = DataManager.load(data) ;
+            otherPlayers.add(newPlayer) ;
+            clientPanel.addPlayer(newPlayer);
+        }
+
+    }
 
 
-//    Timer timer ;
-//    public void prepareTimer(){
-//        timer = new Timer(3000, new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                receiveNewPlayerFromServer();
-//            }
-//        }) ;
-//        timer.start();
-//    }
-//
-//
-//    public void evokeTimer(){
-//        timer.start();
-//    }
-//
-//     class NewPlayerReciever extends Thread{
-//
-//        Scanner scanner ;
-//        Player newPlayer ;
-//
-//        public NewPlayerReciever(Scanner scanner){
-//            this.scanner = scanner ;
-//        }
-//
-//         @Override
-//         public void run() {
-//             super.run();
-//             while (true) {
-//                 if (scanner.hasNextLine()) {
-//                     try {
-//                         sleep(1000);
-//                         newPlayer = DataManager.load(scanner.nextLine());
-//                         otherPlayers.add(newPlayer) ;
-//                         clientPanel.addPlayer(newPlayer);
-//                         sleep(3000);
-//                     } catch (InterruptedException e) {
-//                         e.printStackTrace();
-//                     }
-//
-//                 }
-//             }
-//         }
-//
-//
-//     }
+    Timer timer ;
+    public void prepareTimer(){
+        timer = new Timer(2000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    receiveNewPlayerFromServer();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        }) ;
+        timer.start();
+    }
 
     //getters & setters:
 
