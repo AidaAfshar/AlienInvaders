@@ -48,6 +48,9 @@ public class Client extends Thread {
             receiveOtherPlayersFromServer() ;
 
             prepareTimer();
+            prepareUpdateTimer();
+
+            timer.start();
 
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
@@ -99,7 +102,45 @@ public class Client extends Thread {
                 }
             }
         }) ;
-        timer.start();
+
+    }
+
+    public void stopTimer(){
+        timer.stop();
+    }
+
+    public void retartTimer(){
+        timer.restart();
+    }
+
+    //during game:
+
+    void sendDataToServer(){
+        clientPlayer.save();
+        printer.println(clientPanel);
+        printer.flush();
+    }
+
+    Timer updateTimer ;
+    public void prepareUpdateTimer(){
+        updateTimer = new Timer(20, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                sendDataToServer();
+            }
+        });
+    }
+
+    public void stopUpdateTimer(){
+        updateTimer.stop();
+    }
+
+    public void retartUpdateTimer(){
+        updateTimer.restart();
+    }
+
+    public void startUpdateTimer(){
+        updateTimer.start();
     }
 
     //getters & setters:

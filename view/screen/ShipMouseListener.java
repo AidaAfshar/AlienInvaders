@@ -6,7 +6,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
-public class MyMouseListener implements MouseMotionListener , MouseListener{
+public class ShipMouseListener implements MouseMotionListener , MouseListener{
 
     SpaceShip ship ;
 
@@ -14,27 +14,27 @@ public class MyMouseListener implements MouseMotionListener , MouseListener{
     int y = 790;
     int clickCount = 0 ;
 
-    public MyMouseListener(SpaceShip spaceShip) {
+    public ShipMouseListener(SpaceShip spaceShip) {
         this.ship = spaceShip ;
     }
 
     @Override
     public void mouseDragged(MouseEvent e) {
 
-        ship.setX(e.getX());
-        ship.setY(e.getY());
-//        x = e.getX();
-//        y = e.getY();
+        x = e.getX();
+        y = e.getY();
+        ship.setX(x);
+        ship.setY(y);
+
     }
 
     @Override
     public void mouseMoved(MouseEvent e) {
         if(clickCount>0) {
-
-            ship.setX(e.getX());
-            ship.setY(e.getY());
-//            x = e.getX();
-//            y = e.getY();
+            x = e.getX();
+            y = e.getY();
+            ship.setX(x);
+            ship.setY(y);
         }
 
     }

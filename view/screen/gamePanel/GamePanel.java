@@ -6,7 +6,7 @@ import view.imaging.Background;
 import view.screen.BeamMouseListener;
 import view.screen.ContentPane;
 import view.screen.MyKeyListener;
-import view.screen.MyMouseListener;
+import view.screen.ShipMouseListener;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,7 +21,7 @@ public abstract class GamePanel extends JPanel{
 
     Background gamePanelBackground = new Background();
 
-    public MyMouseListener ml ;
+    public ShipMouseListener ml ;
     public BeamMouseListener bml ;
 
     MyKeyListener kl ;
@@ -37,7 +37,7 @@ public abstract class GamePanel extends JPanel{
     public void initialize() {
         this.setLayout(null);
         this.setBackground(Color.gray);
-        ml = new MyMouseListener(admin.getShip());
+        ml = new ShipMouseListener(admin.getShip());
         this.addMouseMotionListener(ml);
         this.addMouseListener(ml);
         bml = new BeamMouseListener(admin.getShip());
@@ -66,6 +66,14 @@ public abstract class GamePanel extends JPanel{
     public void prepareBackground() {
         gamePanelBackground.setImage(Assets.gamePanelBackgroundImage);
 
+    }
+
+    public void removeMouseListeners(){
+        removeMouseListener(ml);
+        removeMouseMotionListener(ml);
+
+        removeMouseListener(bml);
+        removeMouseMotionListener(bml);
     }
 
     @Override

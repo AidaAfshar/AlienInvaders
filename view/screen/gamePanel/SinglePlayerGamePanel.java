@@ -8,19 +8,13 @@ import java.awt.event.ActionListener;
 import java.util.TimerTask;
 
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
 
 import controller.main.administrator.SinglePlayerAdministrator;
 import controller.ship.SpaceShip;
-import view.imaging.Assets;
-import view.imaging.Background;
-import view.screen.BeamMouseListener;
 import view.screen.ContentPane;
-import view.screen.MyKeyListener;
-import view.screen.MyMouseListener;
 import view.utilities.Dim;
 
 public class SinglePlayerGamePanel extends GamePanel {

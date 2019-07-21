@@ -81,6 +81,14 @@ public class Player {
         score = coin*3 ;
     }
 
+    public void update(Player player){
+        this.score = player.getScore();
+        this.coin = player.getCoin() ;
+        this.bombCount = player.getBombCount() ;
+        this.x = player.getX() ;
+        this.y = player.getY() ;
+    }
+
     public void save(){
         updateValues();
         Gson gson = new Gson() ;
@@ -178,5 +186,19 @@ public class Player {
         this.scanner = new Scanner(inputStream);
     }
 
+    public int getX() {
+        return x;
+    }
 
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
 }

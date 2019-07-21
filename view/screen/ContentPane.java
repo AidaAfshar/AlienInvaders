@@ -147,6 +147,8 @@ public class ContentPane extends JPanel {
     public void prepareGamePanelForPlayerClient(){
         preparePlayersForPlayerClient();
         clientPanel.setVisible(false);
+        client.stopTimer();
+        client.startUpdateTimer();
         add(escapePanel);
         prepareMultiPlayerAdministrator();
         prepareMultiPlayerGamePanel();
@@ -170,9 +172,12 @@ public class ContentPane extends JPanel {
     public void prepareGamePanelForObserverClient(){
         preparePlayersForObserverClient();
         clientPanel.setVisible(false);
+        client.stopTimer();
+        client.startUpdateTimer();
         add(escapePanel);
         prepareMultiPlayerAdministrator();
         prepareMultiPlayerGamePanel();
+        gamePanel.removeMouseListeners();
         add(gamePanel) ;
         gamePanel.requestFocus();
     }
