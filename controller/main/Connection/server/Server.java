@@ -119,7 +119,7 @@ public class Server extends Thread {
     void updatePlayersState(){
         updatedPlayers = new ArrayList<>() ;
         for(UpdateService client : clientsUpdates){
-            updatedPlayers.add(client.getUpdatedPlayer()) ;
+            updatedPlayers.add(client.getCurrentPlayer()) ;
         }
         players = updatedPlayers ;
     }

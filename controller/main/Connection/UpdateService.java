@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 
@@ -17,12 +18,13 @@ public class UpdateService {
     Scanner scanner ;
     PrintWriter printer ;
 
-    Player updatedPlayer ;
+    Player currentPlayer;
+    ArrayList<Player> otherPlayers ;
 
     public UpdateService(OutputStream outputStream, InputStream inputStream ,Player player){
-        printer = new PrintWriter(outputStream) ;
+        printer = new PrintWriter(outputStream , false) ;
         scanner = new Scanner(inputStream) ;
-        updatedPlayer = player ;
+        currentPlayer = player ;
         initialize() ;
     }
 
@@ -30,10 +32,19 @@ public class UpdateService {
         prepareUpdateTimer() ;
     }
 
-    void updatePlayersData() {
-        String data = scanner.nextLine();
-        System.out.println(data);
-        updatedPlayer = DataManager.load(data) ;
+    void sendCurrentPlayersUpdate() {
+        currentPlayer.save();
+        printer.println(currentPlayer);
+        printer.flush();
+    }
+
+    void receiveOtherPlayersUpdate() {
+        for(Player player : otherPlayers){
+            String data = scanner.nextLine();
+            System.out.println(data);
+            Player updatedPlayer = DataManager.load(data) ;
+            player.update(updatedPlayer);
+        }
     }
 
     Timer timer ;
@@ -41,7 +52,8 @@ public class UpdateService {
         timer = new Timer(10, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                updatePlayersData();
+                sendCurrentPlayersUpdate();
+                receiveOtherPlayersUpdate();
             }
         });
     }
@@ -62,8 +74,8 @@ public class UpdateService {
 
     //getter & setter
 
-    public Player getUpdatedPlayer() {
-        return updatedPlayer;
+    public Player getCurrentPlayer() {
+        return currentPlayer;
     }
 
 }
