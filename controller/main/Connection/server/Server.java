@@ -97,8 +97,6 @@ public class Server extends Thread {
     void prepareConnection(ConnectionService connectionService) throws InterruptedException {
         connectionService.start();
         connectionService.join();
-
-
     }
 
     void addNewPlayer(Player player){
@@ -135,6 +133,7 @@ public class Server extends Thread {
                 updatePlayersState();
             }
         });
+        updateTimer.start();
     }
 
     public void stopUpdateTimer(){

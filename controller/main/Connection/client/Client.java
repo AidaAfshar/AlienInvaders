@@ -135,7 +135,7 @@ public class Client extends Thread {
         updateTimer.stop();
     }
 
-    public void retartUpdateTimer(){
+    public void restartUpdateTimer(){
         updateTimer.restart();
     }
 
@@ -143,8 +143,8 @@ public class Client extends Thread {
         updateTimer.start();
     }
 
-    //getters & setters:
 
+    //getters & setters:
 
     public Player getClientPlayer() {
         return clientPlayer;

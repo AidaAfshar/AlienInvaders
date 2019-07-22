@@ -209,19 +209,32 @@ public class ContentPane extends JPanel {
         add(escapePanel);
         prepareMultiPlayerAdministrator();
         prepareMultiPlayerGamePanel();
+        server.prepareUpdateTimer();
         add(gamePanel) ;
         gamePanel.requestFocus();
+        server.startUpdating();
     }
 
 
     public void preparePlayersForServerPlayer(){
-        players = new ArrayList<>(server.getPlayers().size()+1) ;
-//        players.add(serverPlayer) ;
-        players.add(server.getServerPlayer()) ; //I think it's not needed!
-        players.addAll(server.getPlayers());
 
-//        for (Player player:players)
-//            player.preparePlayerThread();
+        players = new ArrayList<>(server.getOtherPlayers().size()+1) ;
+
+        for (Player player:server.getOtherPlayers())
+            player.preparePlayer();
+
+        players.add(server.getServerPlayer()) ;
+        players.addAll(server.getOtherPlayers());
+
+
+        //        players = new ArrayList<>(server.getPlayers().size()+1) ;
+////        players.add(serverPlayer) ;
+//        players.add(server.getServerPlayer()) ; //I think it's not needed!
+//        players.addAll(server.getPlayers());
+//
+////        for (Player player:players)
+////            player.preparePlayerThread();
+
     }
 
 

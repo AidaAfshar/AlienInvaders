@@ -31,7 +31,9 @@ public class UpdateService {
     }
 
     void updatePlayersData() {
-        updatedPlayer = DataManager.load(scanner.nextLine()) ;
+        String data = scanner.nextLine();
+        System.out.println(data);
+        updatedPlayer = DataManager.load(data) ;
     }
 
     Timer timer ;
