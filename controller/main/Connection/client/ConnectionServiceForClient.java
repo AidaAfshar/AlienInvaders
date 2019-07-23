@@ -61,17 +61,21 @@ public class ConnectionServiceForClient extends Thread{
     }
 
 
+
     public void receiveOtherPlayersFromServer() throws IOException, InterruptedException {
         otherPlayers = new ArrayList<>();
 
         String data ;
-        Thread.currentThread().sleep(500);
-        while (reader.ready() &&(data = reader.readLine())!=null){
-            Player player = DataManager.load(data) ;
-            otherPlayers.add(player) ;
-            clientPanel.addPlayer(player);
+        while (reader.ready() && (data = reader.readLine()) !=null){
+                Player player = DataManager.load(data);
+                otherPlayers.add(player);
+                clientPanel.addPlayer(player);
+
         }
     }
+
+
+
 
     Timer timer ;
     public void prepareTimer(){

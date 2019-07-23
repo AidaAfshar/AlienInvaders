@@ -60,10 +60,13 @@ public class ConnectionServiceForServer extends Thread{
         printer.flush();
     }
 
+    int i=0 ;
+
     private void loadNewPlayer() throws IOException, InterruptedException {
         String data ;
+
         Thread.currentThread().sleep(250);
-        while (reader.ready() && (data = reader.readLine())!=null){
+        while (reader.ready() && (data = reader.readLine()) !=null){
             clientPlayer = DataManager.load(data);
         }
         updateServerPanel();
