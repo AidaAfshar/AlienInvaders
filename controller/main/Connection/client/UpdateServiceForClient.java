@@ -1,4 +1,4 @@
-package controller.main.Connection;
+package controller.main.Connection.client;
 
 import controller.player.Player;
 import model.dataManagement.DataManager;
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 
-public class UpdateService {
+public class UpdateServiceForClient {
 
     Scanner scanner ;
     PrintWriter printer ;
@@ -21,10 +21,11 @@ public class UpdateService {
     Player currentPlayer;
     ArrayList<Player> otherPlayers ;
 
-    public UpdateService(OutputStream outputStream, InputStream inputStream ,Player player){
+    public UpdateServiceForClient(OutputStream outputStream, InputStream inputStream , Player player ,ArrayList<Player> otherPlayers){
         printer = new PrintWriter(outputStream , false) ;
         scanner = new Scanner(inputStream) ;
         currentPlayer = player ;
+        this.otherPlayers = otherPlayers ;
         initialize() ;
     }
 
@@ -32,24 +33,9 @@ public class UpdateService {
         prepareUpdateTimer() ;
     }
 
-    void sendCurrentPlayersUpdate() {
-        currentPlayer.save();
-        printer.println(currentPlayer);
-        printer.flush();
-    }
-
-    void receiveOtherPlayersUpdate() {
-        for(Player player : otherPlayers){
-            String data = scanner.nextLine();
-            System.out.println(data);
-            Player updatedPlayer = DataManager.load(data) ;
-            player.update(updatedPlayer);
-        }
-    }
-
-    Timer timer ;
+    Timer updateTimer;
     public void prepareUpdateTimer(){
-        timer = new Timer(10, new ActionListener() {
+        updateTimer = new Timer(10, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 sendCurrentPlayersUpdate();
@@ -58,16 +44,36 @@ public class UpdateService {
         });
     }
 
+
+    void sendCurrentPlayersUpdate() {
+        currentPlayer.save();
+        printer.println(currentPlayer);
+        printer.flush();
+    }
+
+    void receiveOtherPlayersUpdate() {
+        System.out.println("before loop");
+        for(Player player : otherPlayers){
+            System.out.println("inside loop");
+            String data = scanner.nextLine();
+            System.out.println("after next Line");
+            Player updatedPlayer = DataManager.load(data) ;
+            player.update(updatedPlayer);
+        }
+        System.out.println("after loop");
+    }
+
+
     public void stopUpdateTimer(){
-        timer.stop();
+        updateTimer.stop();
     }
 
     public void restartUpdateTimer(){
-        timer.restart();
+        updateTimer.restart();
     }
 
     public void startUpdateTimer(){
-        timer.start();
+        updateTimer.start();
     }
 
 

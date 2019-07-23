@@ -1,6 +1,8 @@
 package view.screen;
 
 import controller.player.Player;
+import controller.player.PlayerState;
+import controller.player.PlayerType;
 import view.imaging.Assets;
 import view.imaging.Background;
 import view.utilities.Dim;

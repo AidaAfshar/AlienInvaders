@@ -26,6 +26,9 @@ public class Player {
     int x ;
     int y ;
 
+    PlayerState state = PlayerState.PREGAME ;
+    PlayerType type = PlayerType.UNDECLARED ;
+
     transient String data ;
 
     transient PrintStream printer ;
@@ -200,5 +203,21 @@ public class Player {
 
     public void setY(int y) {
         this.y = y;
+    }
+
+    public PlayerState getState() {
+        return state;
+    }
+
+    public void setState(PlayerState state) {
+        this.state = state;
+    }
+
+    public PlayerType getType() {
+        return type;
+    }
+
+    public void setType(PlayerType type) {
+        this.type = type;
     }
 }

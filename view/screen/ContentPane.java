@@ -12,6 +12,8 @@ import controller.main.administrator.SinglePlayerAdministrator;
 import controller.main.Connection.client.Client;
 import controller.main.Connection.server.Server;
 import controller.player.Player;
+import controller.player.PlayerState;
+import controller.player.PlayerType;
 import controller.ship.SpaceShip;
 import view.screen.gamePanel.GamePanel;
 import view.screen.gamePanel.MultiPlayerGamePanel;
@@ -137,11 +139,17 @@ public class ContentPane extends JPanel {
     }
 
     public void afterClientPanel(String clientState){
-        if(clientState.equals("player"))
-            prepareGamePanelForPlayerClient() ;
+        if(clientState.equals("player")) {
+            clientPlayer.setType(PlayerType.PLAYER);
+            prepareGamePanelForPlayerClient();
+            clientPlayer.setState(PlayerState.INGAME);
+        }
 
-        if(clientState.equals("spectator"))
-            prepareGamePanelForObserverClient() ;
+        if(clientState.equals("spectator")) {
+            clientPlayer.setType(PlayerType.OBSERVER);
+            prepareGamePanelForObserverClient();
+            clientPlayer.setState(PlayerState.INGAME);
+        }
     }
 
     public void prepareGamePanelForPlayerClient(){

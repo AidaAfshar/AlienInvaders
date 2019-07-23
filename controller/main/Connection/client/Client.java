@@ -1,12 +1,8 @@
 package controller.main.Connection.client;
 
 import controller.player.Player;
-import model.dataManagement.DataManager;
 import view.screen.ClientPanel;
 
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -23,8 +19,8 @@ public class Client extends Thread {
 
     ArrayList<Player> otherPlayers ;
 
-    PrintWriter printer ;
-    BufferedReader reader ;
+    ConnectionServiceForClient connector;
+    UpdateServiceForClient updater;
 
     public Client(String IP , int port , Player player , ClientPanel clientPanel){
         this.IP = IP ;
@@ -40,17 +36,23 @@ public class Client extends Thread {
         try {
 
             socket = new Socket(IP , port) ;
-            printer = new PrintWriter(socket.getOutputStream()) ;
-            reader = new BufferedReader(new InputStreamReader(socket.getInputStream())) ;
+
+            connector = new ConnectionServiceForClient(
+                    socket.getOutputStream(),
+                    socket.getInputStream(),
+                    clientPlayer,
+                    clientPanel);
 
 
-            sendClientPlayerToServer() ;
-            receiveOtherPlayersFromServer() ;
+            prepareConnection() ;
 
-            prepareTimer();
-            prepareUpdateTimer();
 
-            timer.start();
+            updater = new UpdateServiceForClient(
+                    socket.getOutputStream(),
+                    socket.getInputStream(),
+                    clientPlayer,
+                    connector.getOtherPlayers()) ;
+
 
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
@@ -59,90 +61,18 @@ public class Client extends Thread {
     }
 
 
-    private void sendClientPlayerToServer(){
-        clientPlayer.save();
-        printer.println(clientPlayer);
-        printer.flush();
-    }
-
-
-    public void receiveOtherPlayersFromServer() throws IOException, InterruptedException {
-        otherPlayers = new ArrayList<>();
-
-        String data ;
-        Thread.currentThread().sleep(500);
-        while (reader.ready() &&(data = reader.readLine())!=null){
-            Player player = DataManager.load(data) ;
-            otherPlayers.add(player) ;
-            clientPanel.addPlayer(player);
-        }
-    }
-
-
-    void receiveNewPlayerFromServer() throws IOException {
-        String data ;
-        if(reader.ready() &&(data = reader.readLine())!=null){
-            Player newPlayer = DataManager.load(data) ;
-            otherPlayers.add(newPlayer) ;
-            clientPanel.addPlayer(newPlayer);
-        }
-
-    }
-
-
-    Timer timer ;
-    public void prepareTimer(){
-        timer = new Timer(2000, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    receiveNewPlayerFromServer();
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
-            }
-        }) ;
-
+    void prepareConnection() throws InterruptedException {
+        connector.start();
+        connector.join();
     }
 
     public void stopTimer(){
-        timer.stop();
-    }
-
-    public void retartTimer(){
-        timer.restart();
-    }
-
-    //during game:
-
-    void sendDataToServer(){
-        clientPlayer.save();
-        printer.println(clientPanel);
-        printer.flush();
-    }
-
-    Timer updateTimer ;
-    public void prepareUpdateTimer(){
-        updateTimer = new Timer(20, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                sendDataToServer();
-            }
-        });
-    }
-
-    public void stopUpdateTimer(){
-        updateTimer.stop();
-    }
-
-    public void restartUpdateTimer(){
-        updateTimer.restart();
+        connector.stopTimer();
     }
 
     public void startUpdateTimer(){
-        updateTimer.start();
+        updater.startUpdateTimer();
     }
-
 
     //getters & setters:
 
@@ -155,7 +85,7 @@ public class Client extends Thread {
     }
 
     public ArrayList<Player> getOtherPlayers() {
-        return otherPlayers;
+        return connector.otherPlayers;
     }
 
     public void setOtherPlayers(ArrayList<Player> otherPlayers) {

@@ -1,7 +1,8 @@
-package controller.main.Connection;
+package controller.main.Connection.server;
 
 import controller.player.Player;
 import model.dataManagement.DataManager;
+import view.screen.ServerPanel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -9,19 +10,21 @@ import java.awt.event.ActionListener;
 import java.io.*;
 import java.util.ArrayList;
 
-public class ConnectionService extends Thread{
+public class ConnectionServiceForServer extends Thread{
 
     PrintWriter printer ;
     BufferedReader reader ;
 
-    ArrayList<Player> otherPlayers ;
-    Player newPlayer ;
-    Player player ;
+    ServerPanel serverPanel ;
 
-    public ConnectionService(OutputStream outputStream,InputStream inputStream ,ArrayList<Player> otherPlayers) {
+    ArrayList<Player> otherPlayers ;
+    Player clientPlayer;
+
+    public ConnectionServiceForServer(OutputStream outputStream, InputStream inputStream , ArrayList<Player> otherPlayers , ServerPanel serverPanel ) {
         printer = new PrintWriter(outputStream) ;
         reader = new BufferedReader(new InputStreamReader(inputStream)) ;
         this.otherPlayers = otherPlayers ;
+        this.serverPanel = serverPanel ;
     }
 
 
@@ -29,16 +32,17 @@ public class ConnectionService extends Thread{
     public void run() {
         super.run();
 
-
-        sendOtherPlayersToClient();
         try {
+
+            sendOtherPlayersToClient();
             loadNewPlayer();
+
+
+
+
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
-        player = newPlayer ;
-
-
     }
 
 
@@ -60,8 +64,13 @@ public class ConnectionService extends Thread{
         String data ;
         Thread.currentThread().sleep(250);
         while (reader.ready() && (data = reader.readLine())!=null){
-            newPlayer = DataManager.load(data);
+            clientPlayer = DataManager.load(data);
         }
+        updateServerPanel();
+    }
+
+    void updateServerPanel(){
+        serverPanel.addPlayer(clientPlayer.getName());
     }
 
     public void updatePlayersList(Player player){
@@ -74,7 +83,7 @@ public class ConnectionService extends Thread{
     public void updatePlayerData() throws IOException {
         String data ;
         if (reader.ready() && (data = reader.readLine())!=null){
-            player = DataManager.load(data);
+            clientPlayer = DataManager.load(data);
         }
     }
 
@@ -107,15 +116,15 @@ public class ConnectionService extends Thread{
     //getters & setters:
 
 
-    public Player getNewPlayer() {
-        return newPlayer;
+    public Player getClientPlayer() {
+        return clientPlayer;
     }
 
-    public void setNewPlayer(Player newPlayer) {
-        this.newPlayer = newPlayer;
+    public void setClientPlayer(Player clientPlayer) {
+        this.clientPlayer = clientPlayer;
     }
 
-    public Player getPlayer() {
-        return player;
+    public ArrayList<Player> getOtherPlayers() {
+        return otherPlayers;
     }
 }
