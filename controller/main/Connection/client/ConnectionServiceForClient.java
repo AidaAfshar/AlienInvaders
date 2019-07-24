@@ -66,6 +66,7 @@ public class ConnectionServiceForClient extends Thread{
         otherPlayers = new ArrayList<>();
 
         String data ;
+        Thread.currentThread().sleep(500);
         while (reader.ready() && (data = reader.readLine()) !=null){
                 Player player = DataManager.load(data);
                 otherPlayers.add(player);

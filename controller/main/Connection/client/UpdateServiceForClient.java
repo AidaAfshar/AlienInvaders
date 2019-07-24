@@ -22,7 +22,7 @@ public class UpdateServiceForClient {
     ArrayList<Player> otherPlayers ;
 
     public UpdateServiceForClient(OutputStream outputStream, InputStream inputStream , Player player ,ArrayList<Player> otherPlayers){
-        printer = new PrintWriter(outputStream , false) ;
+        printer = new PrintWriter(outputStream ,false) ;
         scanner = new Scanner(inputStream) ;
         currentPlayer = player ;
         this.otherPlayers = otherPlayers ;
