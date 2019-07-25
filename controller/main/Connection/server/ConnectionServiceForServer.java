@@ -4,16 +4,14 @@ import controller.player.Player;
 import model.dataManagement.DataManager;
 import view.screen.ServerPanel;
 
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Scanner;
 
-public class ConnectionServiceForServer extends Thread{
+public class ConnectionServiceForServer{
 
-    PrintWriter printer ;
-    BufferedReader reader ;
+    MyOutputStream outputStream ;
+    MyInputStream inputStream ;
 
     ServerPanel serverPanel ;
 
@@ -21,100 +19,127 @@ public class ConnectionServiceForServer extends Thread{
     Player clientPlayer;
 
     public ConnectionServiceForServer(OutputStream outputStream, InputStream inputStream , ArrayList<Player> otherPlayers , ServerPanel serverPanel ) {
-        printer = new PrintWriter(outputStream) ;
-        reader = new BufferedReader(new InputStreamReader(inputStream)) ;
+        this.outputStream = new MyOutputStream(outputStream,otherPlayers) ;
+        this.inputStream = new MyInputStream(inputStream) ;
         this.otherPlayers = otherPlayers ;
         this.serverPanel = serverPanel ;
+        initialize() ;
     }
 
+    void initialize(){
+        outputStream.start();
+        inputStream.start();
+    }
 
-    @Override
-    public void run() {
-        super.run();
+    class MyOutputStream extends Thread{
 
-        try {
+        PrintWriter printer ;
+        ArrayList<Player> otherPlayers ;
 
-            sendOtherPlayersToClient();
-            loadNewPlayer();
-
-
-
-
-        } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
+        MyOutputStream(OutputStream outputStream , ArrayList<Player> otherPlayers){
+            printer = new PrintWriter(outputStream) ;
+            this.otherPlayers = otherPlayers ;
         }
-    }
 
+        @Override
+        public void run() {
+            super.run();
 
-    public void sendOtherPlayersToClient(){
-        for (Player player : otherPlayers) {
+            sendOtherPlayersToClient() ;
+
+        }
+
+        void sendOtherPlayersToClient(){
+            for (Player player : otherPlayers) {
+                player.save();
+                printer.println(player);
+                printer.flush();
+            }
+        }
+
+        void sendNewPlayerToClient(Player player){
             player.save();
             printer.println(player);
             printer.flush();
         }
     }
 
-    private void sendNewPlayerToClient(Player player){
-        player.save();
-        printer.println(player);
-        printer.flush();
-    }
+   //------------------------------------------------------------
 
-    int i=0 ;
+    class MyInputStream extends Thread{
 
-    private void loadNewPlayer() throws IOException, InterruptedException {
-        String data ;
+        Scanner scanner ;
 
-        Thread.currentThread().sleep(250);
-        while (reader.ready() && (data = reader.readLine()) !=null){
-            clientPlayer = DataManager.load(data);
+        MyInputStream(InputStream inputStream){
+            scanner = new Scanner(inputStream) ;
         }
-        updateServerPanel();
+
+        @Override
+        public void run() {
+            super.run();
+
+            try {
+
+                loadNewPlayer() ;
+
+            } catch (IOException | InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        void loadNewPlayer() throws IOException, InterruptedException {
+            while (scanner.hasNextLine()){
+                String data =scanner.nextLine();
+                clientPlayer = DataManager.load(data);
+            }
+            updateServerPanel();
+        }
+
     }
+
 
     void updateServerPanel(){
         serverPanel.addPlayer(clientPlayer.getName());
     }
 
     public void updatePlayersList(Player player){
-        //otherPlayers.add(player) ;     -_____-
-        sendNewPlayerToClient(player);
+        outputStream.sendNewPlayerToClient(player);
     }
 
     //during game:
 
-    public void updatePlayerData() throws IOException {
-        String data ;
-        if (reader.ready() && (data = reader.readLine())!=null){
-            clientPlayer = DataManager.load(data);
-        }
-    }
-
-    Timer updateTimer ;
-    public void prepareUpdateTimer(){
-        updateTimer = new Timer(30, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    updatePlayerData();
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
-            }
-        });
-    }
-
-    public void stopUpdateTimer(){
-        updateTimer.stop();
-    }
-
-    public void retartUpdateTimer(){
-        updateTimer.restart();
-    }
-
-    public void startUpdateTimer(){
-        updateTimer.start();
-    }
+//    public void updatePlayerData() throws IOException {
+//        String data ;
+//        if (reader.ready() && (data = reader.readLine())!=null){
+//            clientPlayer = DataManager.load(data);
+//        }
+//    }
+//
+//    Timer updateTimer ;
+//    public void prepareUpdateTimer(){
+//        updateTimer = new Timer(30, new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                try {
+//                    updatePlayerData();
+//                } catch (IOException ex) {
+//                    ex.printStackTrace();
+//                }
+//            }
+//        });
+//    }
+//
+//    public void stopUpdateTimer(){
+//        updateTimer.stop();
+//    }
+//
+//    public void retartUpdateTimer(){
+//        updateTimer.restart();
+//    }
+//
+//    public void startUpdateTimer(){
+//        updateTimer.start();
+//    }
 
     //getters & setters:
 
