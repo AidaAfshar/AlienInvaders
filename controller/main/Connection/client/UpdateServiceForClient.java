@@ -6,16 +6,15 @@ import model.dataManagement.DataManager;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 
 public class UpdateServiceForClient {
 
-    Scanner scanner ;
+    //Scanner scanner ;
+    BufferedReader reader ;
     PrintWriter printer ;
 
     Player currentPlayer;
@@ -23,7 +22,8 @@ public class UpdateServiceForClient {
 
     public UpdateServiceForClient(OutputStream outputStream, InputStream inputStream , Player player ,ArrayList<Player> otherPlayers){
         printer = new PrintWriter(outputStream ,false) ;
-        scanner = new Scanner(inputStream) ;
+        //scanner = new Scanner(inputStream) ;
+        reader = new BufferedReader(new InputStreamReader(inputStream));
         currentPlayer = player ;
         this.otherPlayers = otherPlayers ;
         initialize() ;
@@ -38,8 +38,17 @@ public class UpdateServiceForClient {
         updateTimer = new Timer(10, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                sendCurrentPlayersUpdate();
-                receiveOtherPlayersUpdate();
+                try {
+
+                    sendCurrentPlayersUpdate();
+                    receiveOtherPlayersUpdate();
+
+
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
             }
         });
     }
@@ -51,16 +60,17 @@ public class UpdateServiceForClient {
         printer.flush();
     }
 
-    void receiveOtherPlayersUpdate() {
-        System.out.println("before loop");
-        for(Player player : otherPlayers){
-            System.out.println("inside loop");
-            String data = scanner.nextLine();
-            System.out.println("after next Line");
-            Player updatedPlayer = DataManager.load(data) ;
-            player.update(updatedPlayer);
-        }
-        System.out.println("after loop");
+    void receiveOtherPlayersUpdate() throws IOException, InterruptedException {
+//        System.out.println("before loop");
+//        for(Player player : otherPlayers){
+//            System.out.println("inside loop");
+//            String data = scanner.nextLine();
+//            System.out.println("after next Line");
+//            Player updatedPlayer = DataManager.load(data) ;
+//            player.update(updatedPlayer);
+//        }
+//        System.out.println("after loop");
+
     }
 
 

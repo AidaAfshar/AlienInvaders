@@ -58,6 +58,7 @@ public class UpdateServiceForServer {
     void receiveClientPlayersUpdate(){
         if(scanner.hasNextLine()) {
             String data = scanner.nextLine();
+            System.out.println("after nextLine");
             Player updatedPlayer = DataManager.load(data);
             clientPlayer.update(updatedPlayer);
         }else return;
