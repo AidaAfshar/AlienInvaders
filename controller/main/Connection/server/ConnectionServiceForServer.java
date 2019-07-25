@@ -8,7 +8,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class ConnectionServiceForServer{
+public class ConnectionServiceForServer extends Thread{
 
     MyOutputStream outputStream ;
     MyInputStream inputStream ;
@@ -19,14 +19,18 @@ public class ConnectionServiceForServer{
     Player clientPlayer;
 
     public ConnectionServiceForServer(OutputStream outputStream, InputStream inputStream , ArrayList<Player> otherPlayers , ServerPanel serverPanel ) {
-        this.outputStream = new MyOutputStream(outputStream,otherPlayers) ;
+        this.outputStream = new MyOutputStream(outputStream) ;
         this.inputStream = new MyInputStream(inputStream) ;
         this.otherPlayers = otherPlayers ;
         this.serverPanel = serverPanel ;
-        initialize() ;
+
     }
 
-    void initialize(){
+
+    @Override
+    public void run() {
+        super.run();
+
         outputStream.start();
         inputStream.start();
     }
@@ -34,18 +38,16 @@ public class ConnectionServiceForServer{
     class MyOutputStream extends Thread{
 
         PrintWriter printer ;
-        ArrayList<Player> otherPlayers ;
 
-        MyOutputStream(OutputStream outputStream , ArrayList<Player> otherPlayers){
+        MyOutputStream(OutputStream outputStream ){
             printer = new PrintWriter(outputStream) ;
-            this.otherPlayers = otherPlayers ;
         }
 
         @Override
         public void run() {
             super.run();
 
-            sendOtherPlayersToClient() ;
+            sendOtherPlayersToClient();
 
         }
 
@@ -78,21 +80,23 @@ public class ConnectionServiceForServer{
         public void run() {
             super.run();
 
-            try {
+            loadNewPlayer();
 
-                loadNewPlayer() ;
-
-            } catch (IOException | InterruptedException e) {
-                e.printStackTrace();
-            }
         }
 
-        void loadNewPlayer() throws IOException, InterruptedException {
-            while (scanner.hasNextLine()){
-                String data =scanner.nextLine();
-                clientPlayer = DataManager.load(data);
+        void loadNewPlayer() {
+
+            while (true){
+                if(scanner.hasNextLine()){
+                    String data =scanner.nextLine();
+                    if(data != null){
+                        setClientPlayer(DataManager.load(data));
+                        updateServerPanel();
+                    }
+
+                }else break;
             }
-            updateServerPanel();
+
         }
 
     }

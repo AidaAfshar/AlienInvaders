@@ -5,76 +5,116 @@ import model.dataManagement.DataManager;
 import view.screen.ClientPanel;
 
 import javax.swing.*;
+import javax.swing.plaf.synth.SynthTabbedPaneUI;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class ConnectionServiceForClient extends Thread{
 
-    PrintWriter printer ;
-    BufferedReader reader ;
+    MyOutputStream outputStream ;
+    MyInputStream inputStream ;
 
     ClientPanel clientPanel ;
 
     Player clientPlayer;
     ArrayList<Player> otherPlayers ;
 
-    public ConnectionServiceForClient(OutputStream outputStream, InputStream inputStream,Player clientPlayer , ClientPanel clientPanel){
-        printer = new PrintWriter(outputStream) ;
-        reader = new BufferedReader(new InputStreamReader(inputStream)) ;
+    public ConnectionServiceForClient(OutputStream outputStream, InputStream inputStream,Player clientPlayer , ClientPanel clientPanel)  {
+        this.outputStream = new MyOutputStream(outputStream) ;
+        this.inputStream = new MyInputStream(inputStream) ;
         this.clientPlayer = clientPlayer ;
         this.clientPanel = clientPanel ;
-
-        initialize() ;
     }
-
-    void initialize(){
-
-    }
-
 
     @Override
     public void run() {
         super.run();
 
-        try {
+        outputStream.start();
+        inputStream.start();
 
-            sendClientPlayerToServer();
+
+    }
+
+    class MyOutputStream extends Thread{
+
+        PrintWriter printer ;
+
+        MyOutputStream(OutputStream outputStream){
+            printer = new PrintWriter(outputStream) ;
+
+        }
+
+        @Override
+        public void run() {
+            super.run();
+
+            try {
+
+                    sendClientPlayerToServer();
+
+
+            }catch (Exception e){}
+
+
+        }
+
+        void sendClientPlayerToServer(){
+            clientPlayer.save();
+            printer.println(clientPlayer);
+            printer.flush();
+        }
+
+    }
+
+    //------------------------------------------------------------
+
+    class MyInputStream extends Thread{
+
+        Scanner scanner ;
+
+        MyInputStream(InputStream inputStream){
+            scanner = new Scanner(inputStream) ;
+        }
+
+        @Override
+        public void run() {
+            super.run();
+
             receiveOtherPlayersFromServer();
 
-
-            prepareTimer();
-            timer.start();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
         }
-    }
-
-    private void sendClientPlayerToServer(){
-        clientPlayer.save();
-        printer.println(clientPlayer);
-        printer.flush();
-    }
 
 
+        void receiveOtherPlayersFromServer() {
+            otherPlayers = new ArrayList<>();
 
-    public void receiveOtherPlayersFromServer() throws IOException, InterruptedException {
-        otherPlayers = new ArrayList<>();
+            while (true){
+                if(scanner.hasNextLine()) {
+                    String data = scanner.nextLine();
+                    Player player = DataManager.load(data);
+                    otherPlayers.add(player);
+                    clientPanel.addPlayer(player);
+                }else break;
+            }
 
-        String data ;
-        Thread.currentThread().sleep(500);
-        while (reader.ready() && (data = reader.readLine()) !=null){
-                Player player = DataManager.load(data);
-                otherPlayers.add(player);
-                clientPanel.addPlayer(player);
+            System.out.println("after while");
 
         }
-    }
 
+        void receiveNewPlayerFromServer() throws IOException {
+            if(scanner.hasNextLine()){
+                String data =scanner.nextLine();
+                Player newPlayer = DataManager.load(data) ;
+                otherPlayers.add(newPlayer) ;
+                clientPanel.addPlayer(newPlayer);
+            }
+
+        }
+    }
 
 
 
@@ -84,7 +124,7 @@ public class ConnectionServiceForClient extends Thread{
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    receiveNewPlayerFromServer();
+                    inputStream.receiveNewPlayerFromServer();
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
@@ -97,19 +137,10 @@ public class ConnectionServiceForClient extends Thread{
         timer.stop();
     }
 
-    public void retartTimer(){
+    public void restartTimer(){
         timer.restart();
     }
 
-    void receiveNewPlayerFromServer() throws IOException {
-        String data ;
-        if(reader.ready() &&(data = reader.readLine())!=null){
-            Player newPlayer = DataManager.load(data) ;
-            otherPlayers.add(newPlayer) ;
-            clientPanel.addPlayer(newPlayer);
-        }
-
-    }
 
     //getter
 

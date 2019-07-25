@@ -55,6 +55,7 @@ public class Server extends Thread {
 
                 Socket socket = serverSocket.accept() ;
 
+
                 ConnectionServiceForServer connectionService = new ConnectionServiceForServer(
                         socket.getOutputStream(),
                         socket.getInputStream(),
@@ -90,9 +91,11 @@ public class Server extends Thread {
         connectionService.start();
         connectionService.join();
 
+        Thread.sleep(500);
         clientPlayer = connectionService.getClientPlayer() ;
-        addNewPlayer(clientPlayer) ;
+        addNewPlayer(clientPlayer);
         sendNewPlayerToOtherClients(clientPlayer);
+
     }
 
     void addNewPlayer(Player player){

@@ -133,7 +133,7 @@ public class ContentPane extends JPanel {
         add(clientPanel);
         client = new Client(clientInfoPanel.getIP(),clientInfoPanel.getPort(), clientPlayer ,clientPanel) ;
         client.start();
-        client.join();
+        //client.join();
         clientInfoPanel.setVisible(false);
 
     }
