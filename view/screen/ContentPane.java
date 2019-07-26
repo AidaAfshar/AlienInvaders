@@ -159,7 +159,10 @@ public class ContentPane extends JPanel {
         prepareMultiPlayerGamePanel();
         add(gamePanel) ;
         gamePanel.requestFocus();
+        client.stopPreGameConnection();
+        client.startUpdating();
     }
+
     public void preparePlayersForPlayerClient(){
         players = new ArrayList<>(client.getOtherPlayers().size()+1) ;
 
@@ -183,6 +186,8 @@ public class ContentPane extends JPanel {
         gamePanel.removeMouseListeners();
         add(gamePanel) ;
         gamePanel.requestFocus();
+        client.stopPreGameConnection();
+        client.startUpdating();
     }
 
     public void preparePlayersForObserverClient(){
@@ -207,6 +212,7 @@ public class ContentPane extends JPanel {
 
 
     public void afterServerPanel(){
+        prepareServerPlayer() ;
         preparePlayersForServerPlayer();
         serverPanel.setVisible(false);
         add(escapePanel);
@@ -214,11 +220,16 @@ public class ContentPane extends JPanel {
         prepareMultiPlayerGamePanel();
         add(gamePanel) ;
         gamePanel.requestFocus();
+        server.stopPreGameConnection();
+        server.startUpdating();
     }
 
+    void prepareServerPlayer(){
+        serverPlayer.setType(PlayerType.PLAYER);
+        serverPlayer.setState(PlayerState.INGAME);
+    }
 
     public void preparePlayersForServerPlayer(){
-
         players = new ArrayList<>(server.getOtherPlayers().size()+1) ;
 
         for (Player player:server.getOtherPlayers())

@@ -1,5 +1,6 @@
 package controller.main.Connection.server;
 
+import controller.main.Connection.client.UpdateServiceForClient;
 import controller.player.Player;
 import view.screen.ServerPanel;
 
@@ -63,13 +64,17 @@ public class Server extends Thread {
 
                 prepareConnection(connectionService) ;
 
+                UpdateServiceForServer updateService = new UpdateServiceForServer(
+                        socket.getOutputStream(),
+                        socket.getInputStream(),
+                        players) ;
+
                 clientsConnections.add(connectionService) ;
+                clientsUpdates.add(updateService);
 
             }
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -97,9 +102,16 @@ public class Server extends Thread {
 
     }
 
+    public void startUpdating(){
+        for(UpdateServiceForServer service : clientsUpdates){
+            service.initialize();
+        }
+    }
 
-
-
+    public void stopPreGameConnection(){
+        for(ConnectionServiceForServer service : clientsConnections)
+            service.pause();
+    }
 
     //getters & setters :
 

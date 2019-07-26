@@ -41,9 +41,12 @@ public class Client extends Thread{
                     socket.getOutputStream(),
                     socket.getInputStream(),
                     clientPlayer,
-                    clientPanel);
+                    clientPanel) ;
 
-
+            updater = new UpdateServiceForClient(
+                    socket.getOutputStream(),
+                    socket.getInputStream(),
+                    this) ;
 
 
         } catch (Exception e) {
@@ -53,8 +56,14 @@ public class Client extends Thread{
     }
 
 
+    public void startUpdating(){
+        updater.initialize();
+    }
 
-
+    public void stopPreGameConnection(){
+        System.out.println("inside stopPreGameConnection-client");
+        connector.pause();
+    }
 
     //getters & setters:
 
@@ -67,7 +76,7 @@ public class Client extends Thread{
     }
 
     public ArrayList<Player> getOtherPlayers() {
-        return connector.otherPlayers;
+        return connector.getOtherPlayers();
     }
 
     public void setOtherPlayers(ArrayList<Player> otherPlayers) {

@@ -31,6 +31,9 @@ public class ConnectionServiceForClient {
         inputStream.start();
     }
 
+    public void pause(){
+        whileBoolean = false ;
+    }
 
     class MyOutputStream extends Thread{
 
@@ -65,6 +68,8 @@ public class ConnectionServiceForClient {
 
     //------------------------------------------------------------
 
+    boolean whileBoolean = true ;
+
     class MyInputStream extends Thread{
 
         Scanner scanner ;
@@ -85,7 +90,7 @@ public class ConnectionServiceForClient {
         void receiveOtherPlayersFromServer() {
             otherPlayers = new ArrayList<>();
 
-            while (true){
+            while (whileBoolean){
                 if(scanner.hasNextLine()) {
                     String data = scanner.nextLine();
                     Player player = DataManager.load(data);
@@ -94,14 +99,23 @@ public class ConnectionServiceForClient {
                 }else break;
             }
 
+            System.out.println("after while");
         }
 
     }
 
 
 
-    //getter
+    //getters & setters:
 
+
+    public boolean getWhileBoolean() {
+        return whileBoolean;
+    }
+
+    public void setWhileBoolean(boolean whileBoolean) {
+        this.whileBoolean = whileBoolean;
+    }
 
     public ArrayList<Player> getOtherPlayers() {
         return otherPlayers;

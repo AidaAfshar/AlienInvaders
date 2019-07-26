@@ -113,6 +113,17 @@ public class Player {
                 '}';
     }
 
+    @Override
+    public boolean equals(Object object) {
+        if(object instanceof Player){
+            Player player = (Player) object ;
+            if(player.getName().equals(this.getName()))
+                return true ;
+            else
+                return false ;
+        }
+        return false ;
+    }
 
     //getters & setters:
 
@@ -219,5 +230,12 @@ public class Player {
 
     public void setType(PlayerType type) {
         this.type = type;
+    }
+
+    public boolean isInGame(){
+        if(this.state == PlayerState.INGAME) {
+            return true;
+        }
+        return false ;
     }
 }
