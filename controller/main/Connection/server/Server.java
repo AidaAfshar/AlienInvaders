@@ -55,7 +55,6 @@ public class Server extends Thread {
 
                 Socket socket = serverSocket.accept() ;
 
-
                 ConnectionServiceForServer connectionService = new ConnectionServiceForServer(
                         socket.getOutputStream(),
                         socket.getInputStream(),
@@ -64,15 +63,7 @@ public class Server extends Thread {
 
                 prepareConnection(connectionService) ;
 
-                UpdateServiceForServer updateService = new UpdateServiceForServer(
-                        socket.getOutputStream(),
-                        socket.getInputStream(),
-                        clientPlayer,
-                        connectionService.getOtherPlayers()) ;
-
-
                 clientsConnections.add(connectionService) ;
-                clientsUpdates.add(updateService) ;
 
             }
 
@@ -88,14 +79,10 @@ public class Server extends Thread {
 
 
     void prepareConnection(ConnectionServiceForServer connectionService) throws InterruptedException {
-        connectionService.start();
-        connectionService.join();
-
         Thread.sleep(500);
         clientPlayer = connectionService.getClientPlayer() ;
         addNewPlayer(clientPlayer);
         sendNewPlayerToOtherClients(clientPlayer);
-
     }
 
     void addNewPlayer(Player player){
@@ -110,47 +97,12 @@ public class Server extends Thread {
 
     }
 
-    //during game:
-
-    ArrayList<Player> updatedPlayers ;
-
-    void updatePlayersState(){
-        updatedPlayers = new ArrayList<>() ;
-        for(UpdateServiceForServer client : clientsUpdates){
-            updatedPlayers.add(client.getClientPlayer()) ;
-        }
-        otherPlayers = updatedPlayers ;
-    }
 
 
-    Timer updateTimer ;
-    public void prepareUpdateTimer(){
-        updateTimer = new Timer(20, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                updatePlayersState();
-            }
-        });
-        updateTimer.start();
-    }
-
-
-    public void startUpdating(){
-        for(UpdateServiceForServer service :clientsUpdates)
-            service.startUpdateTimer();
-    }
-
-    public void stopUpdating(){
-        for(UpdateServiceForServer service :clientsUpdates)
-            service.stopUpdateTimer();
-    }
 
 
     //getters & setters :
 
-    public ArrayList<Player> getUpdatedPlayers() {
-        return updatedPlayers;
-    }
 
     public int getPort() {
         return port;

@@ -8,7 +8,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class ConnectionServiceForServer extends Thread{
+public class ConnectionServiceForServer {
 
     MyOutputStream outputStream ;
     MyInputStream inputStream ;
@@ -23,17 +23,15 @@ public class ConnectionServiceForServer extends Thread{
         this.inputStream = new MyInputStream(inputStream) ;
         this.otherPlayers = otherPlayers ;
         this.serverPanel = serverPanel ;
-
+        initialize();
     }
 
 
-    @Override
-    public void run() {
-        super.run();
-
+    public void initialize(){
         outputStream.start();
         inputStream.start();
     }
+
 
     class MyOutputStream extends Thread{
 
@@ -110,40 +108,6 @@ public class ConnectionServiceForServer extends Thread{
         outputStream.sendNewPlayerToClient(player);
     }
 
-    //during game:
-
-//    public void updatePlayerData() throws IOException {
-//        String data ;
-//        if (reader.ready() && (data = reader.readLine())!=null){
-//            clientPlayer = DataManager.load(data);
-//        }
-//    }
-//
-//    Timer updateTimer ;
-//    public void prepareUpdateTimer(){
-//        updateTimer = new Timer(30, new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                try {
-//                    updatePlayerData();
-//                } catch (IOException ex) {
-//                    ex.printStackTrace();
-//                }
-//            }
-//        });
-//    }
-//
-//    public void stopUpdateTimer(){
-//        updateTimer.stop();
-//    }
-//
-//    public void retartUpdateTimer(){
-//        updateTimer.restart();
-//    }
-//
-//    public void startUpdateTimer(){
-//        updateTimer.start();
-//    }
 
     //getters & setters:
 

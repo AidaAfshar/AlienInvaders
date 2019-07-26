@@ -7,7 +7,7 @@ import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
 
-public class Client extends Thread {
+public class Client extends Thread{
 
     Socket socket ;
 
@@ -44,35 +44,17 @@ public class Client extends Thread {
                     clientPanel);
 
 
-            prepareConnection() ;
 
 
-            updater = new UpdateServiceForClient(
-                    socket.getOutputStream(),
-                    socket.getInputStream(),
-                    clientPlayer,
-                    connector.getOtherPlayers()) ;
-
-
-        } catch (IOException | InterruptedException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
     }
 
 
-    void prepareConnection() throws InterruptedException {
-        connector.start();
-        connector.join();
-    }
 
-    public void stopTimer(){
-        connector.stopTimer();
-    }
 
-    public void startUpdateTimer(){
-        updater.startUpdateTimer();
-    }
 
     //getters & setters:
 

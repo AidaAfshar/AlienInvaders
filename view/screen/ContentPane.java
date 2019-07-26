@@ -133,7 +133,6 @@ public class ContentPane extends JPanel {
         add(clientPanel);
         client = new Client(clientInfoPanel.getIP(),clientInfoPanel.getPort(), clientPlayer ,clientPanel) ;
         client.start();
-        //client.join();
         clientInfoPanel.setVisible(false);
 
     }
@@ -155,8 +154,6 @@ public class ContentPane extends JPanel {
     public void prepareGamePanelForPlayerClient(){
         preparePlayersForPlayerClient();
         clientPanel.setVisible(false);
-        client.stopTimer();
-        client.startUpdateTimer();
         add(escapePanel);
         prepareMultiPlayerAdministrator();
         prepareMultiPlayerGamePanel();
@@ -180,8 +177,6 @@ public class ContentPane extends JPanel {
     public void prepareGamePanelForObserverClient(){
         preparePlayersForObserverClient();
         clientPanel.setVisible(false);
-        client.stopTimer();
-        client.startUpdateTimer();
         add(escapePanel);
         prepareMultiPlayerAdministrator();
         prepareMultiPlayerGamePanel();
@@ -217,10 +212,8 @@ public class ContentPane extends JPanel {
         add(escapePanel);
         prepareMultiPlayerAdministrator();
         prepareMultiPlayerGamePanel();
-        server.prepareUpdateTimer();
         add(gamePanel) ;
         gamePanel.requestFocus();
-        server.startUpdating();
     }
 
 
@@ -233,15 +226,6 @@ public class ContentPane extends JPanel {
 
         players.add(server.getServerPlayer()) ;
         players.addAll(server.getOtherPlayers());
-
-
-        //        players = new ArrayList<>(server.getPlayers().size()+1) ;
-////        players.add(serverPlayer) ;
-//        players.add(server.getServerPlayer()) ; //I think it's not needed!
-//        players.addAll(server.getPlayers());
-//
-////        for (Player player:players)
-////            player.preparePlayerThread();
 
     }
 
