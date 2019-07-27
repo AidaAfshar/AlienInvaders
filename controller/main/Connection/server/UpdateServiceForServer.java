@@ -16,16 +16,21 @@ public class UpdateServiceForServer {
     MyOutputStream outputStream ;
     MyInputStream inputStream ;
 
+    Server server ;
+    Player clientPlayer ;
     ArrayList<Player> otherPlayers ;
 
-    public UpdateServiceForServer(OutputStream outputStream, InputStream inputStream , ArrayList<Player> otherPlayers){
+    public UpdateServiceForServer(OutputStream outputStream, InputStream inputStream , Server server){
         this.outputStream = new MyOutputStream(outputStream) ;
         this.inputStream = new MyInputStream(inputStream) ;
-        this.otherPlayers = otherPlayers ;
+        this.server = server ;
     }
 
 
     public void initialize(){
+        this.clientPlayer = server.getClientPlayer();
+        this.otherPlayers = getOtherPlayersThanCurrentClient() ;
+
         //outputStream.start();
         inputStream.start();
     }
@@ -109,12 +114,15 @@ public class UpdateServiceForServer {
                     String data = scanner.nextLine() ;
                     Player updatedPlayer = DataManager.load(data) ;
 
-                    //TODO see which one works:
+                    clientPlayer.update(updatedPlayer);
+                    // server har chand lahze client playere har kodoom az clientaro begire va game panel ham liste update shode ro paint kone
 
-                    findPlayer(updatedPlayer).update(updatedPlayer);
-
-//                    Player player = findPlayer(updatedPlayer) ;
-//                    player.update(updatedPlayer);
+//                    //TODO see which one works:
+//
+//                    findPlayer(updatedPlayer).update(updatedPlayer);
+//
+////                    Player player = findPlayer(updatedPlayer) ;
+////                    player.update(updatedPlayer);
 
                 }else break;
             }
@@ -131,6 +139,14 @@ public class UpdateServiceForServer {
         return null ;
     }
 
+    ArrayList<Player> getOtherPlayersThanCurrentClient(){
+        ArrayList<Player> a = new ArrayList<>() ;
+        for(Player player: server.getPlayers()){
+            if(! player.equals(clientPlayer))
+                a.add(player) ;
+        }
+        return a ;
+    }
 
     //getters & setters:
 

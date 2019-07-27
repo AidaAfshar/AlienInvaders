@@ -67,7 +67,7 @@ public class Server extends Thread {
                 UpdateServiceForServer updateService = new UpdateServiceForServer(
                         socket.getOutputStream(),
                         socket.getInputStream(),
-                        players) ;
+                        this) ;
 
                 clientsConnections.add(connectionService) ;
                 clientsUpdates.add(updateService);
@@ -145,5 +145,9 @@ public class Server extends Thread {
         }
 
         return otherPlayers;
+    }
+
+    public Player getClientPlayer() {
+        return clientPlayer;
     }
 }
