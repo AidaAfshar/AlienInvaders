@@ -12,7 +12,7 @@ import controller.enemy.alienGroups.RectangularGroup;
 import controller.enemy.alienGroups.circularGroup.CircularGroup;
 import controller.enemy.alienGroups.rotatingGroup.RotatingGroup;
 import controller.enemy.aliens.Alien;
-import controller.player.Player;
+import controller.player.playerExtentions.Player;
 import controller.ship.SpaceShip;
 import view.screen.ContentPane;
 

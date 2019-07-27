@@ -1,6 +1,6 @@
 package controller.main.Connection.client;
 
-import controller.player.Player;
+import controller.player.playerExtentions.Player;
 import model.dataManagement.DataManager;
 import view.screen.ClientPanel;
 

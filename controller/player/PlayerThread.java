@@ -1,5 +1,7 @@
 package controller.player;
 
+import controller.player.playerExtentions.Player;
+
 public class PlayerThread extends Thread {
 
     Player player ;

@@ -11,7 +11,7 @@ import controller.main.administrator.MultiPlayerAdministrator;
 import controller.main.administrator.SinglePlayerAdministrator;
 import controller.main.Connection.client.Client;
 import controller.main.Connection.server.Server;
-import controller.player.Player;
+import controller.player.playerExtentions.Player;
 import controller.player.PlayerState;
 import controller.player.PlayerType;
 import controller.ship.SpaceShip;

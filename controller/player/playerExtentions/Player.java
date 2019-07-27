@@ -1,12 +1,10 @@
-package controller.player;
+package controller.player.playerExtentions;
 
-import com.gilecode.yagson.YaGson;
 import com.google.gson.Gson;
+import controller.player.PlayerState;
+import controller.player.PlayerType;
 import controller.ship.SpaceShip;
-import model.dataManagement.DataManager;
-import view.screen.ServerPanel;
 
-import java.awt.image.BufferedImage;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
@@ -29,10 +27,8 @@ public class Player {
     PlayerState state = PlayerState.PREGAME ;
     PlayerType type = PlayerType.UNDECLARED ;
 
-    transient String data ;
 
-    transient PrintStream printer ;
-    transient Scanner scanner ;
+    transient String data ;
 
     public Player(String name ,SpaceShip ship) {
         this.name = name ;
@@ -96,8 +92,6 @@ public class Player {
         updateValues();
         Gson gson = new Gson() ;
         data = gson.toJson(this) ;
-//        YaGson gson = new YaGson() ;
-//        data = gson.toJson(this) ;
     }
 
 
@@ -184,21 +178,6 @@ public class Player {
      this.data = data ;
     }
 
-    public PrintStream getOutputStream() {
-        return printer;
-    }
-
-    public void setOutputStream(OutputStream outputStream) {
-        this.printer = new PrintStream(outputStream);
-    }
-
-    public Scanner getInputStream() {
-        return scanner;
-    }
-
-    public void setInputStream(InputStream inputStream) {
-        this.scanner = new Scanner(inputStream);
-    }
 
     public int getX() {
         return x;

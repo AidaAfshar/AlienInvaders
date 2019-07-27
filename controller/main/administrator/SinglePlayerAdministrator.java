@@ -1,6 +1,6 @@
 package controller.main.administrator;
 
-import controller.player.Player;
+import controller.player.playerExtentions.Player;
 import view.screen.ContentPane;
 
 public class SinglePlayerAdministrator extends Administrator{

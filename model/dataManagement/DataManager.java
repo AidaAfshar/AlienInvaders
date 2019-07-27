@@ -1,10 +1,8 @@
 package model.dataManagement;
 
-import com.gilecode.yagson.YaGson;
-import com.gilecode.yagson.YaGsonBuilder;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import controller.player.Player;
+import controller.player.playerExtentions.Player;
 
 import java.io.InputStream;
 import java.lang.reflect.Modifier;

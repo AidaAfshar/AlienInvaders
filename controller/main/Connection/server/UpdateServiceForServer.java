@@ -1,7 +1,7 @@
 package controller.main.Connection.server;
 
 
-import controller.player.Player;
+import controller.player.playerExtentions.Player;
 import model.dataManagement.DataManager;
 
 import java.io.InputStream;

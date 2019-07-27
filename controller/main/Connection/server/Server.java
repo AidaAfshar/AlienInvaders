@@ -1,13 +1,8 @@
 package controller.main.Connection.server;
 
-import controller.main.Connection.client.UpdateServiceForClient;
-import controller.player.Player;
+import controller.player.playerExtentions.Player;
 import view.screen.ServerPanel;
 
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;

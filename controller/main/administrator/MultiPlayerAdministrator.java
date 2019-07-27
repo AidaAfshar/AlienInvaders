@@ -1,5 +1,5 @@
 package controller.main.administrator;
-import controller.player.Player;
+import controller.player.playerExtentions.Player;
 import view.screen.ContentPane;
 import java.util.ArrayList;
 
@@ -26,7 +26,7 @@ public class MultiPlayerAdministrator extends Administrator{
     public void setCurrentPlayer(Player currentPlayer) {
         this.currentPlayer = currentPlayer;
         player = currentPlayer ;
-        initialize();
+        //initialize();
     }
 
     public ArrayList<Player> getPlayers() {

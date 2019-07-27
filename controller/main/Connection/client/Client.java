@@ -1,9 +1,8 @@
 package controller.main.Connection.client;
 
-import controller.player.Player;
+import controller.player.playerExtentions.Player;
 import view.screen.ClientPanel;
 
-import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
 

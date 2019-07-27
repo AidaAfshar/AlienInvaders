@@ -1,7 +1,7 @@
 package view.screen.gamePanel;
 
 import controller.main.administrator.MultiPlayerAdministrator;
-import controller.player.Player;
+import controller.player.playerExtentions.Player;
 import view.screen.ContentPane;
 import java.awt.*;
 
