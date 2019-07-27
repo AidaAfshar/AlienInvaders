@@ -83,31 +83,40 @@ public class ConnectionServiceForServer {
         public void run() {
             super.run();
 
+            loadClientPlayer();
             loadNewPlayer();
 
         }
 
+
+        void loadClientPlayer(){
+            String data =scanner.nextLine();
+            if(data != null) {
+                clientPlayer = DataManager.load(data);
+                updateServerPanel(clientPlayer);
+            }
+        }
+
         void loadNewPlayer() {
 
-            while (whileBoolean){
-                if(scanner.hasNextLine()){
+            while (true){
+                if(scanner.hasNextLine() && whileBoolean){
                     String data =scanner.nextLine();
                     if(data != null){
-                        setClientPlayer(DataManager.load(data));
-                        updateServerPanel();
+                        Player newPlayer =DataManager.load(data);
+                        updateServerPanel(newPlayer);
                     }
 
                 }else break;
             }
-
 
         }
 
     }
 
 
-    void updateServerPanel(){
-        serverPanel.addPlayer(clientPlayer.getName());
+    void updateServerPanel(Player player){
+        serverPanel.addPlayer(player.getName());
     }
 
     public void updatePlayersList(Player player){

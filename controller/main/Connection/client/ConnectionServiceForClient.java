@@ -90,8 +90,8 @@ public class ConnectionServiceForClient {
         void receiveOtherPlayersFromServer() {
             otherPlayers = new ArrayList<>();
 
-            while (whileBoolean){
-                if(scanner.hasNextLine()) {
+            while (true){
+                if( scanner.hasNextLine() && whileBoolean) {
                     String data = scanner.nextLine();
                     Player player = DataManager.load(data);
                     otherPlayers.add(player);
@@ -99,7 +99,6 @@ public class ConnectionServiceForClient {
                 }else break;
             }
 
-            System.out.println("after while");
         }
 
     }

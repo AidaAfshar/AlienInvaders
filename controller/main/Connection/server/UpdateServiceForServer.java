@@ -26,7 +26,7 @@ public class UpdateServiceForServer {
 
 
     public void initialize(){
-        outputStream.start();
+        //outputStream.start();
         inputStream.start();
     }
 
@@ -56,7 +56,6 @@ public class UpdateServiceForServer {
 
         }
 
-        //moshkele 2 ta aida az injast
 
         void sendOtherPlayersUpdateToClient(){
             for(Player player : otherPlayers){
@@ -86,10 +85,24 @@ public class UpdateServiceForServer {
         public void run() {
             super.run();
 
+            waitForClientToEnterGame();
             updateOtherPlayers() ;
         }
 
+        void waitForClientToEnterGame(){
+            while(true){
+                String data = scanner.nextLine();
+                if(data.equals("in")){
+                    outputStream.start();
+                    break;
+                }
+            }
+        }
+
         void updateOtherPlayers(){
+
+            //inja faghat bayad dataye hamin cliente rooye khato bekhooni
+
             while(whileBoolean){
                 if(scanner.hasNextLine()){
 

@@ -47,6 +47,7 @@ public class UpdateServiceForClient {
 
             try {
 
+                enterGame();
                 sendClientPlayersUpdateToClient() ;
                 sleep(30);
 
@@ -56,6 +57,11 @@ public class UpdateServiceForClient {
 
 
 
+        }
+
+        void enterGame(){
+            printer.println("in");
+            printer.flush();
         }
 
         void sendClientPlayersUpdateToClient() {
