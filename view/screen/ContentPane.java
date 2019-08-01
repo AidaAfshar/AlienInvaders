@@ -6,14 +6,14 @@ import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
-import controller.main.administrator.Administrator;
-import controller.main.administrator.MultiPlayerAdministrator;
-import controller.main.administrator.SinglePlayerAdministrator;
-import controller.main.Connection.client.Client;
-import controller.main.Connection.server.Server;
+import controller.controlSection.administrator.Administrator;
+import controller.controlSection.administrator.MultiPlayerAdministrator;
+import controller.controlSection.administrator.SinglePlayerAdministrator;
+import controller.controlSection.Connection.client.Client;
+import controller.controlSection.Connection.server.Server;
 import controller.player.playerExtentions.Player;
 import controller.player.PlayerState;
-import controller.player.PlayerType;
+import controller.player.PlayerRole;
 import controller.ship.SpaceShip;
 import view.screen.gamePanel.GamePanel;
 import view.screen.gamePanel.MultiPlayerGamePanel;
@@ -139,13 +139,13 @@ public class ContentPane extends JPanel {
 
     public void afterClientPanel(String clientState){
         if(clientState.equals("player")) {
-            clientPlayer.setType(PlayerType.PLAYER);
+            clientPlayer.setRole(PlayerRole.PLAYER);
             prepareGamePanelForPlayerClient();
             clientPlayer.setState(PlayerState.INGAME);
         }
 
         if(clientState.equals("spectator")) {
-            clientPlayer.setType(PlayerType.OBSERVER);
+            clientPlayer.setRole(PlayerRole.OBSERVER);
             prepareGamePanelForObserverClient();
             clientPlayer.setState(PlayerState.INGAME);
         }
@@ -225,7 +225,7 @@ public class ContentPane extends JPanel {
     }
 
     void prepareServerPlayer(){
-        serverPlayer.setType(PlayerType.PLAYER);
+        serverPlayer.setRole(PlayerRole.PLAYER);
         serverPlayer.setState(PlayerState.INGAME);
     }
 

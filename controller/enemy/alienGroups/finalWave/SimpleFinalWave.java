@@ -1,4 +1,4 @@
-package controller.enemy.alienGroups;
+package controller.enemy.alienGroups.finalWave;
 
 import controller.enemy.alienAttack.FinalSpike;
 import controller.enemy.aliens.Alien;
@@ -6,18 +6,16 @@ import controller.enemy.aliens.Gravitus;
 import view.utilities.Dim;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
-public class FinalWave  extends Group{
+public class SimpleFinalWave extends FinalWave{
 
-    Timer spikeTimer ;
 
-    public FinalWave() {
+    public SimpleFinalWave(){
         super();
         aliens.add(new Gravitus(Dim.CENTER_X-300,-500));
-        setType(GroupType.FINALWAVE);
     }
 
     @Override
@@ -30,6 +28,7 @@ public class FinalWave  extends Group{
     public void placeAliens() {
 
     }
+
 
     @Override
     public void prepareEntrance() {
@@ -46,33 +45,18 @@ public class FinalWave  extends Group{
                 }
             }
         });
-
     }
+
 
     @Override
     public void moveGroup() {
 
     }
 
-    @Override
-    public void produceSpike() {
-    }
-
-
-    public void evokeSpikeTimer(){
-        spikeTimer = new Timer(2000, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                releaseSpike();
-            }
-        });
-
-        spikeTimer.start();
-    }
-
     public void releaseSpike(){
         Alien alien = aliens.get(0);
         if(alien.isAlive()) {
+            spikes = new ArrayList<> () ;
             spikes.add(new FinalSpike(alien.getX()+90, alien.getY()+90, -5, -5));
             spikes.add(new FinalSpike(alien.getX() + (alien.getWidth() / 2)-10, alien.getY()+10, 0, -5));
             spikes.add(new FinalSpike(alien.getX() + alien.getWidth()-110, alien.getY()+110, 5, -5));
@@ -85,11 +69,6 @@ public class FinalWave  extends Group{
 
     }
 
-    @Override
-    public void renderGroup(Graphics g){
-        renderAliens(g);
-        renderSpikes(g);
 
-    }
 
 }

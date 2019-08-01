@@ -1,4 +1,4 @@
-package controller.main.administrator;
+package controller.controlSection.administrator;
 import controller.player.playerExtentions.Player;
 import view.screen.ContentPane;
 import java.util.ArrayList;

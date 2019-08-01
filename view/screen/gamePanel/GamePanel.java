@@ -1,6 +1,6 @@
 package view.screen.gamePanel;
 
-import controller.main.administrator.Administrator;
+import controller.controlSection.administrator.Administrator;
 import view.imaging.Assets;
 import view.imaging.Background;
 import view.screen.BeamMouseListener;

@@ -1,4 +1,4 @@
-package controller.main.Connection.client;
+package controller.controlSection.Connection.client;
 
 import controller.player.playerExtentions.Player;
 import view.screen.ClientPanel;

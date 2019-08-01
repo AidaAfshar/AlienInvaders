@@ -1,16 +1,12 @@
-package controller.main.administrator;
+package controller.controlSection.administrator;
 
 import controller.attackTools.Beam;
 import controller.attackTools.Bomb;
 import controller.bonus.Coin;
 import controller.bonus.empowerment.Turbo;
+import controller.controlSection.levelize.LevelManager;
 import controller.enemy.alienAttack.Spike;
-import controller.enemy.alienGroups.FinalWave;
 import controller.enemy.alienGroups.Group;
-import controller.enemy.alienGroups.GroupType;
-import controller.enemy.alienGroups.RectangularGroup;
-import controller.enemy.alienGroups.circularGroup.CircularGroup;
-import controller.enemy.alienGroups.rotatingGroup.RotatingGroup;
 import controller.enemy.aliens.Alien;
 import controller.player.playerExtentions.Player;
 import controller.ship.SpaceShip;
@@ -19,16 +15,13 @@ import view.screen.ContentPane;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 public abstract class Administrator {
 
     Player player ;
-
     SpaceShip ship ;
 
-    ArrayList<Group> groups ;
-    Group group ;
+    LevelManager levelManager ;
 
     Timer timer ;
 
@@ -42,39 +35,16 @@ public abstract class Administrator {
 
 
     protected void initialize(){
-        prepareEnemy();
+        prepareLevelManager() ;
         prepareShip();
         prepareTimer();
         timer.start();
     }
 
-
-
-    private void prepareEnemy() {
-//       group = new RandomGroup(ship) ;
-
-        groups = new ArrayList<>();
-        groups.add(new RectangularGroup());
-        groups.add(new CircularGroup());
-        groups.add(new RotatingGroup());
-        groups.add(new FinalWave());
-        groups.add(new RectangularGroup());
-        groups.add(new CircularGroup());
-        groups.add(new RotatingGroup());
-        groups.add(new FinalWave());
-        groups.add(new RectangularGroup());
-        groups.add(new CircularGroup());
-        groups.add(new RotatingGroup());
-        groups.add(new FinalWave());
-        groups.add(new RectangularGroup());
-        groups.add(new CircularGroup());
-        groups.add(new RotatingGroup());
-        groups.add(new FinalWave());
-
-        group = groups.get(0);
-        group.initialize();
-
+    void prepareLevelManager(){
+        levelManager = new LevelManager(this) ;
     }
+
 
     public void prepareShip() {
         ship = player.getShip();
@@ -86,30 +56,17 @@ public abstract class Administrator {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(group.isDead())
-                    nextGroup();
-                group.moveStuffs();
-                group.produceSpike();
-                detectCollisions();
-                bombExplosion();
+                    Group group = levelManager.getCurrentGroup();
+                    if (group.isDead())
+                        levelManager.nextGroup();
+                    group.moveStuffs();
+                    group.produceSpike();
+                    detectCollisions();
+                    bombExplosion();
+
             }
 
         });
-    }
-
-    int round = 0 ;
-
-    public void nextGroup(){
-        for(Group group : groups){
-            if(! group.isDead()){
-                this.group = group ;
-                this.group.initialize();
-                break ;
-            }else if(group.getType().equals(GroupType.FINALWAVE)){
-                round++ ;
-                if(round == 4) finishGame();
-            }
-        }
     }
 
 
@@ -121,15 +78,12 @@ public abstract class Administrator {
     protected void bombExplosion() {
         for(Bomb bomb : ship.getBombs()) {
             if(bomb.isExploded()){
+                Group group = levelManager.getCurrentGroup() ;
                 group.killTheGroup();
                 bomb.setExplode(false);
             }
         }
     }
-
-
-
-
 
 
     public void detectCollisions() {
@@ -145,6 +99,7 @@ public abstract class Administrator {
     }
 
     private void spaceShipCoinCollision(){
+        Group group = levelManager.getCurrentGroup() ;
         for (int j = 0; j < group.getCoins().size(); j++) {
             Coin coin = group.getCoins().get(j);
             if (! coin.isCaught()) {
@@ -162,6 +117,7 @@ public abstract class Administrator {
 
 
     private void spaceShipTurboCollision(){
+        Group group = levelManager.getCurrentGroup() ;
         for (int j = 0; j < group.getTurbos().size(); j++) {
             Turbo turbo = group.getTurbos().get(j);
             if (! turbo.isCaught()) {
@@ -180,6 +136,7 @@ public abstract class Administrator {
 
 
     private void spaceShipSpikeCollision() {
+        Group group = levelManager.getCurrentGroup() ;
         for (int j = 0; j < group.getSpikes().size(); j++) {
             Spike spike = group.getSpikes().get(j);
             if (!spike.isCollided()) {
@@ -195,6 +152,7 @@ public abstract class Administrator {
         }
     }
     private void beamAlienCollision(){
+        Group group = levelManager.getCurrentGroup() ;
         for(int i=0 ; i<group.getAliens().size() ; i++) {
             for(int j = 0; j<ship.getBeams().size() ; j++) {
                 Alien alien = group.getAliens().get(i);
@@ -216,7 +174,7 @@ public abstract class Administrator {
 
 
     private void spaceShipAlienCollision(){
-
+        Group group = levelManager.getCurrentGroup() ;
         for(Alien alien :group.getAliens()) {
             if(alien.isAlive()) {
                 double d = Math.sqrt(Math.pow(alien.getX()-ship.getX(),2)+Math.pow(alien.getY()-ship.getY(),2)) ;
@@ -231,10 +189,7 @@ public abstract class Administrator {
 
 
 
-
-
     //getters & setters :
-
 
 
     public SpaceShip getShip() {
@@ -245,7 +200,8 @@ public abstract class Administrator {
         this.ship = ship;
     }
 
-    public Group getGroup() {
-        return group;
+    public Group getGroup(){
+        return levelManager.getCurrentGroup() ;
     }
+
 }

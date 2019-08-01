@@ -12,7 +12,7 @@ import javax.swing.JProgressBar;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
 
-import controller.main.administrator.SinglePlayerAdministrator;
+import controller.controlSection.administrator.SinglePlayerAdministrator;
 import controller.ship.SpaceShip;
 import view.screen.ContentPane;
 import view.utilities.Dim;

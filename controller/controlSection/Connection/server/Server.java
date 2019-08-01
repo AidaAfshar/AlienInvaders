@@ -1,4 +1,4 @@
-package controller.main.Connection.server;
+package controller.controlSection.Connection.server;
 
 import controller.player.playerExtentions.Player;
 import view.screen.ServerPanel;

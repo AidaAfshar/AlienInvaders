@@ -2,13 +2,9 @@ package controller.player.playerExtentions;
 
 import com.google.gson.Gson;
 import controller.player.PlayerState;
+import controller.player.PlayerRole;
 import controller.player.PlayerType;
 import controller.ship.SpaceShip;
-
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.PrintStream;
-import java.util.Scanner;
 
 
 public class Player {
@@ -25,7 +21,8 @@ public class Player {
     int y ;
 
     PlayerState state = PlayerState.PREGAME ;
-    PlayerType type = PlayerType.UNDECLARED ;
+    PlayerRole role = PlayerRole.UNDECLARED ;
+    PlayerType type =PlayerType.UNDECLARED ;
 
 
     transient String data ;
@@ -203,12 +200,12 @@ public class Player {
         this.state = state;
     }
 
-    public PlayerType getType() {
-        return type;
+    public PlayerRole getRole() {
+        return role;
     }
 
-    public void setType(PlayerType type) {
-        this.type = type;
+    public void setRole(PlayerRole role) {
+        this.role = role;
     }
 
     public boolean isInGame(){
@@ -216,5 +213,9 @@ public class Player {
             return true;
         }
         return false ;
+    }
+
+    public void setType(PlayerType type) {
+        this.type = type;
     }
 }

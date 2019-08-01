@@ -1,4 +1,4 @@
-package controller.main;
+package controller.controlSection;
 
 import view.screen.MainFrame;
 

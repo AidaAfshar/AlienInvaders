@@ -1,6 +1,6 @@
 package view.screen.gamePanel;
 
-import controller.main.administrator.MultiPlayerAdministrator;
+import controller.controlSection.administrator.MultiPlayerAdministrator;
 import controller.player.playerExtentions.Player;
 import view.screen.ContentPane;
 import java.awt.*;
