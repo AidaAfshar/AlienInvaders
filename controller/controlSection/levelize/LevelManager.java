@@ -4,6 +4,7 @@ import controller.controlSection.administrator.Administrator;
 import controller.enemy.alienGroups.Group;
 import controller.enemy.alienGroups.GroupType;
 import controller.enemy.alienGroups.RectangularGroup;
+import controller.enemy.alienGroups.TrainGroup;
 import controller.enemy.alienGroups.circularGroup.CircularGroup;
 import controller.enemy.alienGroups.finalWave.FinalWave;
 import controller.enemy.alienGroups.finalWave.SimpleFinalWave;
@@ -44,6 +45,7 @@ public class LevelManager {
         groupsClasses.add(RectangularGroup.class) ;
         groupsClasses.add(CircularGroup.class) ;
         groupsClasses.add(RotatingGroup.class) ;
+        groupsClasses.add(TrainGroup.class) ;
         finalWavesClasses.add(SimpleFinalWave.class) ;
     }
 
@@ -78,7 +80,6 @@ public class LevelManager {
     public static Group loadGroup(Class aClass){
 
         try {
-            System.out.println(aClass.getSimpleName());
             Constructor constructor = aClass.getConstructor ();
             Group group = (Group) constructor.newInstance ();
 

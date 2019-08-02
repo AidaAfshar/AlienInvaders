@@ -111,7 +111,6 @@ public class ContentPane extends JPanel {
         if(menuPanel.isResumeGameSelected()) {
             menuPanel.setVisible(false);
             add(escapePanel);
-//			ContentPane.this.add(singlePlayerGamePanel = new SinglePlayerGamePanel(FileManager.load(),menuPanel.player));
             gamePanel.requestFocus();
         }
     }
