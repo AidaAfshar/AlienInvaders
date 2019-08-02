@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import controller.player.playerExtentions.Player;
+import controller.ship.SpaceShip;
 import model.fileManagement.FileManager;
 import view.imaging.Assets;
 import view.imaging.Background;
@@ -123,7 +124,7 @@ public class UsersPanel extends JPanel {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                contentPane.setPlayer(getPlayersName());
+                contentPane.setPlayer(getNewPlayer ());
                 contentPane.afterUsersPanel();
             }
 
@@ -131,14 +132,14 @@ public class UsersPanel extends JPanel {
 
     }
 
-    public String getPlayersName() {
+    public Player getNewPlayer() {
         for(int i=0 ; i<playersLabel.size();i++) {
             if(playersLabel.get(i).chosen) {
                 playerName = playersLabel.get(i).name ;
             }
         }
 
-        return playerName ;
+        return new Player (playerName,new SpaceShip ());
     }
 
     public void removeUser(String showInputDialog) {

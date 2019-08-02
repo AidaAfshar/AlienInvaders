@@ -85,13 +85,9 @@ public class EscapePanel extends JPanel {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-
-                try {
-                    openWindow() ;
-                } catch (IOException ex) {
-                    ex.printStackTrace ();
-                }
-
+                loader = new MyClassLoader (getClass().getClassLoader()) ;
+                openWindow() ;
+                contentPane.getAdmin().getLevelManager().AddGroupClass(mainClass) ;
             }
 
         });
@@ -100,20 +96,26 @@ public class EscapePanel extends JPanel {
 
     JFileChooser fileChooser ;
     File selectedFile ;
-    String filePath ;
     String fileName ;
 
-    void openWindow() throws IOException {
+    MyClassLoader loader ;
+    Class mainClass ;
+    
+    void openWindow()  {
         fileChooser = new JFileChooser (FileSystemView.getFileSystemView().getHomeDirectory()) ;
         fileChooser.showOpenDialog (null) ;
         selectedFile = fileChooser.getSelectedFile() ;
         fileName = selectedFile.getName () ;
         fileName = fileName.substring (0,fileName.length ()-".class".length ());
 
-        MyClassLoader loader = new MyClassLoader (getClass().getClassLoader()) ;
-        Class aClass = loader.loadClass (fileName,selectedFile) ;
-        System.out.println (aClass.getSimpleName ()) ;
+        prepareLoader(selectedFile,fileName) ;
+    }
 
+    void prepareLoader(File selectedFile ,String fileName){
+        Class c =loader.loadClass (fileName,selectedFile) ;
+        String s = c.getSimpleName() ;
+        if(!s.contains("$"))
+            mainClass = c ;
     }
 
 

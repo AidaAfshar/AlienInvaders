@@ -53,6 +53,7 @@ public class SimpleFinalWave extends FinalWave{
 
     }
 
+
     public void releaseSpike(){
         Alien alien = aliens.get(0);
         if(alien.isAlive()) {

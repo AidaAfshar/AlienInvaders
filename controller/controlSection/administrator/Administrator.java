@@ -204,4 +204,7 @@ public abstract class Administrator {
         return levelManager.getCurrentGroup() ;
     }
 
+    public LevelManager getLevelManager() {
+        return levelManager;
+    }
 }

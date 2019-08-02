@@ -253,6 +253,7 @@ public class ContentPane extends JPanel {
     public void prepareSinglePlayerAdministrator(){
         admin = new SinglePlayerAdministrator(this) ;
         ((SinglePlayerAdministrator)admin).setPlayer(player) ;
+
     }
 
     public void prepareMultiPlayerGamePanel() {
@@ -269,10 +270,11 @@ public class ContentPane extends JPanel {
 
 
     public void handleEscapePanel(){
-            gamePanel.setVisible(false);
-            add(escapePanel);
-            escapePanel.setVisible(true);
-            escapePanel.requestFocus();
+        //fileManager.save(player);
+        gamePanel.setVisible(false);
+        add(escapePanel);
+        escapePanel.setVisible(true);
+        escapePanel.requestFocus();
     }
 
 
@@ -284,6 +286,7 @@ public class ContentPane extends JPanel {
     }
 
     public void showGameOverPanel(){
+        //fileManager.save(player);
         gameOverPanel = new GameOverPanel(this);
         add(gameOverPanel);
         gameOverPanel.setVisible(true);
@@ -329,6 +332,10 @@ public class ContentPane extends JPanel {
         player = new Player(playerName , new SpaceShip()) ;
     }
 
+    public void setPlayer(Player player) {
+        this.player = player ;
+    }
+
     public ArrayList<Player> getPlayers() {
         return players;
     }
@@ -351,5 +358,9 @@ public class ContentPane extends JPanel {
 
     public void setClientPlayer(Player clientPlayer) {
         this.clientPlayer = clientPlayer;
+    }
+
+    public Administrator getAdmin() {
+        return admin;
     }
 }
