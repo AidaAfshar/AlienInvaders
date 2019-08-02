@@ -238,4 +238,6 @@ public abstract class Group {
     public void setType(GroupType type) {
         this.type = type;
     }
+
+
 }

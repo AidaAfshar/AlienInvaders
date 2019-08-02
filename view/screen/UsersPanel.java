@@ -12,6 +12,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import controller.player.playerExtentions.Player;
+import model.fileManagement.FileManager;
 import view.imaging.Assets;
 import view.imaging.Background;
 import view.imaging.ImageLoader;
@@ -33,6 +35,8 @@ public class UsersPanel extends JPanel {
     JOptionPane optionPane ;
     JLabel label ;
 
+    FileManager fileManager ;
+
     public UsersPanel(ContentPane contentPane){
         super();
         this.contentPane = contentPane ;
@@ -43,6 +47,7 @@ public class UsersPanel extends JPanel {
         this.setLayout(null);
         this.setBackground(Color.black);
         prepareBackground();
+        prepareFileManager() ;
         prepareLabel();
         prepareUserLabels();
         prepareButtons();
@@ -53,6 +58,10 @@ public class UsersPanel extends JPanel {
 
     public void prepareBackground() {
         usersPanelBackground.setImage(Assets.usersPanelBackgroundImage);
+    }
+
+    public void prepareFileManager(){
+        fileManager = new FileManager () ;
     }
 
     public void prepareLabel() {
@@ -75,6 +84,7 @@ public class UsersPanel extends JPanel {
             this.add(playersLabel.get(i));
         }
 
+        addSavedPlayers ();
     }
 
 
@@ -187,6 +197,16 @@ public class UsersPanel extends JPanel {
         }
     }
 
+
+    void addSavedPlayers(){
+        ArrayList<Player> savedPlayers = fileManager.getSavedList () ;
+        int size = savedPlayers.size () ;
+        if(size != 0){
+            for(Player player: savedPlayers){
+                addUser (player.getName ());
+            }
+        }
+    }
 
     @Override
     public void paintComponent(Graphics g) {

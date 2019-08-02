@@ -1,67 +1,77 @@
 package model.fileManagement;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.PrintStream;
-import java.util.Scanner;
+import controller.player.playerExtentions.Player;
+import model.dataManagement.DataManager;
 
-//import com.google.gson.Gson;
-//import com.google.gson.GsonBuilder;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 
 public class FileManager {
 
-    File file = new File("src/model/fileManagement/game.model");
-    File file2 = new File("src/model/fileManagement/savedGame");
 
-    FileOutputStream fos ;
-    BufferedOutputStream bos ;
-    FileInputStream fis ;
-
-    static PrintStream p ;
-    static Scanner sc ;
+    PrintWriter printer ;
+    Scanner scanner ;
 
 
-    public FileManager() {
-        initialize();
+    public FileManager(){
+        initialize() ;
+    }
+
+    void initialize(){
+        try {
+
+
+            printer = new PrintWriter (new FileWriter ("src/model/fileManagement/game.data",true)) ;
+            scanner = new Scanner (new FileReader ("src/model/fileManagement/game.data")) ;
+
+
+        } catch (IOException e) {
+            e.printStackTrace ();
+        }
+    }
+
+    public  void save(Player player){
+        player.save ();
+        printer.println (player);
+        printer.flush ();
     }
 
 
-    public void initialize() {
-        try {
-//			fos = new FileOutputStream(file);
-//			fis = new FileInputStream(file);
-            p = new PrintStream(file);
-            sc = new Scanner(file2);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+    public Player load(String name){
+        while (scanner.hasNextLine ()){
+
+            Player player = DataManager.load (scanner.nextLine ());
+            if(player.getName ().equals (name)) {
+                return player;
+            }
+        }
+        return null ;
+    }
+
+
+    public ArrayList<Player> getSavedList(){
+
+        ArrayList<Player> players = new ArrayList<> () ;
+
+        while (scanner.hasNextLine ()){
+            Player player = DataManager.load (scanner.nextLine ());
+            players.add (player) ;
         }
 
-//	   bos = new BufferedOutputStream(fos);
-//       p = new PrintStream(bos);
-//       sc = new Scanner(fis);
+        return players ;
     }
 
-    public void close() {
-        p.close();
-        sc.close();
+    public boolean includes(String name){
+        while (scanner.hasNextLine ()){
+
+            Player player = DataManager.load (scanner.nextLine ());
+            if(player.getName ().equals (name)) {
+                return true;
+            }
+        }
+        return false ;
     }
-
-//	public void save(SpaceShip spaceShip) {
-//		GsonBuilder gsonBuilder = new GsonBuilder();
-//		gsonBuilder.serializeNulls();
-//		Gson gson = gsonBuilder.excludeFieldsWithModifiers(Modifier.TRANSIENT).create();
-//		p.println(gson.toJson(spaceShip));
-////		System.out.println(gson.toJson(spaceShip));
-//	}
-
-//	public static SpaceShip load() {
-//		Gson gson = new Gson();
-//		return gson.fromJson(sc.nextLine(),SpaceShip.class);
-//	}
-
 
 }

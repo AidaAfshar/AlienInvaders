@@ -1,15 +1,15 @@
 package controller.controlSection.levelize;
 
 import controller.controlSection.administrator.Administrator;
-import controller.enemy.alienGroups.finalWave.FinalWave;
 import controller.enemy.alienGroups.Group;
 import controller.enemy.alienGroups.GroupType;
 import controller.enemy.alienGroups.RectangularGroup;
 import controller.enemy.alienGroups.circularGroup.CircularGroup;
-import controller.enemy.alienGroups.finalWave.RoundFinalWave;
 import controller.enemy.alienGroups.finalWave.SimpleFinalWave;
 import controller.enemy.alienGroups.rotatingGroup.RotatingGroup;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 
@@ -23,7 +23,6 @@ public class LevelManager {
     int currentLevelCount = 0 ;
     int maximumLevelCount = 4 ;
 
-    Object synchObject = new Object() ;
 
     public LevelManager(Administrator admin){
         this.admin = admin ;
@@ -34,6 +33,7 @@ public class LevelManager {
     void initialize(){
         prepareNormalGame();
         startGame();
+
     }
 
     void prepareNormalGame(){
@@ -82,9 +82,21 @@ public class LevelManager {
 
     }
 
-    void addGroupsForRandomGame(){
+    void addGroupsForRandomGame()  {
+
+        try {
+            Class aClass = RectangularGroup.class;
+            Constructor constructor = aClass.getConstructor ();
+            Group group = (Group) constructor.newInstance ();
+
+            System.out.println (group.getType ());
+        }catch (Exception e){
+            e.printStackTrace ();
+        }
 
     }
+
+
 
     //getters & setters:
 
@@ -93,7 +105,4 @@ public class LevelManager {
         return currentGroup;
     }
 
-    public Object getSynchObject() {
-        return synchObject;
-    }
 }

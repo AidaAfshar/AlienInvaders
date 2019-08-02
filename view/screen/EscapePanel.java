@@ -107,13 +107,13 @@ public class EscapePanel extends JPanel {
         fileChooser = new JFileChooser (FileSystemView.getFileSystemView().getHomeDirectory()) ;
         fileChooser.showOpenDialog (null) ;
         selectedFile = fileChooser.getSelectedFile() ;
-        filePath = selectedFile.getAbsolutePath () ;
         fileName = selectedFile.getName () ;
-        System.out.println(filePath) ;
-        System.out.println(fileName) ;
+        fileName = fileName.substring (0,fileName.length ()-".class".length ());
 
-        MyClassLoader loader = new MyClassLoader (filePath,fileName) ;
-        loader.initialize ();
+        MyClassLoader loader = new MyClassLoader (getClass().getClassLoader()) ;
+        Class aClass = loader.loadClass (fileName,selectedFile) ;
+        System.out.println (aClass.getSimpleName ()) ;
+
     }
 
 
