@@ -15,6 +15,7 @@ import controller.player.playerExtentions.Player;
 import controller.player.PlayerState;
 import controller.player.PlayerRole;
 import controller.ship.SpaceShip;
+import model.fileManagement.FileManager;
 import view.screen.gamePanel.GamePanel;
 import view.screen.gamePanel.MultiPlayerGamePanel;
 import view.screen.gamePanel.SinglePlayerGamePanel;
@@ -48,6 +49,8 @@ public class ContentPane extends JPanel {
     ArrayList<Player> players ;
 
 
+    FileManager fileManager ;
+
     Administrator admin ;
 
     public ContentPane() {
@@ -58,6 +61,7 @@ public class ContentPane extends JPanel {
     public void initialize() {
         setLayout(new BorderLayout());
         setBackground(Color.blue);
+        fileManager = new FileManager () ;
         preparePanels() ;
         add(invitationPanel);
     }
