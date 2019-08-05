@@ -11,6 +11,8 @@ import controller.controlSection.administrator.MultiPlayerAdministrator;
 import controller.controlSection.administrator.SinglePlayerAdministrator;
 import controller.controlSection.Connection.client.Client;
 import controller.controlSection.Connection.server.Server;
+import model.dataManagement.DataManagement;
+import model.database.DatabaseManager;
 import controller.player.playerExtentions.Player;
 import controller.player.PlayerState;
 import controller.player.PlayerRole;
@@ -34,6 +36,7 @@ public class ContentPane extends JPanel {
     ClientPanel clientPanel ;
     ServerPanel serverPanel ;
     MenuPanel menuPanel ;
+    RankingPanel rankingPanel ;
     GamePanel gamePanel ;
     EscapePanel escapePanel ;
     GameOverPanel gameOverPanel ;
@@ -50,6 +53,9 @@ public class ContentPane extends JPanel {
 
 
     FileManager fileManager ;
+    DatabaseManager databaseManager;
+
+    DataManagement dataManagement = DataManagement.VIA_FILE ;
 
     Administrator admin ;
 
@@ -61,15 +67,25 @@ public class ContentPane extends JPanel {
     public void initialize() {
         setLayout(new BorderLayout());
         setBackground(Color.blue);
-        fileManager = new FileManager () ;
+        prepareDataManagement(DataManagement.VIA_DATABASE) ;
+        databaseManager= new DatabaseManager();
         preparePanels() ;
         add(invitationPanel);
+    }
+
+    void prepareDataManagement(DataManagement x){
+        if(x.equals(DataManagement.VIA_FILE)){
+            fileManager=new FileManager();
+        }
+        if(x.equals(DataManagement.VIA_DATABASE)){
+            dataManagement = DataManagement.VIA_DATABASE ;
+            databaseManager=new DatabaseManager();
+        }
     }
 
     public void preparePanels(){
         invitationPanel= new InvitationPanel(this);
         escapePanel = new EscapePanel(this);
-
     }
 
 
@@ -103,6 +119,7 @@ public class ContentPane extends JPanel {
         if(menuPanel.isNewGameSelected()) {
             menuPanel.setVisible(false);
             add(escapePanel);
+            player.initialize();
             prepareSinglePlayerAdministrator();
             prepareSinglePlayerGamePanel();
             add(gamePanel);
@@ -110,11 +127,28 @@ public class ContentPane extends JPanel {
         }
         if(menuPanel.isResumeGameSelected()) {
             menuPanel.setVisible(false);
-            add(escapePanel);
+            add(escapePanel) ;
+            //player = databaseManager.getPlayersData(player.getName()) ;
+            player.reLoad();
+            prepareSinglePlayerAdministrator();
+            prepareSinglePlayerGamePanel();
+            add(gamePanel);
             gamePanel.requestFocus();
         }
     }
 
+
+    public void openRankingPanel(){
+        menuPanel.setVisible(false);
+        rankingPanel = new RankingPanel(this,usersPanel.getSavedPlayers()) ;
+        add(rankingPanel) ;
+    }
+
+    public void closeRankingPanel(){
+        rankingPanel.setVisible(false);
+        menuPanel.setVisible(true);
+        add(menuPanel) ;
+    }
 
     public void afterServerClientPanel(){
         if (serverClientPanel.isServerSelected()) {
@@ -130,7 +164,7 @@ public class ContentPane extends JPanel {
 
     }
 
-    public void afterClientInfoPanel() throws InterruptedException{
+    public void afterClientInfoPanel() {
         setClientPlayer(player);
         clientPanel = new ClientPanel(this, clientPlayer);
         add(clientPanel);
@@ -252,14 +286,12 @@ public class ContentPane extends JPanel {
     public void prepareSinglePlayerAdministrator(){
         admin = new SinglePlayerAdministrator(this) ;
         ((SinglePlayerAdministrator)admin).setPlayer(player) ;
-
     }
 
     public void prepareMultiPlayerGamePanel() {
         gamePanel = new MultiPlayerGamePanel(this ,(MultiPlayerAdministrator) admin);
         gamePanel.setVisible(true);
     }
-
 
     public void prepareMultiPlayerAdministrator(){
         admin = new MultiPlayerAdministrator(this) ;
@@ -269,13 +301,18 @@ public class ContentPane extends JPanel {
 
 
     public void handleEscapePanel(){
-        //fileManager.save(player);
         gamePanel.setVisible(false);
         add(escapePanel);
         escapePanel.setVisible(true);
         escapePanel.requestFocus();
     }
 
+    public void savePlayerAsModel(){
+        if(dataManagement == DataManagement.VIA_FILE)
+            fileManager.save(player);
+        if(dataManagement == DataManagement.VIA_DATABASE)
+            databaseManager.updatePlayer(player);
+    }
 
     public void resumeGameFromEscapePanel(){
             this.remove(escapePanel);
@@ -285,7 +322,7 @@ public class ContentPane extends JPanel {
     }
 
     public void showGameOverPanel(){
-        //fileManager.save(player);
+        savePlayerAsModel();
         gameOverPanel = new GameOverPanel(this);
         add(gameOverPanel);
         gameOverPanel.setVisible(true);
@@ -294,6 +331,7 @@ public class ContentPane extends JPanel {
     }
 
     public void showWinPanel(int score){
+        savePlayerAsModel();
         winPanel = new WinPanel(this,score);
         add(winPanel);
         gamePanel.setVisible(false);
@@ -301,6 +339,7 @@ public class ContentPane extends JPanel {
     }
 
     public void afterGameOver(){
+        savePlayerAsModel();
         player.initialize();
         prepareSinglePlayerAdministrator();
         gameOverPanel.setVisible(false);
@@ -310,6 +349,7 @@ public class ContentPane extends JPanel {
     }
 
     public void afterWin(){
+        //databaseManager.updatePlayer(player);
         player.initialize();
         prepareSinglePlayerAdministrator();
         winPanel.setVisible(false);
@@ -362,4 +402,17 @@ public class ContentPane extends JPanel {
     public Administrator getAdmin() {
         return admin;
     }
+
+    public DatabaseManager getDatabaseManager() {
+        return databaseManager;
+    }
+
+    public FileManager getFileManager() {
+        return fileManager;
+    }
+
+    public DataManagement getDataManagement() {
+        return dataManagement;
+    }
+
 }

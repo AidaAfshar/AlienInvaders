@@ -63,6 +63,14 @@ public class Player {
         updateValues();
     }
 
+    public void upgradeScore(){
+        score += 3*coin ;
+    }
+
+    public void increaseScore(int alienResistance){
+        score += alienResistance ;
+    }
+
 //    public void preparePlayerThread(){
 //        playerThread = new PlayerThread(this) ;
 //    }
@@ -72,8 +80,6 @@ public class Player {
         bombCount = ship.getBombCount() ;
         x = ship.getX() ;
         y = ship.getY() ;
-
-        //TODO correct score
         score = coin*3 ;
     }
 
@@ -83,6 +89,10 @@ public class Player {
         this.bombCount = player.getBombCount() ;
         this.x = player.getX() ;
         this.y = player.getY() ;
+    }
+
+    public void reLoad(){
+        prepareShip();
     }
 
     public void save(){
@@ -98,6 +108,7 @@ public class Player {
                 "name=" + name +
                 ", score=" + score +
                 ", coin=" + coin +
+                ", power=" + power +
                 ", bombCount=" + bombCount +
                 ", x=" + x +
                 ", y=" + y +

@@ -1,6 +1,5 @@
 package controller.controlSection.Connection.server;
 
-
 import controller.player.playerExtentions.Player;
 import model.dataManagement.DataManager;
 
@@ -11,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class UpdateServiceForServer {
-
 
     MyOutputStream outputStream ;
     MyInputStream inputStream ;

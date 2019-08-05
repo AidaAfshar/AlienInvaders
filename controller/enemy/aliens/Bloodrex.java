@@ -24,8 +24,9 @@ public class Bloodrex extends Alien{
     public void initialize(){
         setName(AlienName.BLOODREX) ;
         setImages(Assets.bloodrex1Image ,Assets.bloodrex2Image );
-        setProbablity(500);
-        setPower(3);
+        setProbability(500);
+        setPower(4);
+        setResistance(4);
         setHeight(90);
         setWidth(85);
     }

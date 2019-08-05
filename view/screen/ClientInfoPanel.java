@@ -109,7 +109,7 @@ public class ClientInfoPanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 try {
                     contentPane.afterClientInfoPanel();
-                } catch (InterruptedException ex) {
+                } catch (Exception ex) {
                     ex.printStackTrace();
                 }
             }

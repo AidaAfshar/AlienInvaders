@@ -23,8 +23,9 @@ public class Augustus extends Alien{
 
     public void initialize(){
         setName(AlienName.AUGUSTUS) ;
-        setProbablity(1000);
+        setProbability(1000);
         setPower(3);
+        setResistance(3);
         setImages(Assets.augustus1Image ,Assets.augustus2Image);
         setHeight(95);
         setWidth(90);

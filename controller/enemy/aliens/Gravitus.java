@@ -7,10 +7,6 @@ import java.awt.*;
 
 public class Gravitus extends Alien {
 
-    public Gravitus() {
-        initialize();
-    }
-
 
     public Gravitus(int x, int y) {
         super(x,y) ;
@@ -22,6 +18,7 @@ public class Gravitus extends Alien {
         setName(AlienName.GRAVITUS) ;
         setImage(Assets.gravitusImage );
         setPower(100);
+        setResistance(100);
         setAlive(true);
         setHeight(540);
         setWidth(540);

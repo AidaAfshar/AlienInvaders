@@ -2,6 +2,6 @@ package controller.attackTools;
 
 public enum BeamType {
 
-    FLAMEBALL,FIREGLOBE,NITROGLOBE ;
+    FLAMEBALL,FIREGLOBE,NITROGLOBE,MULTIBEAM ;
 
 }

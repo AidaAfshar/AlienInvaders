@@ -83,7 +83,7 @@ public abstract class Group {
     public void produceSpike(){
         for(Alien alien : aliens){
             if(alien.isAlive()) {
-                if (random.nextInt(15000) % alien.getProbablity() == 0) {
+                if (random.nextInt(15000) % alien.getProbability() == 0) {
                     releaseSpike(alien.getX(), alien.getY());
                 }
             }
@@ -113,11 +113,11 @@ public abstract class Group {
     }
 
     public void releaseTurbo(int x , int y ,BeamType type){
-        int num = random.nextInt(2);
+        int num = random.nextInt(3);
         if(num == 0)
             turbos.add(new TempInterval(x,y));
 
-        if(num == 1)
+        if(num != 0)
             turbos.add(Turbo.diagnoseTurbo(x,y,type));
 
     }

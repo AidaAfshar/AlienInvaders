@@ -12,12 +12,13 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import model.dataManagement.DataManagement;
+import model.database.DatabaseManager;
 import controller.player.playerExtentions.Player;
 import controller.ship.SpaceShip;
 import model.fileManagement.FileManager;
 import view.imaging.Assets;
 import view.imaging.Background;
-import view.imaging.ImageLoader;
 import view.utilities.Dim;
 
 
@@ -27,6 +28,8 @@ public class UsersPanel extends JPanel {
     ContentPane contentPane ;
 
     ArrayList<UserLabel> playersLabel = new ArrayList<UserLabel>(5);
+    ArrayList<Player> savedPlayers ;
+
 
     String playerName ;
 
@@ -37,6 +40,7 @@ public class UsersPanel extends JPanel {
     JLabel label ;
 
     FileManager fileManager ;
+    DatabaseManager databaseManager ;
 
     public UsersPanel(ContentPane contentPane){
         super();
@@ -48,7 +52,9 @@ public class UsersPanel extends JPanel {
         this.setLayout(null);
         this.setBackground(Color.black);
         prepareBackground();
-        prepareFileManager() ;
+//        prepareFileManager() ;
+//        prepareDatabaseManager() ;
+        prepareDataManagement("via database") ;
         prepareLabel();
         prepareUserLabels();
         prepareButtons();
@@ -57,22 +63,57 @@ public class UsersPanel extends JPanel {
         this.add(startButton);
     }
 
-    public void prepareBackground() {
+    void prepareBackground() {
         usersPanelBackground.setImage(Assets.usersPanelBackgroundImage);
     }
 
-    public void prepareFileManager(){
-        fileManager = new FileManager () ;
+    void prepareDataManagement(String x){
+        if(x.equals("via file"))
+            prepareFileManager();
+        if(x.equals("via database"))
+            prepareDatabaseManager();
+    }
+
+    void prepareFileManager(){
+        fileManager = contentPane.getFileManager() ;
+        savedPlayers = fileManager.getSavedList () ;
+        normalizeSavedPlayers();
+    }
+
+    void prepareDatabaseManager(){
+        databaseManager = contentPane.getDatabaseManager() ;
+        savedPlayers = databaseManager.getPlayersArrayList () ;
+        normalizeSavedPlayers();
+    }
+
+    void normalizeSavedPlayers(){
+        ArrayList<Player> temp = new ArrayList<>() ;
+        for(int i=savedPlayers.size()-1 ; i>=0 ; i--){
+            Player player = savedPlayers.get(i) ;
+            if(! alreadyExists(player,temp)){
+                temp.add(player);
+            }
+        }
+
+        savedPlayers = temp ;
+    }
+
+    static boolean alreadyExists(Player player,ArrayList<Player> temp){
+        for(int i=0 ; i<temp.size() ; i++){
+            Player tempPlayer = temp.get(i) ;
+            if(tempPlayer.getName().equals(player.getName())){
+                return true ;
+            }
+        }
+        return false ;
     }
 
     public void prepareLabel() {
-
         label = new JLabel(" U S E R S !");
         label.setBounds(Dim.CENTER_X-200,20,500,200);
         label.setFont(new Font("Chiller",Font.BOLD,80));
         label.setForeground(Color.white);
         this.add(label);
-
     }
 
 
@@ -85,7 +126,7 @@ public class UsersPanel extends JPanel {
             this.add(playersLabel.get(i));
         }
 
-        addSavedPlayers ();
+        addSavedPlayersToPanel();
     }
 
 
@@ -100,7 +141,6 @@ public class UsersPanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 removeUser(JOptionPane.showInputDialog("Enter users name"));
 
-
             }
 
         });
@@ -111,8 +151,9 @@ public class UsersPanel extends JPanel {
         addButton.addActionListener(new ActionListener() {
 
             @Override
-            public void actionPerformed(ActionEvent e) {
-                addUser(JOptionPane.showInputDialog("Enter users name"));
+            public void actionPerformed(ActionEvent e){
+                String name = JOptionPane.showInputDialog("Enter users name") ;
+                addUser(name);
             }
 
         });
@@ -124,7 +165,16 @@ public class UsersPanel extends JPanel {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                contentPane.setPlayer(getNewPlayer ());
+                prepareNewPlayer();
+                if(playerAlreadyExists()){
+                       Player player = getExistingPlayer(playerName) ;
+                        contentPane.setPlayer(player);
+                }else{
+                    Player newPlayer = new Player(playerName, new SpaceShip());
+                    if(contentPane.getDataManagement()==DataManagement.VIA_DATABASE)
+                    databaseManager.addPlayerToDatabase(newPlayer);
+                    contentPane.setPlayer(newPlayer);
+                }
                 contentPane.afterUsersPanel();
             }
 
@@ -132,14 +182,32 @@ public class UsersPanel extends JPanel {
 
     }
 
-    public Player getNewPlayer() {
+    void prepareNewPlayer() {
         for(int i=0 ; i<playersLabel.size();i++) {
             if(playersLabel.get(i).chosen) {
                 playerName = playersLabel.get(i).name ;
             }
         }
+    }
 
-        return new Player (playerName,new SpaceShip ());
+    boolean playerAlreadyExists(){
+
+        for(int i=savedPlayers.size()-1 ; i>=0 ; i--){
+            if(savedPlayers.get(i).getName().equals(playerName))
+                return true ;
+        }
+
+        return false ;
+    }
+
+
+
+    Player getExistingPlayer(String playerName){
+        for(int i=savedPlayers.size()-1 ; i>=0 ; i--){
+            if(savedPlayers.get(i).getName().equals(playerName))
+                return savedPlayers.get(i) ;
+        }
+        return null ;
     }
 
     public void removeUser(String showInputDialog) {
@@ -199,8 +267,7 @@ public class UsersPanel extends JPanel {
     }
 
 
-    void addSavedPlayers(){
-        ArrayList<Player> savedPlayers = fileManager.getSavedList () ;
+    void addSavedPlayersToPanel(){
         int size = savedPlayers.size () ;
         if(size != 0){
             for(Player player: savedPlayers){
@@ -215,7 +282,10 @@ public class UsersPanel extends JPanel {
         g.drawImage(usersPanelBackground.getImage(),Dim.CENTER_X +170,Dim.CENTER_Y-280,480,500,null);
     }
 
+    //getters:
 
 
-
+    public ArrayList<Player> getSavedPlayers() {
+        return savedPlayers;
+    }
 }

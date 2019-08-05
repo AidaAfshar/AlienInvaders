@@ -10,10 +10,10 @@ import java.util.Scanner;
 
 public class FileManager {
 
-
     PrintWriter printer ;
     Scanner scanner ;
 
+    LineRemover lineRemover ;
 
     public FileManager(){
         initialize() ;
@@ -25,6 +25,8 @@ public class FileManager {
 
             printer = new PrintWriter (new FileWriter ("src/model/fileManagement/game.data",true)) ;
             scanner = new Scanner (new FileReader ("src/model/fileManagement/game.data")) ;
+            //lineRemover = new LineRemover("src/model/fileManagement/game.data") ;
+
 
 
         } catch (IOException e) {
@@ -41,7 +43,6 @@ public class FileManager {
 
     public Player load(String name){
         while (scanner.hasNextLine ()){
-
             Player player = DataManager.load (scanner.nextLine ());
             if(player.getName ().equals (name)) {
                 return player;

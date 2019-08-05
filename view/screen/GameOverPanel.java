@@ -60,6 +60,7 @@ public class GameOverPanel extends JPanel {
 
             @Override
             public void actionPerformed(ActionEvent e) {
+                contentPane.savePlayerAsModel();
                 System.exit(0);
             }
 

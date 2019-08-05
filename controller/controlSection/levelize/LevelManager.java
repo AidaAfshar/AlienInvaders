@@ -9,6 +9,7 @@ import controller.enemy.alienGroups.circularGroup.CircularGroup;
 import controller.enemy.alienGroups.finalWave.FinalWave;
 import controller.enemy.alienGroups.finalWave.SimpleFinalWave;
 import controller.enemy.alienGroups.rotatingGroup.RotatingGroup;
+import controller.enemy.aliens.Gravitus;
 
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
@@ -36,12 +37,12 @@ public class LevelManager {
     }
 
     void initialize() {
-        prepareGame();
+        addClasses();
         addGroupsForRandomGame();
         startGame();
     }
 
-    void prepareGame(){
+    void addClasses(){
         groupsClasses.add(RectangularGroup.class) ;
         groupsClasses.add(CircularGroup.class) ;
         groupsClasses.add(RotatingGroup.class) ;
@@ -93,27 +94,30 @@ public class LevelManager {
 
 
     public void nextGroup() {
-        for (int i = 0;i < groups.size ();i++) {
-            Group group = groups.get (i);
-            if (!group.isDead ()) {
+        for(int i=0;i<groups.size();i++){
+            Group group=groups.get(i);
+            System.out.println(group.getType());
+            if(!group.isDead()){
                 this.currentGroup = group;
-                this.currentGroup.initialize ();
+                this.currentGroup.initialize();
                 break;
-            } else if (group.getType () == GroupType.FINALWAVE && group.isDead ()) {
+            }else if(group.getType()==GroupType.FINALWAVE && group.isDead()){
                 currentLevelCount++;
-                if (currentLevelCount == maximumLevelCount) {
-                    admin.finishGame ();
-                    break;
-                } else {
-                    nextLevel ();
-                    break;
-                }
+                Gravitus.setResistance(100*currentLevelCount);
+            }
+            if(currentLevelCount==maximumLevelCount){
+                admin.finishGame();
+                break;
+            }else{
+                nextLevel();
+                break;
             }
         }
     }
 
+
     public void nextLevel() {
-        //addGroupsForNormalGame();
+        admin.upgradeScore() ;
         addGroupsForRandomGame();
         startGame ();
     }

@@ -14,9 +14,9 @@ public class TempInterval extends Turbo {
 
     public void initialize(){
         setType(TurboType.TEMP_INTERVAL);
-        setImage(Assets.redCubeImage);
+        setImage(Assets.colorCircleImage);
         setWidth(60);
-        setHeight(60);
+        setHeight(40);
         setInScreen(true);
     }
 

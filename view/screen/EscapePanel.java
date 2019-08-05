@@ -6,7 +6,6 @@ import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.IOException;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileSystemView;
@@ -70,7 +69,7 @@ public class EscapePanel extends JPanel {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-            //    contentPane.fileManager.close();
+                contentPane.savePlayerAsModel();
                 System.exit(0);
             }
 
@@ -110,6 +109,7 @@ public class EscapePanel extends JPanel {
 
         prepareLoader(selectedFile,fileName) ;
     }
+
 
     void prepareLoader(File selectedFile ,String fileName){
         Class c =loader.loadClass (fileName,selectedFile) ;

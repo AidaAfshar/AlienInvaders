@@ -56,6 +56,10 @@ public class SpaceShip extends Image{
             setBeamType(BeamType.NITROGLOBE);
             return new NitroGlobe(x, y);
         }
+        if(type.equals(BeamType.MULTIBEAM)){
+            setBeamType(BeamType.MULTIBEAM);
+            return new MultiBeam(x, y);
+        }
 
         return null ;
     }

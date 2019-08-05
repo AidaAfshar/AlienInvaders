@@ -60,7 +60,6 @@ public class Client extends Thread{
     }
 
     public void stopPreGameConnection(){
-        System.out.println("inside stopPreGameConnection-client");
         connector.pause();
     }
 

@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import controller.player.playerExtentions.Player;
 
+import javax.xml.crypto.Data;
 import java.io.InputStream;
 import java.lang.reflect.Modifier;
 import java.util.Scanner;
@@ -46,6 +47,31 @@ public class DataManager {
         return player ;
     }
 
+    public static String getJsonString(String name,int score,int coin , int power,int bombCount , int x , int y){
+        return "{" +
+                "name=" + name +
+                ", score=" + score +
+                ", coin=" + coin +
+                ", power=" + power +
+                ", bombCount=" + bombCount +
+                ", x=" + x +
+                ", y=" + y +
+                '}';
+    }
+
+    public static Player instantiatePlayer(String name,int score,int coin , int power,int bombCount , int x , int y){
+        String data = "{" +
+                "name=" + name +
+                ", score=" + score +
+                ", coin=" + coin +
+                ", power=" + power +
+                ", bombCount=" + bombCount +
+                ", x=" + x +
+                ", y=" + y +
+                '}';
+
+        return DataManager.load(data) ;
+    }
 
 }
 

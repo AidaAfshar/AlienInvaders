@@ -44,7 +44,7 @@ public class MenuPanel extends JPanel {
 
     public void initialize() {
         this.setLayout(null);
-        this.setBackground(Color.green);
+        this.setBackground(Color.black);
         prepareBackground();
         prepareWelcomeLabel();
         this.add(welcomeLabel);
@@ -67,7 +67,7 @@ public class MenuPanel extends JPanel {
     public void prepareWelcomeLabel() {
         welcomeLabel = new JLabel("Welcome  " + contentPane.getPlayer().getName() + "  !");
         welcomeLabel.setBounds(Dim.CENTER_X-250,Dim.CENTER_Y-100,700,200);
-        welcomeLabel.setForeground(Color.red);
+        welcomeLabel.setForeground(Color.red.darker());
         welcomeLabel.setFont(new Font("Chiller", Font.BOLD , 80));
     }
 
@@ -81,8 +81,8 @@ public class MenuPanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 resumeGameSelected = true ;
-                contentPane.afterMenuPanel();
                 timer.stop();
+                contentPane.afterMenuPanel();
             }
 
         });
@@ -95,8 +95,8 @@ public class MenuPanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 newGameSelected = true ;
-                contentPane.afterMenuPanel();
                 timer.stop();
+                contentPane.afterMenuPanel();
             }
 
         });
@@ -104,6 +104,13 @@ public class MenuPanel extends JPanel {
         rankingsButton = new JButton("RANKINGS");
         rankingsButton.setBounds(Dim.CENTER_X-200+20,Dim.CENTER_Y+280,300,50);
         rankingsButton.setFont(new Font("Footlight MT Light",Font.BOLD,30));
+        rankingsButton.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                contentPane.openRankingPanel() ;
+            }
+        });
 
         exitButton = new JButton("exit");
         exitButton.setBounds(50+20,Dim.CENTER_Y+290,150,40);
@@ -142,6 +149,10 @@ public class MenuPanel extends JPanel {
         g.drawImage(menuPanelBackground.getImage(),0,0,Dim.MAX_X,Dim.MAX_Y,null);
         skeleton.renderMovement(g, skeleton.j%25);
     }
+
+
+    //getters
+
 
 
     public boolean isNewGameSelected() {

@@ -44,7 +44,7 @@ public class ServerPanel extends JPanel {
         prepareBackground();
         preparePlayersLabels();
         prepareButton() ;
-        addPlayer(contentPane.getServerPlayer().getName() + "(controlSection server)");
+        addPlayer(contentPane.getServerPlayer().getName() + "(main server)");
     }
 
     public void prepareBackground() {

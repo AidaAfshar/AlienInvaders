@@ -90,7 +90,7 @@ public class ConnectionServiceForServer {
 
 
         void loadClientPlayer(){
-            String data =scanner.nextLine();
+            String data = scanner.nextLine();
             if(data != null) {
                 clientPlayer = DataManager.load(data);
                 updateServerPanel(clientPlayer);

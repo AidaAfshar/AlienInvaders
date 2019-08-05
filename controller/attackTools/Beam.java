@@ -5,7 +5,7 @@ import java.awt.Graphics;
 import view.imaging.Image;
 
 
-public abstract class Beam extends Image{
+public class Beam extends Image{
 
     int power ;
     int tempUp ;
@@ -20,15 +20,14 @@ public abstract class Beam extends Image{
 
     public Beam() {
         super();
-        initialize();
 
     }
 
-
-    public void initialize() {
-
+    public Beam(int x0, int y0) {
+        super();
+        this.x0 = x0 ;
+        this.y0 = y0 ;
     }
-
 
     public void moveBeam(){
         y-= v ;

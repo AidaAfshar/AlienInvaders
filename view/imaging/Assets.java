@@ -26,11 +26,27 @@ public class Assets {
     public static String fireGlobeAddress = "pictures/beams/fire.png" ;
     public static BufferedImage fireGlobeImage = ImageLoader.load(fireGlobeAddress);
 
+    public static String nitroGlobeAddress = "pictures/beams/nitro.png" ;
+    public static BufferedImage nitroGlobeImage = ImageLoader.load(nitroGlobeAddress);
+
     public static String flameBallAddress = "pictures/beams/flameball.png" ;
     public static BufferedImage flameBallImage = ImageLoader.load(flameBallAddress);
 
-    public static String nitroGlobeAddress = "pictures/beams/nitro.png" ;
-    public static BufferedImage nitroGlobeImage = ImageLoader.load(nitroGlobeAddress);
+    public static String multi1Address = "pictures/beams/multiBeam/1.png" ;
+    public static BufferedImage multi1Image = ImageLoader.load(multi1Address);
+
+    public static String multi2Address = "pictures/beams/multiBeam/2.png" ;
+    public static BufferedImage multi2Image = ImageLoader.load(multi2Address);
+
+    public static String multi3Address = "pictures/beams/multiBeam/3.png" ;
+    public static BufferedImage multi3Image = ImageLoader.load(multi3Address);
+
+    public static String multi4Address = "pictures/beams/multiBeam/4.png" ;
+    public static BufferedImage multi4Image = ImageLoader.load(multi4Address);
+
+    public static String multi5Address = "pictures/beams/multiBeam/5.png" ;
+    public static BufferedImage multi5Image = ImageLoader.load(multi5Address);
+
 
     //bonus:
 
@@ -48,6 +64,9 @@ public class Assets {
 
     public static String coinAddress = "pictures/bonus/coin.png" ;
     public static BufferedImage coinImage = ImageLoader.load(coinAddress);
+
+    public static String colorCircleAddress = "pictures/bonus/colorCircle.png" ;
+    public static BufferedImage colorCircleImage = ImageLoader.load(colorCircleAddress);
 
     //alien attack:
 
@@ -110,6 +129,8 @@ public class Assets {
     public static String serverClientPanelBackgroundAddress = "pictures/backgrounds/serverClientPanel.png" ;
     public static BufferedImage serverClientPanelBackgroundImage = ImageLoader.load(serverClientPanelBackgroundAddress);
 
+    public static String rankingPanelBackgroundAddress = "pictures/backgrounds/rankingPanel.png" ;
+    public static BufferedImage rankingPanelPanelBackgroundImage = ImageLoader.load(rankingPanelBackgroundAddress);
 
 
 }

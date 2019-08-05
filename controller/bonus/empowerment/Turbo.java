@@ -2,6 +2,7 @@ package controller.bonus.empowerment;
 
 import controller.attackTools.BeamType;
 import controller.bonus.Bonus;
+import controller.bonus.empowerment.beamTypeChanger.MultiBeamTurbo;
 import controller.bonus.empowerment.beamTypeChanger.NitroTurbo;
 import controller.bonus.empowerment.beamTypeChanger.FireTurbo;
 import controller.bonus.empowerment.beamTypeChanger.FlameTurbo;
@@ -30,6 +31,10 @@ public abstract class Turbo extends Bonus {
         }
         if(type.equals(BeamType.NITROGLOBE)) {
     //        System.out.println("NF");
+            return new MultiBeamTurbo(x, y);
+        }
+        if(type.equals(BeamType.MULTIBEAM)) {
+    //        System.out.println("MB");
             return new FlameTurbo(x, y);
         }
         return null ;

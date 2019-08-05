@@ -8,7 +8,6 @@ import java.util.Random;
 import controller.attackTools.BeamType;
 import controller.enemy.alienGroups.Group;
 import view.imaging.Image;
-import view.imaging.ImageLoader;
 import view.utilities.Dim;
 
 
@@ -24,8 +23,9 @@ public class Alien extends Image{
     int x , y ;
     int vx , vy ;
     boolean alive = true ;
-    int probablity ;
-    int power ;
+    int probability ;
+    int power;
+    static int resistance ;
 
     Group group ;
 
@@ -257,19 +257,30 @@ public class Alien extends Image{
         return true ;
     }
 
-    public int getProbablity() {
-        return probablity;
+    public int getProbability() {
+        return probability;
     }
 
-    public void setProbablity(int probablity) {
-        this.probablity = probablity;
+    public void setProbability(int probability) {
+        this.probability=probability;
     }
+
 
     public int getPower() {
         return power;
     }
 
     public void setPower(int power) {
-        this.power = power;
+        this.power=power;
     }
+
+    public static int getResistance() {
+        return resistance;
+    }
+
+    public static void setResistance(int resistance) {
+        Alien.resistance=resistance;
+    }
+
+
 }

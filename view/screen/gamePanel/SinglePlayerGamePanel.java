@@ -25,6 +25,7 @@ public class SinglePlayerGamePanel extends GamePanel {
 
     JLabel coinLabel ;
     JLabel powerLabel ;
+    JLabel scoreLabel ;
     JLabel bombLabel ;
 
     JProgressBar tempBar ;
@@ -41,7 +42,6 @@ public class SinglePlayerGamePanel extends GamePanel {
         this.admin = admin;
         initialize();
     }
-
 
 
     @Override
@@ -192,8 +192,8 @@ public class SinglePlayerGamePanel extends GamePanel {
         prepareCoinLabel();
         preparePowerLabel();
         prepareBombLabel() ;
+        prepareScoreLabel();
         prepareNameLabel() ;
-
     }
 
     public void prepareCoinLabel(){
@@ -222,6 +222,15 @@ public class SinglePlayerGamePanel extends GamePanel {
         bombLabel.setBounds(0,Dim.MAX_Y-100,120,35);
     }
 
+    public void prepareScoreLabel() {
+        scoreLabel = new JLabel("   Score :     " + admin.getPlayer().getScore());
+        scoreLabel.setBounds(Dim.MAX_X-300 + 40,85,300,50);
+        scoreLabel.setFont(new Font("Footlight MT Light",Font.BOLD,25));
+        scoreLabel.setForeground(Color.white);
+        scoreLabel.setBackground(Color.blue.darker().darker());
+        scoreLabel.setOpaque(true);
+    }
+
 
     public void prepareNameLabel() {
         nameLabel = new JLabel("   Player :     " + admin.getPlayer().getName());
@@ -230,7 +239,6 @@ public class SinglePlayerGamePanel extends GamePanel {
         nameLabel.setForeground(Color.white);
         nameLabel.setBackground(Color.magenta.darker().darker().darker().darker());
         nameLabel.setOpaque(true);
-
     }
 
 
@@ -238,6 +246,7 @@ public class SinglePlayerGamePanel extends GamePanel {
         add(coinLabel);
         add(powerLabel);
         add(bombLabel);
+        add(scoreLabel) ;
         add(nameLabel);
     }
 
@@ -246,6 +255,7 @@ public class SinglePlayerGamePanel extends GamePanel {
         getBombLabel().setText("         Bomb : " + admin.getPlayer().getBombCount());
         getPowerLabel().setText("      Power : " + admin.getPlayer().getPower());
         getCoinLabel().setText("   Coin : " + admin.getPlayer().getCoin());
+        getScoreLabel().setText("   Score :     " + admin.getPlayer().getScore());
     }
 
 
@@ -306,5 +316,9 @@ public class SinglePlayerGamePanel extends GamePanel {
 
     public void setNameLabel(JLabel nameLabel) {
         this.nameLabel = nameLabel;
+    }
+
+    public JLabel getScoreLabel() {
+        return scoreLabel;
     }
 }

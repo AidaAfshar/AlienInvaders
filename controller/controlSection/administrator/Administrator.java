@@ -2,6 +2,7 @@ package controller.controlSection.administrator;
 
 import controller.attackTools.Beam;
 import controller.attackTools.Bomb;
+import controller.attackTools.MultiBeam;
 import controller.bonus.Coin;
 import controller.bonus.empowerment.Turbo;
 import controller.controlSection.levelize.LevelManager;
@@ -57,8 +58,13 @@ public abstract class Administrator {
             @Override
             public void actionPerformed(ActionEvent e) {
                     Group group = levelManager.getCurrentGroup();
+
                     if (group.isDead())
                         levelManager.nextGroup();
+
+                    if(player.getPower()<0)
+                        contentPane.showGameOverPanel();
+
                     group.moveStuffs();
                     group.produceSpike();
                     detectCollisions();
@@ -157,22 +163,38 @@ public abstract class Administrator {
             for(int j = 0; j<ship.getBeams().size() ; j++) {
                 Alien alien = group.getAliens().get(i);
                 Beam beam = ship.getBeams().get(j);
-                if(beam.getThrowPermission()) {
-                    double d = Math.sqrt(Math.pow(alien.getX()-beam.getX(),2)+Math.pow(alien.getY()-beam.getY(),2)) ;
-                    if(alien.isAlive() && d<alien.getHeight()) {
-                        beam.setThrowPermission(false);
-                        alien.setPower(alien.getPower()-beam.getPower());
-                        if(alien.getPower()<=0)
-                            alien.gotHit(alien.getX(),alien.getY(),ship.getBeamType());
-                    }
+                if(beam instanceof MultiBeam){
+                    beamAlienCollisionForMultiBeam(beam, alien);
                 }
+                else
+                    beamAlienCollisionForSingleBeam(beam,alien);
             }
         }
 
     }
 
 
+    void beamAlienCollisionForMultiBeam(Beam beam , Alien alien){
+        MultiBeam multiBeam = (MultiBeam) beam ;
+        Beam[] beams = multiBeam.getMultiArrows().getBeams() ;
+        for(Beam eachBeam:beams){
+            beamAlienCollisionForSingleBeam(eachBeam,alien);
+        }
+    }
 
+    void beamAlienCollisionForSingleBeam(Beam beam , Alien alien){
+        if(beam.getThrowPermission()) {
+            double d = Math.sqrt(Math.pow(alien.getX()-beam.getX(),2)+Math.pow(alien.getY()-beam.getY(),2)) ;
+            if(alien.isAlive() && d<alien.getHeight()) {
+                beam.setThrowPermission(false);
+                alien.setPower(alien.getPower()-beam.getPower());
+                if(alien.getPower()<=0){
+                    alien.gotHit(alien.getX(), alien.getY(), ship.getBeamType());
+                    player.increaseScore(alien.getResistance()) ;
+                }
+            }
+        }
+    }
     private void spaceShipAlienCollision(){
         Group group = levelManager.getCurrentGroup() ;
         for(Alien alien :group.getAliens()) {
@@ -187,6 +209,9 @@ public abstract class Administrator {
         }
     }
 
+    public void upgradeScore(){
+        player.upgradeScore() ;
+    }
 
 
     //getters & setters :

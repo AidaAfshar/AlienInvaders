@@ -5,7 +5,6 @@ import view.imaging.Assets;
 public class FlameBall extends Beam {
 
 
-
     public FlameBall(int x0, int y0) {
         super();
         this.x0 = x0 ;
