@@ -2,5 +2,6 @@ package controller.enemy.alienGroups;
 
 public enum GroupType {
 
-    RECTANGULAR,CIRCULAR,ROTATING,FINALWAVE ;
+    RECTANGULAR,CIRCULAR,ROTATING,TRAIN,FINALWAVE ;
+
 }

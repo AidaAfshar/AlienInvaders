@@ -47,6 +47,15 @@ public class DataManager {
         return player ;
     }
 
+    public static GameState loadSate(String data){
+
+        GsonBuilder gsonBuilder = new GsonBuilder() ;
+        Gson gson = gsonBuilder.excludeFieldsWithModifiers(Modifier.TRANSIENT).create() ;
+
+        GameState state = gson.fromJson(data, GameState.class) ;
+        return state ;
+    }
+
     public static String getJsonString(String name,int score,int coin , int power,int bombCount , int x , int y){
         return "{" +
                 "name=" + name +

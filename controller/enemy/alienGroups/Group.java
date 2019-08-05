@@ -5,6 +5,10 @@ import controller.bonus.Coin;
 import controller.bonus.empowerment.Turbo;
 import controller.bonus.empowerment.TempInterval;
 import controller.enemy.alienAttack.Spike;
+import controller.enemy.alienGroups.circularGroup.CircularGroup;
+import controller.enemy.alienGroups.finalWave.FinalWave;
+import controller.enemy.alienGroups.finalWave.SimpleFinalWave;
+import controller.enemy.alienGroups.rotatingGroup.RotatingGroup;
 import controller.enemy.aliens.Alien;
 import controller.enemy.aliens.AlienName;
 import view.utilities.Dim;
@@ -123,6 +127,24 @@ public abstract class Group {
     }
 
 
+    public static Group diagnoseType(GroupType type){
+        if(type.equals(GroupType.RECTANGULAR))
+            return new RectangularGroup() ;
+
+        if(type.equals(GroupType.CIRCULAR))
+            return new CircularGroup();
+
+        if(type.equals(GroupType.ROTATING))
+            return new RotatingGroup() ;
+
+        if(type.equals(GroupType.TRAIN))
+            return new TrainGroup() ;
+
+        if(type.equals(GroupType.FINALWAVE))
+            return new SimpleFinalWave() ;
+
+        else return null ;
+    }
 
     //----
 
