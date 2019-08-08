@@ -11,8 +11,6 @@ import java.util.Scanner;
 
 public class FileManager {
 
-    PrintWriter printer ;
-    Scanner scanner ;
 
     static String dataFileAddress = "src/model/fileManagement/game.data";
     static String stateFileAddress = "src/model/fileManagement/gameState";
@@ -47,8 +45,6 @@ public class FileManager {
 
         }catch (Exception e){
             e.printStackTrace();
-        }finally {
-            printer.close();
         }
     }
 
@@ -62,11 +58,13 @@ public class FileManager {
                     return player;
                 }
             }
+
+            scanner.close();
         }catch (Exception e){
             e.printStackTrace();
-        }finally {
-            scanner.close();
         }
+
+
         return null ;
     }
 
@@ -78,16 +76,14 @@ public class FileManager {
         try {
             Scanner scanner=new Scanner(new FileReader(dataFileAddress));
 
-
             while(scanner.hasNextLine()){
                 Player player=DataManager.load(scanner.nextLine());
                 players.add(player);
             }
 
+            scanner.close();
         }catch (Exception e){
             e.printStackTrace();
-        }finally{
-            scanner.close();
         }
 
         return players ;
@@ -104,11 +100,12 @@ public class FileManager {
                     return true;
                 }
             }
+
+            scanner.close();
         }catch (Exception e){
             e.printStackTrace();
-        }finally{
-            scanner.close();
         }
+
         return false ;
     }
 
@@ -120,10 +117,9 @@ public class FileManager {
             printer.flush();
 
 
+
         }catch (Exception e){
             e.printStackTrace();
-        }finally {
-            printer.close();
         }
     }
 

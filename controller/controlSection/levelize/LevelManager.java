@@ -96,7 +96,6 @@ public class LevelManager {
     public void nextGroup() {
         for(int i=0;i<groups.size();i++){
             Group group=groups.get(i);
-            System.out.println(group.getType());
             if(!group.isDead()){
                 this.currentGroup = group;
                 this.currentGroup.initialize();

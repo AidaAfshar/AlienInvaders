@@ -86,7 +86,7 @@ public abstract class Administrator {
             if(bomb.isExploded()){
                 Group group = levelManager.getCurrentGroup() ;
                 group.killTheGroup();
-                bomb.setExplode(false);
+                //bomb.setExplode(false);
             }
         }
     }

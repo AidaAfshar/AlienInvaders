@@ -2,6 +2,7 @@ package model.dataManagement;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import controller.enemy.alienGroups.GroupType;
 import controller.player.playerExtentions.Player;
 
 import javax.xml.crypto.Data;
@@ -80,6 +81,17 @@ public class DataManager {
                 '}';
 
         return DataManager.load(data) ;
+    }
+
+    public static GameState instantiateState(String name , GroupType groupType, int deadsCount){
+
+        String data = "{" +
+                "name=" + name +
+                ", groupType=" + groupType  +
+                ", deadsCount =" + deadsCount +
+                '}';
+
+        return DataManager.loadSate(data) ;
     }
 
 }

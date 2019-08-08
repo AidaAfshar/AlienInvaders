@@ -39,5 +39,30 @@ public class GameState {
 
     }
 
+    //getters
 
+
+    public String getPlayerName() {
+        return playerName;
+    }
+
+    public void setPlayerName(String playerName) {
+        this.playerName=playerName;
+    }
+
+    public GroupType getGroupType() {
+        return groupType;
+    }
+
+    public void setGroupType(GroupType groupType) {
+        this.groupType=groupType;
+    }
+
+    public int getDeadsCount() {
+        return deadsCount;
+    }
+
+    public void setDeadsCount(int deadsCount) {
+        this.deadsCount=deadsCount;
+    }
 }

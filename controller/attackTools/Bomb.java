@@ -40,25 +40,23 @@ public class Bomb extends Beam {
 
     @Override
     public void moveBeam() {
-        setExplode(true);
-        setThrowPermission(false);
+        if(Math.abs(x-Dim.CENTER_X)>4) {
+            x+= vx*3 ;
+        }else {
+            reachedXCenter=true ;
+        }
+        if(Math.abs(y-Dim.CENTER_Y)>4) {
+            y+= vy*3 ;
+        }else {
+            reachedYCenter=true ;
+        }
+        if(reachedXCenter && reachedYCenter) {
+            System.out.println("inside reached");
+            this.explode = true ;
+            this.throwPermission = false ;
+        }
 
-//        System.out.println("inside moveBomb 1");
-//        if(Math.abs(x-Dim.CENTER_X)>4) {
-//            x+= vx*3 ;
-//        }else {
-//            reachedXCenter=true ;
-//        }
-//        if(Math.abs(y-Dim.CENTER_Y)>4) {
-//            y+= vy*3 ;
-//        }else {
-//            reachedYCenter=true ;
-//        }
-//        if(reachedXCenter && reachedYCenter) {
-//            System.out.println("inside moveBomb 2");
-//            setExplode(true);
-//            this.throwPermission = false ;
-//        }
+
     }
 
     Timer expTimer ;
@@ -68,20 +66,27 @@ public class Bomb extends Beam {
         expTimer = new Timer(40, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                if(i>13){
+                    expTimer.stop();
+                    return;
+                }
+                System.out.println(i);
                 g.drawImage(BombExplosion.explosionImages[i],Dim.CENTER_X-120,Dim.CENTER_Y-120,200,200,null);
+                i++ ;
             }
         });
+        expTimer.start();
     }
 
     //getters & setters:
 
 
     public void setVx() {
-        vx = x0-Dim.CENTER_X/Math.abs(x0-Dim.CENTER_X);
+        vx = (Dim.CENTER_X-x0)/Math.abs(x0-Dim.CENTER_X);
     }
 
     public void setVy() {
-       vy =  y0-Dim.CENTER_Y/Math.abs(y0-Dim.CENTER_Y);
+       vy =  (Dim.CENTER_Y-y0)/Math.abs(y0-Dim.CENTER_Y);
     }
 
     public boolean isExploded() {

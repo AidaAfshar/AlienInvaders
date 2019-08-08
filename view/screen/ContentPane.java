@@ -67,8 +67,8 @@ public class ContentPane extends JPanel {
     public void initialize() {
         setLayout(new BorderLayout());
         setBackground(Color.blue);
-        prepareDataManagement(DataManagement.VIA_DATABASE) ;
-        databaseManager= new DatabaseManager();
+        prepareDataManagement(DataManagement.VIA_FILE) ;
+        //databaseManager= new DatabaseManager();
         preparePanels() ;
         add(invitationPanel);
     }

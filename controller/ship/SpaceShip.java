@@ -74,7 +74,7 @@ public class SpaceShip extends Image{
                     bombCount -- ;
                 }
             }
-        }
+    }
 
 
 
@@ -103,10 +103,9 @@ public class SpaceShip extends Image{
                         bomb.draw(g);
                         bomb.moveBeam();
                     }else if(bomb.isExploded()) {
-//                        bomb.renderExplosion(g);
-//                        bomb.j++ ;
-//                        if(bomb.j>13)
-//                            bomb.explode = false ;
+                        System.out.println("inside isExploded");
+                        bomb.renderExplosion(g);
+                        bomb.setExplode(false);
                     }
                 }
             }

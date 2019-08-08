@@ -34,17 +34,9 @@ public class DatabaseClass {
     }
 
 
-    public static String getInsertString(String name , int score , int coin , int power ,int bombCount , int x , int y){
-        return "INSERT INTO Players (name, score, coin, power, bombCount , x , y) values('"+name+"',"+score+","+coin+","+power+","+bombCount +","+x+","+y+")" ;
-    }
-
     public static int deleteQuery(Connection connection,String string) throws SQLException {
         Statement statement = connection.createStatement();
         return statement.executeUpdate(string);
-    }
-
-    public static String getDeleteString(String name){
-        return "DELETE FROM Players WHERE name ='"+name+"'" ;
     }
 
     public static int updateQuery(Connection connection,String string) throws SQLException {
@@ -52,13 +44,10 @@ public class DatabaseClass {
         return statement.executeUpdate(string);
     }
 
-    public static String getUpdateString(String name , int score , int coin , int power ,int bombCount , int x , int y){
-        return "UPDATE Players SET score = "+score+", coin="+coin+", power="+power+", bombCount="+bombCount+",x="+x+",y="+y+" WHERE name='"+name+"'" ;
-    }
 
-    public static ResultSet selectAllQuery(Connection connection) throws SQLException {
+    public static ResultSet selectAllQuery(Connection connection,String string) throws SQLException {
         Statement statement = connection.createStatement();
-        return statement.executeQuery("SELECT * From Players");
+        return statement.executeQuery(string);
     }
 
     public static ResultSet selectQuery(Connection connection , String string) throws SQLException {
@@ -66,9 +55,6 @@ public class DatabaseClass {
         return statement.executeQuery(string);
     }
 
-    public static String getSelectString(String wantedVariable){
-        return "SELECT name ,"+ wantedVariable +"FROM Players" ;
-    }
 
 
 }

@@ -19,7 +19,11 @@ public class StateQuery {
     }
 
     public static String getSelectString(String wantedVariable){
-        return "SELECT name ,"+ wantedVariable +"FROM gameState" ;
+        return "SELECT name ,"+ wantedVariable +"FROM gamestate" ;
+    }
+
+    public static String getSelectAllString(){
+        return "SELECT * From gamestate" ;
     }
 
 }

@@ -1,9 +1,11 @@
 package model.database;
 
 
+import controller.enemy.alienGroups.GroupType;
 import controller.player.playerExtentions.Player;
 import controller.ship.SpaceShip;
 import model.dataManagement.DataManager;
+import model.dataManagement.GameState;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -11,6 +13,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import static model.database.DatabaseClass.*;
+import static model.database.PlayerQuery.*;
+import static model.database.StateQuery.*;
+
 
 public class DatabaseManager {
 
@@ -42,6 +47,8 @@ public class DatabaseManager {
     }
 
 
+    //PLAYER
+
     public void addPlayerToDatabase(Player player){
         try {
             String string=getInsertString(
@@ -57,7 +64,7 @@ public class DatabaseManager {
 
     public void deletePlayerFromDatabase(Player player) {
         try{
-            String string = getDeleteString(player.getName()) ;
+            String string = PlayerQuery.getDeleteString(player.getName()) ;
             deleteQuery(connection,string) ;
         }catch (SQLException e){
             e.printStackTrace();
@@ -66,7 +73,7 @@ public class DatabaseManager {
 
     public void deletePlayerFromDatabase(String playerName) {
         try{
-            String string = getDeleteString(playerName) ;
+            String string = PlayerQuery.getDeleteString(playerName) ;
             deleteQuery(connection,string) ;
         }catch (SQLException e){
             e.printStackTrace();
@@ -101,7 +108,8 @@ public class DatabaseManager {
         ArrayList<Player> players = new ArrayList<>();
 
         try {
-            ResultSet resultSet=selectAllQuery(connection);
+            String string = PlayerQuery.getSelectAllString() ;
+            ResultSet resultSet=selectAllQuery(connection,string);
 
             ArrayList<String> names=new ArrayList<>();
             ArrayList<Integer> scores=new ArrayList<>();
@@ -156,20 +164,75 @@ public class DatabaseManager {
         }
         return null ;
     }
+
+    //STATE
+    public void addGameStateToDatabase(GameState state){
+        try {
+            String string=getInsertString(
+                    state.getPlayerName(),
+                    state.getGroupType(),
+                    state.getDeadsCount());
+
+            insertQuery(connection, string);
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    public void updateGameState(GameState state){
+        try {
+
+            String string=getUpdateString(
+                    state.getPlayerName(),
+                    state.getGroupType(),
+                    state.getDeadsCount());
+
+            updateQuery(connection, string);
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    public ArrayList<GameState> getGameStatesArrayList()  {
+
+        ArrayList<GameState> states = new ArrayList<>();
+
+        try {
+            String string = StateQuery.getSelectAllString() ;
+            ResultSet resultSet=selectAllQuery(connection,string);
+
+            ArrayList<String> names=new ArrayList<>();
+            ArrayList<Object> types=new ArrayList<>();
+            ArrayList<Integer> deadCounts=new ArrayList<>();
+
+
+
+            int j=0;
+
+            while(resultSet.next()){
+                int i=1;
+                names.add(resultSet.getObject(i).toString());
+                i++;
+                types.add(resultSet.getObject(i));
+                i++;
+                deadCounts.add(Integer.valueOf(resultSet.getObject(i).toString()));
+                j++;
+            }
+
+//            for (int i=0;i < j;i++){
+//                states.add(DataManager.instantiateState(
+//                        names.get(i),
+//                        types.get(i),
+//                        deadCounts.get(i));
+//            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+
+        return states ;
+    }
+
 }
-//            Player player = new Player("aref",new SpaceShip()) ;
-//            deletePlayerFromDatabase(player);
-
-//            Player player = new Player("aref",new SpaceShip()) ;
-//            addPlayerToDatabase(player);
-//            ResultSet resultSet = selectAllQuery(connection) ;
-//            printResultSet(resultSet);
-
-//    deletePlayerFromDatabase("aref");
-//    deletePlayerFromDatabase("liza");
-
-//    Player player1 = DataManager.instantiatePlayer("liza",0,0,0,0,0,0);
-//    Player player2 = DataManager.instantiatePlayer("liza",0,5,0,3,0,0);
-//
-//    addPlayerToDatabase(player1);
-//    addPlayerToDatabase(player2);

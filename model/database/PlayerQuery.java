@@ -23,4 +23,8 @@ public class PlayerQuery {
         return "SELECT name ,"+ wantedVariable +"FROM Players" ;
     }
 
+
+    public static String getSelectAllString(){
+        return "SELECT * From Players" ;
+    }
 }

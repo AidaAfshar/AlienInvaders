@@ -45,7 +45,6 @@ public class Player {
         ship.setHeight(180) ;
         ship.setDimensions();
         ship.prepareTempTimer();
-        ship.setBombCount(bombCount);
     }
 
     public void setInitialValues(){

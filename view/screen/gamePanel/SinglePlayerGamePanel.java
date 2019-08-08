@@ -252,7 +252,7 @@ public class SinglePlayerGamePanel extends GamePanel {
 
     public void updateValues() {
         getTempBar().setValue(admin.getShip().getTemperature());
-        getBombLabel().setText("         Bomb : " + admin.getPlayer().getBombCount());
+        getBombLabel().setText("         Bomb : " + admin.getShip().getBombCount());
         getPowerLabel().setText("      Power : " + admin.getPlayer().getPower());
         getCoinLabel().setText("   Coin : " + admin.getPlayer().getCoin());
         getScoreLabel().setText("   Score :     " + admin.getPlayer().getScore());

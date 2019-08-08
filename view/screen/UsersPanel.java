@@ -54,7 +54,7 @@ public class UsersPanel extends JPanel {
         prepareBackground();
 //        prepareFileManager() ;
 //        prepareDatabaseManager() ;
-        prepareDataManagement("via database") ;
+        prepareDataManagement() ;
         prepareLabel();
         prepareUserLabels();
         prepareButtons();
@@ -67,10 +67,11 @@ public class UsersPanel extends JPanel {
         usersPanelBackground.setImage(Assets.usersPanelBackgroundImage);
     }
 
-    void prepareDataManagement(String x){
-        if(x.equals("via file"))
+
+    void prepareDataManagement(){
+        if(contentPane.getDataManagement().equals(DataManagement.VIA_FILE))
             prepareFileManager();
-        if(x.equals("via database"))
+        if(contentPane.getDataManagement().equals(DataManagement.VIA_DATABASE))
             prepareDatabaseManager();
     }
 
