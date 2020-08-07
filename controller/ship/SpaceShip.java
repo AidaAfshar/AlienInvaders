@@ -16,7 +16,7 @@ public class SpaceShip extends Image{
     int halfWidth , halfHeight ;
     int centerX , centerY ;
 
-    int bombCount = 3;
+    int bombCount = 10 ;
 
 
     public SpaceShip() {
@@ -103,9 +103,8 @@ public class SpaceShip extends Image{
                         bomb.draw(g);
                         bomb.moveBeam();
                     }else if(bomb.isExploded()) {
-                        System.out.println("inside isExploded");
                         bomb.renderExplosion(g);
-                        bomb.setExplode(false);
+                        //bomb.setExplode(false);
                     }
                 }
             }

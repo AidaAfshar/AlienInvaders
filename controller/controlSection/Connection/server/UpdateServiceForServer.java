@@ -104,7 +104,6 @@ public class UpdateServiceForServer {
 
         void updateOtherPlayers(){
 
-            //inja faghat bayad dataye hamin cliente rooye khato bekhooni
 
             while(whileBoolean){
                 if(scanner.hasNextLine()){
@@ -113,14 +112,6 @@ public class UpdateServiceForServer {
                     Player updatedPlayer = DataManager.load(data) ;
 
                     clientPlayer.update(updatedPlayer);
-                    // server har chand lahze client playere har kodoom az clientaro begire va game panel ham liste update shode ro paint kone
-
-//                    //TODO see which one works:
-//
-//                    findPlayer(updatedPlayer).update(updatedPlayer);
-//
-////                    Player player = findPlayer(updatedPlayer) ;
-////                    player.update(updatedPlayer);
 
                 }else break;
             }

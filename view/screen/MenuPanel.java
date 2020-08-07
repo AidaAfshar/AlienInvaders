@@ -5,12 +5,12 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.Timer;
+import javax.swing.*;
 
+import controller.player.playerExtentions.Player;
+import model.dataManagement.DataManagement;
 import view.animations.Skeleton;
 import view.imaging.Assets;
 import view.imaging.Background;
@@ -34,11 +34,15 @@ public class MenuPanel extends JPanel {
     JButton infoButton ;
 
     Timer timer ;
+    ArrayList<Player> savedPlayers ;
+    Player currentPlayer ;
     Skeleton skeleton = new Skeleton();
 
-    public MenuPanel(ContentPane contentPane) {
+    public MenuPanel(ContentPane contentPane, Player currentPlayer ,ArrayList<Player> savedPlayers) {
         super();
         this.contentPane = contentPane ;
+        this.savedPlayers = savedPlayers ;
+        this.currentPlayer = currentPlayer ;
         initialize();
     }
 
@@ -80,9 +84,19 @@ public class MenuPanel extends JPanel {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                resumeGameSelected = true ;
-                timer.stop();
-                contentPane.afterMenuPanel();
+                if(contentPane.getDataManagement()==DataManagement.VIA_FILE){
+                    if(playerAlreadyExists()){
+                        resumeGameSelected=true;
+                        timer.stop();
+                        contentPane.afterMenuPanel();
+                    }else{
+                        JOptionPane.showMessageDialog(MenuPanel.this, "You are a new player , press 'NEW GAME' ", "warning", JOptionPane.WARNING_MESSAGE);
+                    }
+                }else {
+                    resumeGameSelected=true;
+                    timer.stop();
+                    contentPane.afterMenuPanel();
+                }
             }
 
         });
@@ -130,6 +144,15 @@ public class MenuPanel extends JPanel {
 
     }
 
+    boolean playerAlreadyExists(){
+
+        for(int i=savedPlayers.size()-1 ; i>=0 ; i--){
+            if(savedPlayers.get(i).getName().equals(currentPlayer))
+                return true ;
+        }
+
+        return false ;
+    }
 
     public void prepareTimer() {
         timer = new Timer(26,new ActionListener() {

@@ -220,12 +220,12 @@ public class DatabaseManager {
                 j++;
             }
 
-//            for (int i=0;i < j;i++){
-//                states.add(DataManager.instantiateState(
-//                        names.get(i),
-//                        types.get(i),
-//                        deadCounts.get(i));
-//            }
+            for (int i=0;i < j;i++){
+                states.add(DataManager.instantiateState(
+                        names.get(i),
+                        (GroupType) types.get(i),
+                        deadCounts.get(i)));
+            }
 
         }catch (Exception e){
             e.printStackTrace();

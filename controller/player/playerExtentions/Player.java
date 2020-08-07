@@ -50,11 +50,10 @@ public class Player {
     public void setInitialValues(){
         score = 0 ;
         coin = 0 ;
-        power = 5 ;
+        power = 20 ;
         bombCount = ship.getBombCount() ;
         x = ship.getX() ;
         y = ship.getY() ;
-
     }
 
     public void preparePlayer(){
@@ -64,6 +63,7 @@ public class Player {
 
     public void upgradeScore(){
         score += 3*coin ;
+        power = 5 ;
     }
 
     public void increaseScore(int alienResistance){

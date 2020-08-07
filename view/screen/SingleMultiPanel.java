@@ -37,13 +37,13 @@ public class SingleMultiPanel extends JPanel{
     }
 
     public void prepareBackground() {
-        singleMultiPanelBackground.setImage(Assets.serverClientPanelBackgroundImage);
+        singleMultiPanelBackground.setImage(Assets.singleMultiPanelBackgroundImage);
     }
 
 
     public void prepareButtons() {
         singlePlayerButton = new JButton("SINGLE PLAYER");
-        singlePlayerButton.setBounds(Dim.CENTER_X-200+20,Dim.CENTER_Y-130,350,80);
+        singlePlayerButton.setBounds(Dim.CENTER_X-200+20,Dim.CENTER_Y-120,350,80);
         singlePlayerButton.setFont(new Font("Footlight MT Light",Font.BOLD,40));
         this.add(singlePlayerButton);
         singlePlayerButton.addActionListener(new ActionListener() {
@@ -58,7 +58,7 @@ public class SingleMultiPanel extends JPanel{
 
 
         multiPlayerButton = new JButton("MULTI PLAYER");
-        multiPlayerButton.setBounds(Dim.CENTER_X-200+20,Dim.CENTER_Y+70,350,80);
+        multiPlayerButton.setBounds(Dim.CENTER_X-200+20,Dim.CENTER_Y+60,350,80);
         multiPlayerButton.setFont(new Font("Footlight MT Light",Font.BOLD,40));
         this.add(multiPlayerButton);
         multiPlayerButton.addActionListener(new ActionListener() {
@@ -79,7 +79,7 @@ public class SingleMultiPanel extends JPanel{
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 //        g.drawImage(singleMultiPanelBackground.getImage(),0,0,Dim.MAX_X,Dim.MAX_Y,null);
-//        g.drawImage(singleMultiPanelBackground.getImage(),130,Dim.CENTER_Y-150,300,300,null);
+        g.drawImage(singleMultiPanelBackground.getImage(),220,Dim.CENTER_Y-180,370,370,null);
     }
 
 

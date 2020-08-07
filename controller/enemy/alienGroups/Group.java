@@ -193,7 +193,7 @@ public abstract class Group {
 
     protected void renderCoins(Graphics g){
         for(Coin coin:coins){
-            if(! coin.isCaught())
+            if(! coin.isCaught() && coin.getShowPermition())
                 coin.draw(g);
 
             if(coin.getY()> Dim.MAX_Y+20){

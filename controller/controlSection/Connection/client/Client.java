@@ -21,6 +21,8 @@ public class Client extends Thread{
     ConnectionServiceForClient connector;
     UpdateServiceForClient updater;
 
+    boolean serverEntered = false ;
+
     public Client(String IP , int port , Player player , ClientPanel clientPanel){
         this.IP = IP ;
         this.port = port ;
@@ -80,4 +82,6 @@ public class Client extends Thread{
     public void setOtherPlayers(ArrayList<Player> otherPlayers) {
         this.otherPlayers = otherPlayers;
     }
+
+
 }

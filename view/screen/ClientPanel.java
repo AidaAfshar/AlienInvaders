@@ -57,7 +57,9 @@ public class ClientPanel extends JPanel {
         playerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                contentPane.afterClientPanel("player");
+                    contentPane.afterClientPanel("player");
+
+
             }
         });
 
@@ -68,7 +70,8 @@ public class ClientPanel extends JPanel {
         spectatorButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                contentPane.afterClientPanel("spectator");
+                    contentPane.afterClientPanel("spectator");
+
             }
         });
     }

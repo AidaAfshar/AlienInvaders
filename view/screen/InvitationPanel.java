@@ -46,9 +46,9 @@ public class InvitationPanel extends JPanel {
 
     private void prepareLabel() {
         label = new JLabel("AILIEN INVADERS");
-        label.setFont(new Font("Chiller",Font.BOLD,70));
-        label.setForeground(Color.white);
-        label.setBounds(Dim.CENTER_X-250,40,600,100);
+        label.setFont(new Font("Chiller",Font.BOLD,90));
+        label.setForeground(Color.red);
+        label.setBounds(Dim.CENTER_X-330,40,600,100);
 
     }
 
@@ -70,7 +70,7 @@ public class InvitationPanel extends JPanel {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(invitationPanelBackground.getImage(),Dim.CENTER_X-310,Dim.CENTER_Y-320,580,580,null);
+        g.drawImage(invitationPanelBackground.getImage(),Dim.CENTER_X-250,Dim.CENTER_Y-250,400,450,null);
 //          g.drawImage(invitationPanelBackground.getImage(),-75,140,900,850,null);
 
 

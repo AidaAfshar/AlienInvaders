@@ -39,7 +39,7 @@ public class ServerClientPanel extends JPanel {
     }
 
     public void prepareBackground() {
-        serverClientPanelBackground.setImage(Assets.menuPanelBackgroundImage);
+        serverClientPanelBackground.setImage(Assets.rankingPanelPanelBackgroundImage);
     }
 
     public void prepareLabel(){
@@ -88,7 +88,7 @@ public class ServerClientPanel extends JPanel {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-//        g.drawImage(serverClientPanelBackground.getImage(),0,0,Dim.MAX_X,Dim.MAX_Y,null);
+        g.drawImage(serverClientPanelBackground.getImage(),0,0,Dim.MAX_X,Dim.MAX_Y,null);
     }
 
 

@@ -21,17 +21,7 @@ public class FileManager {
     }
 
     void initialize(){
-//        try {
-//
-//
-//            printer = new PrintWriter (new FileWriter ("src/model/fileManagement/game.data",true)) ;
-//            scanner = new Scanner (new FileReader ("src/model/fileManagement/game.data")) ;
-//
-//
-//
-//        } catch (IOException e) {
-//            e.printStackTrace ();
-//        }
+
     }
 
     public void save(Player player){

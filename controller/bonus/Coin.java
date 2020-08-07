@@ -4,6 +4,7 @@ import view.imaging.Assets;
 
 public class Coin extends Bonus {
 
+    boolean showPermition = true ;
 
     public Coin(int x, int y) {
         super(x, y);
@@ -18,5 +19,11 @@ public class Coin extends Bonus {
         setInScreen(true);
     }
 
+    public boolean getShowPermition() {
+        return showPermition;
+    }
 
+    public void setShowPermition(boolean showPermition) {
+        this.showPermition=showPermition;
+    }
 }

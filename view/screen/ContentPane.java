@@ -68,7 +68,6 @@ public class ContentPane extends JPanel {
         setLayout(new BorderLayout());
         setBackground(Color.blue);
         prepareDataManagement(DataManagement.VIA_FILE) ;
-        //databaseManager= new DatabaseManager();
         preparePanels() ;
         add(invitationPanel);
     }
@@ -104,7 +103,7 @@ public class ContentPane extends JPanel {
     public void afterSingleMultiPanel(){
         if (singleMultiPanel.isSinglePlayerSelected()) {
             singleMultiPanel.setVisible(false);
-            menuPanel = new MenuPanel(this);
+            menuPanel = new MenuPanel(this,player,usersPanel.getSavedPlayers());
             add(menuPanel);
         }
         if (singleMultiPanel.isMultiPlayerSelected()) {
@@ -165,6 +164,7 @@ public class ContentPane extends JPanel {
     }
 
     public void afterClientInfoPanel() {
+        player = new Player(player.getName(),new SpaceShip()) ;
         setClientPlayer(player);
         clientPanel = new ClientPanel(this, clientPlayer);
         add(clientPanel);
@@ -239,6 +239,7 @@ public class ContentPane extends JPanel {
 
 
     public void afterServerInfoPanel(){
+        player = new Player(player.getName(),new SpaceShip()) ;
         setServerPlayer(player);
         serverInfoPanel.setVisible(false);
         serverPanel = new ServerPanel(this , serverInfoPanel.getPlayersCount());
@@ -264,6 +265,7 @@ public class ContentPane extends JPanel {
     void prepareServerPlayer(){
         serverPlayer.setRole(PlayerRole.PLAYER);
         serverPlayer.setState(PlayerState.INGAME);
+
     }
 
     public void preparePlayersForServerPlayer(){
@@ -276,7 +278,6 @@ public class ContentPane extends JPanel {
         players.addAll(server.getOtherPlayers());
 
     }
-
 
     public void prepareSinglePlayerGamePanel() {
         gamePanel = new SinglePlayerGamePanel(this , (SinglePlayerAdministrator) admin);
@@ -339,7 +340,6 @@ public class ContentPane extends JPanel {
     }
 
     public void afterGameOver(){
-        savePlayerAsModel();
         player.initialize();
         prepareSinglePlayerAdministrator();
         gameOverPanel.setVisible(false);

@@ -62,8 +62,10 @@ public abstract class Administrator {
                     if (group.isDead())
                         levelManager.nextGroup();
 
-                    if(player.getPower()<0)
+                    if(player.getPower()<0){
                         contentPane.showGameOverPanel();
+                        return;
+                    }
 
                     group.moveStuffs();
                     group.produceSpike();
@@ -86,7 +88,7 @@ public abstract class Administrator {
             if(bomb.isExploded()){
                 Group group = levelManager.getCurrentGroup() ;
                 group.killTheGroup();
-                //bomb.setExplode(false);
+                bomb.setExplode(false);
             }
         }
     }
@@ -94,6 +96,7 @@ public abstract class Administrator {
 
     public void detectCollisions() {
         beamAlienCollision();
+        coinBeamCollision();
         spaceShipAlienCollision();
         spaceShipSpikeCollision();
         spaceShipBonusCollision();
@@ -195,6 +198,25 @@ public abstract class Administrator {
             }
         }
     }
+
+    void coinBeamCollision(){
+        Group group = levelManager.getCurrentGroup() ;
+        for(int i=0 ; i<group.getCoins().size() ; i++) {
+            for(int j = 0; j<ship.getBeams().size() ; j++) {
+                Coin coin = group.getCoins().get(i);
+                Beam beam = ship.getBeams().get(j);
+                if(beam.getThrowPermission()){
+                    double d=Math.sqrt(Math.pow(coin.getX() - beam.getX(), 2) + Math.pow(coin.getY() - beam.getY(), 2));
+                    if(coin.getShowPermition() && d<coin.getHeight()){
+                        beam.setThrowPermission(false);
+                        coin.setShowPermition(false);
+                    }
+                }
+            }
+        }
+
+    }
+
     private void spaceShipAlienCollision(){
         Group group = levelManager.getCurrentGroup() ;
         for(Alien alien :group.getAliens()) {
@@ -203,7 +225,6 @@ public abstract class Administrator {
                 if(d<Math.min(alien.getHeight() , alien.getWidth())) {
                     timer.stop();
                     contentPane.showGameOverPanel();
-                    timer.stop();
                 }
             }
         }

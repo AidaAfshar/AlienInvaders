@@ -53,6 +53,10 @@ public class LevelManager {
     void addGroupsForRandomGame() {
         int [] randomNumbers = produce3RandomNumbers() ;
         Class[] randomClasses = get3RandomClasses(randomNumbers) ;
+//        for(Class aClass : randomClasses){
+//            System.out.print(aClass.getSimpleName()+"-") ;
+//        }
+//        System.out.println("\n");
 
         groups = new ArrayList<>() ;
         for(int i=0 ; i<3 ; i++){
@@ -103,14 +107,15 @@ public class LevelManager {
             }else if(group.getType()==GroupType.FINALWAVE && group.isDead()){
                 currentLevelCount++;
                 Gravitus.setResistance(100*currentLevelCount);
+                if(currentLevelCount==maximumLevelCount){
+                    admin.finishGame();
+                    break;
+                }else{
+                    nextLevel();
+                    break;
+                }
             }
-            if(currentLevelCount==maximumLevelCount){
-                admin.finishGame();
-                break;
-            }else{
-                nextLevel();
-                break;
-            }
+
         }
     }
 

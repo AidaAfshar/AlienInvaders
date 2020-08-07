@@ -51,7 +51,6 @@ public class Bomb extends Beam {
             reachedYCenter=true ;
         }
         if(reachedXCenter && reachedYCenter) {
-            System.out.println("inside reached");
             this.explode = true ;
             this.throwPermission = false ;
         }
@@ -70,7 +69,6 @@ public class Bomb extends Beam {
                     expTimer.stop();
                     return;
                 }
-                System.out.println(i);
                 g.drawImage(BombExplosion.explosionImages[i],Dim.CENTER_X-120,Dim.CENTER_Y-120,200,200,null);
                 i++ ;
             }
